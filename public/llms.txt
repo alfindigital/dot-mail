@@ -1,0 +1,9 @@
+# DotMail
+
+> Gmail dot trick generator — buat semua variasi titik untuk alamat Gmail kamu. Cepat, elegan, sepenuhnya berjalan di browser.
+
+DotMail memanfaatkan fakta bahwa Gmail mengabaikan titik di bagian username alamat email — `s.atu`, `sa.tu`, dan `satu` semua masuk ke inbox yang sama. Tool ini menghasilkan seluruh kombinasi titik dari sebuah username Gmail, berguna untuk testing, signup multi-akun, atau melacak sumber email.
+
+## Pages
+
+- [Home](/): Generator utama untuk membuat seluruh variasi titik dari alamat Gmail.
