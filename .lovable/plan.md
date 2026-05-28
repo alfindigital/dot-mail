@@ -1,157 +1,82 @@
+# Plan — Polish DotMail (Fase 1.5)
 
-# DotMail Generator — Rencana Pembangunan Bertahap
+Sepuluh perubahan terarah, semuanya di frontend/presentation. Tidak ada perubahan algoritma atau struktur data.
 
-Aplikasi mini 100% lokal (tanpa server, tanpa database, tanpa biaya operasional). Semua logika di browser. Cocok dijadikan freebie + lead magnet halus di footer.
+## 1. Contoh username generik
+- `src/routes/index.tsx` hero copy: ganti contoh `a.lfin / al.fin / alfin` → `s.atu / sa.tu / sat.u / satu`.
+- `src/components/generator/GeneratorCard.tsx` placeholder `contoh: alfinjulianto` → `contoh: satu`.
 
-## Prinsip Desain
+## 2. Hapus eyebrow "Gmail dot trick generator"
+- Hilangkan `<p class="uppercase tracking …">Gmail dot trick generator</p>` di hero.
 
-- **Elegan & profesional**: tipografi serif display + sans body, palet netral premium (off‑white/charcoal) dengan satu accent color, banyak whitespace, micro‑animation halus.
-- **To the point**: hero langsung input + tombol generate; tanpa popup, tanpa ads, tanpa noise.
-- **Mobile‑first**: layout single column, sticky CTA bawah di mobile, touch target ≥44px.
-- **Lokal sepenuhnya**: localStorage untuk favorit/history/preferensi. Tidak ada Cloud, tidak ada tracking.
-- **Performa**: virtualisasi list (TanStack Virtual), Web Worker untuk generate kombinasi besar agar UI tidak nge‑freeze.
+## 3. Warna brand → merah Gmail
+Di `src/styles.css`, ganti accent brass jadi merah Gmail (`#EA4335` ≈ `oklch(0.62 0.22 27)`), termasuk:
+- `--accent`, `--ring`, `--chart-1` (light + dark)
+- Dot logo di header pakai token `bg-accent` (sudah otomatis ikut)
+- Italic "Ratusan" di hero pakai `text-accent` (sudah otomatis ikut)
 
-## Tech Stack (sesuai template)
+## 4. Logo DotMail merah Gmail
+- Header: dot bulat (`size-2.5`) tetap, jadikan logomark: lingkaran kecil merah + wordmark `DotMail` di font yang sama dengan hero (lihat #8). Wordmark pakai `text-foreground`, titik merah pakai `bg-accent`.
 
-- TanStack Start + React 19 + Tailwind v4 + shadcn/ui (sudah tersedia).
-- Framer Motion untuk animasi.
-- TanStack Virtual untuk daftar panjang.
-- Web Worker (vanilla) untuk algoritma generasi.
-- Tidak mengaktifkan Lovable Cloud — semua state di client.
+## 5. Hapus badge versi / local-only di header
+- Buang `v0.1 · local-only` di header kanan.
 
----
+## 6. Toggle dark / light di pojok kanan atas
+- Komponen baru `src/components/layout/ThemeToggle.tsx`:
+  - State default = `prefers-color-scheme`.
+  - Persist ke `localStorage` (`dotmail-theme`).
+  - Toggle class `.dark` pada `<html>`.
+  - Icon `Sun` / `Moon` dari lucide, tombol `ghost` ukuran `icon`, rounded-full.
+- Slot di header kanan, menggantikan badge versi.
 
-## Fase 1 — Fondasi & MVP Fungsional
+## 7. Hapus kalimat "Buat semua variasinya sekaligus."
+- Potong kalimat tersebut di hero subcopy.
 
-Tujuan: aplikasi yang bisa dipakai end‑to‑end dengan kualitas rapih.
+## 8. Rephrase label input
+- `Username Gmail kamu` → `Alamat Gmail kamu` (lebih natural; kita sudah render suffix `@gmail.com` jadi nuansanya alamat, bukan username).
 
-1. **Routing & shell**
-   - Route `/` jadi landing + tool (single page, sectioned).
-   - Update `__root.tsx` meta (title, description, OG) untuk SEO dasar.
-2. **Design system**
-   - Tambah token warna premium di `src/styles.css` (light + dark, oklch).
-   - Pilih font pair (mis. Instrument Serif + Inter / DM Sans) via Google Fonts link di root.
-3. **Komponen inti**
-   - `GeneratorCard`: input username, validasi realtime (a‑z, 0‑9, 2–30 char, tanpa titik/spasi), live counter "n chars → 2^(n‑1) kombinasi".
-   - Tombol Generate + tampilan jumlah total.
-   - `ResultsList`: daftar email hasil, masing‑masing row dengan tombol Copy, dot di‑highlight warna accent.
-   - Toast (sonner) untuk feedback copy/error.
-4. **Algoritma**
-   - Fungsi murni `generateDotVariants(username)` (bitmask 2^(n‑1)).
-   - Util highlight dot untuk render.
-5. **Empty state & validation state** yang rapi.
+## 9. Ganti icon Generate
+- `Sparkles` → `ArrowRight` (lucide). To-the-point, bukan icon AI/magic cliché. Posisi icon di kanan teks.
 
-Selesai Fase 1 = tool sudah usable, mirip TwistMail tapi lebih bersih.
+## 10. Konsistensi tipografi & komponen
+- **Header semua pakai `font-serif`** (Instrument Serif):
+  - `h1` hero ✓ (sudah)
+  - `h2` "N variasi" ✓ (sudah)
+  - Wordmark `DotMail` → tambahkan `font-serif` (saat ini default sans, hanya `tracking-tight`)
+- **Body text** semua pakai default `font-sans` Inter (sudah konsisten).
+- **Button**: pakai varian shadcn standar (jangan override warna manual).
+  - Generate: `<Button>` default (otomatis `bg-primary text-primary-foreground`) — buang `bg-foreground text-background hover:bg-foreground/90`.
+  - Salin semua: `<Button variant="outline">` ✓ (sudah).
+  - Tampilkan-lagi: `<Button variant="ghost">` ✓ (sudah).
+  - Semua tombol pakai `rounded-xl h-10` atau ukuran default; samakan jadi `size="lg"` untuk Generate + Salin semua agar visual seimbang.
 
----
+## 11. Footer disalin persis dari drawdowncal.lovable.app
+Markup target (Indonesia, satu baris, center di mobile):
 
-## Fase 2 — UX Profesional & Performa
-
-1. **Web Worker** untuk generate (offload main thread), dengan progress bar saat >10k hasil.
-2. **Guard rail**: jika username >20 char, tampil modal konfirmasi ("Akan menghasilkan N kombinasi, lanjutkan?") + opsi batasi jumlah dot.
-3. **Filter & search**:
-   - Pills filter berdasarkan jumlah dot (0,1,2,…,n‑1) dengan counter per tier.
-   - Search box untuk filter substring dalam hasil.
-4. **Virtualized list** (TanStack Virtual) — smooth meski 100k rows.
-5. **Bulk actions**: Copy All, Copy Filtered, Download TXT, Download CSV (dengan watermark baris pertama: `# Generated by DotMail — <url>`).
-6. **Dark/Light toggle** + simpan preferensi di localStorage.
-7. **Keyboard shortcuts**: Ctrl/Cmd+Enter generate, Ctrl/Cmd+C copy all, `/` fokus ke search.
-
----
-
-## Fase 3 — Fitur Lokal Bernilai Tambah
-
-Semua memakai localStorage saja.
-
-1. **History** 10 username terakhir → dropdown quick‑select di input.
-2. **Favorites/Pin**: tandai email tertentu, tab terpisah "Favorites" yang persist.
-3. **Batch mode**: textarea multi‑username (satu per baris), generate semuanya, hasil dikelompokkan per username (accordion).
-4. **Reverse lookup**: input email lengkap → tebak username dasarnya + tampilkan kombinasi serumpun.
-5. **Copy format selector**: newline / koma / titik‑koma (siap paste ke BCC).
-6. **Shareable link**: encode username di URL hash (`#u=alfin`), buka langsung auto‑generate. Zero backend.
-7. **Dot pattern presets**: "Hanya 1 dot", "Setiap karakter ganjil", "Setengah pertama", dll.
-
----
-
-## Fase 4 — Mobile‑First Polish
-
-1. **Sticky bottom action bar** di mobile (Generate / Copy All / Download).
-2. **Bottom sheet** untuk hasil saat di mobile (drawer dari shadcn).
-3. **Swipe actions** di row: swipe kanan = copy, swipe kiri = favorit.
-4. **Haptic feedback** via `navigator.vibrate` (best‑effort).
-5. **Web Share API** untuk share daftar email ke WhatsApp/Telegram secara native.
-6. **PWA**: manifest + service worker (Workbox sederhana) → installable & offline.
-7. **Floating counter** "Viewing 50 / 512" saat scroll hasil panjang.
-
----
-
-## Fase 5 — Branding, SEO, Lead Magnet (Tanpa Opex)
-
-1. **SEO**: meta lengkap, OG image statis (dibuat via imagegen), JSON‑LD `WebApplication`, sitemap & robots.
-2. **FAQ section** (accordion): apa itu dot trick, kenapa aman, use case, batasan.
-3. **Edukasi singkat**: "How it works" collapsible di atas hasil.
-4. **Footer lead magnet halus**: kartu kecil "Made by <Brand> — lihat tools lain" (link ke landing/portofolio), tanpa popup.
-5. **Watermark di file ekspor** (sudah di Fase 2) sebagai growth loop pasif.
-6. **i18n ID/EN** sederhana berbasis dictionary + localStorage; menggandakan permukaan SEO.
-7. **Embed widget**: halaman `/embed` minimal untuk `<iframe>` dengan atribusi.
-
----
-
-## Struktur File (rencana)
-
-```text
-src/
-  routes/
-    __root.tsx          (update meta + font links)
-    index.tsx           (landing + generator)
-    embed.tsx           (fase 5)
-  components/
-    generator/
-      GeneratorCard.tsx
-      ResultsList.tsx
-      ResultRow.tsx
-      FilterPills.tsx
-      SearchBox.tsx
-      BulkActions.tsx
-      BatchMode.tsx        (fase 3)
-      ReverseLookup.tsx    (fase 3)
-      MobileActionBar.tsx  (fase 4)
-    layout/
-      SiteHeader.tsx
-      SiteFooter.tsx
-      ThemeToggle.tsx
-    seo/
-      Faq.tsx
-      HowItWorks.tsx
-  lib/
-    dot-variants.ts        (algoritma murni + tipe)
-    dot-variants.worker.ts (web worker wrapper)
-    download.ts            (txt/csv + watermark)
-    storage.ts             (localStorage helpers: history, favs, prefs)
-    i18n.ts                (fase 5)
-  styles.css               (token premium light/dark)
+```
+by @alfindigital  |  [globe] [facebook] [youtube] [tiktok] [x] [telegram]
 ```
 
-## Detail Teknis Singkat
+Implementasi `src/routes/index.tsx` footer:
+- Container: `border-t border-border/60`, inner `mx-auto max-w-3xl px-5 py-6 flex items-center justify-center gap-3 text-sm text-muted-foreground`.
+- Teks: `by` + link `@alfindigital` (bold, `text-foreground`, href `https://www.instagram.com/alfindigital`).
+- Separator vertikal `|` (`text-border`).
+- Row icon (`size-4`, `text-muted-foreground hover:text-accent transition`):
+  - Globe → `https://alfindigital.com`
+  - Facebook → `https://facebook.com/alfindigital`
+  - Youtube → `https://youtube.com/@alfindigital`
+  - Tiktok → `https://tiktok.com/@alfindigital`
+  - X (Twitter) → `https://x.com/alfindigital`
+  - Telegram (`Send` icon lucide) → `https://t.me/alfindigital`
+- Hapus dua baris footer lama ("100% lokal…" dan "DotMail · made with care").
 
-- Algoritma: untuk username dengan n karakter, posisi titik adalah subset dari (n‑1) gap → enumerasi via bitmask `0..(1<<(n-1))-1`.
-- Web Worker mengirim hasil dalam chunk (mis. 5.000 per pesan) agar UI tetap responsif dan bisa progresif di‑render.
-- Virtualisasi memastikan render hanya row yang terlihat, tanpa batas hard‑coded.
-- Semua state turunan (filter, search) dihitung dari array hasil di memori; tidak menyimpan duplikat besar di localStorage (cukup username & preferensi).
-- PWA: caching shell + asset statis; aplikasi tetap berjalan offline karena tidak butuh network.
+## File yang disentuh
+- `src/styles.css` — token accent merah Gmail (light + dark)
+- `src/routes/index.tsx` — header, hero copy, footer, mount ThemeToggle
+- `src/components/generator/GeneratorCard.tsx` — placeholder, label, icon, button styling
+- `src/components/layout/ThemeToggle.tsx` — baru
 
-## Yang TIDAK dikerjakan
+## Yang TIDAK berubah
+- Algoritma `dot-variants.ts`, `ResultsList.tsx` interaksi, struktur SEO meta, route tree.
 
-- Tidak ada backend, database, auth, atau cloud function.
-- Tidak ada iklan, popup, tracker pihak ketiga.
-- Tidak ada integrasi pembayaran (lead magnet hanya berupa link halus di footer).
-
----
-
-## Urutan Implementasi yang Disarankan
-
-1. Fase 1 dulu (1 batch) → app fungsional rapi.
-2. Setelah kamu coba, lanjut Fase 2 (worker + virtualisasi + export).
-3. Fase 3, 4, 5 sesuai prioritasmu (bisa dipilih per modul).
-
-Kalau setuju, aku mulai dari **Fase 1** begitu kamu klik Implement.
+Setelah approve, saya implement langsung tanpa pertanyaan lanjutan.

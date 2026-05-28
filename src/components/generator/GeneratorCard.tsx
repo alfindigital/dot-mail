@@ -2,7 +2,7 @@ import { useMemo, useState, type FormEvent } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { countVariants, validateUsername } from "@/lib/dot-variants";
-import { Sparkles } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 interface Props {
   onGenerate: (username: string) => void;
@@ -28,7 +28,7 @@ export function GeneratorCard({ onGenerate, isGenerating }: Props) {
     <form onSubmit={handleSubmit} className="w-full">
       <div className="rounded-2xl border border-border bg-card p-5 sm:p-7 shadow-sm">
         <label htmlFor="username" className="text-sm font-medium text-muted-foreground">
-          Username Gmail kamu
+          Alamat Gmail kamu
         </label>
         <div className="mt-3 flex flex-col sm:flex-row gap-3">
           <div className="flex-1 flex items-stretch rounded-xl border border-input bg-background focus-within:ring-2 focus-within:ring-ring focus-within:border-ring transition">
@@ -40,7 +40,7 @@ export function GeneratorCard({ onGenerate, isGenerating }: Props) {
               value={value}
               onChange={(e) => setValue(e.target.value.toLowerCase())}
               onBlur={() => setTouched(true)}
-              placeholder="contoh: alfinjulianto"
+              placeholder="contoh: satu"
               className="border-0 bg-transparent focus-visible:ring-0 text-base h-12 px-4"
             />
             <span className="hidden sm:flex items-center pr-4 text-muted-foreground font-mono text-sm select-none">
@@ -49,11 +49,12 @@ export function GeneratorCard({ onGenerate, isGenerating }: Props) {
           </div>
           <Button
             type="submit"
+            size="lg"
             disabled={!validation.valid || isGenerating}
-            className="h-12 px-6 rounded-xl bg-foreground text-background hover:bg-foreground/90"
+            className="h-12 px-6 rounded-xl"
           >
-            <Sparkles className="size-4" />
             {isGenerating ? "Membuat…" : "Generate"}
+            <ArrowRight className="size-4" />
           </Button>
         </div>
 
