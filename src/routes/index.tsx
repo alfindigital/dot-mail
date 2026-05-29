@@ -10,19 +10,22 @@ import { generateDotVariants } from "@/lib/dot-variants";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "DotMail — Gmail Dot Trick Generator" },
+      { title: "DotMail — Generator Variasi Titik Gmail" },
       {
         name: "description",
         content:
-          "Generate semua variasi titik (dot trick) untuk username Gmail kamu. Cepat, elegan, sepenuhnya berjalan di browser.",
+          "Hasilkan semua variasi titik (dot trick) alamat Gmail kamu secara instan. Gratis, privat, berjalan sepenuhnya di browser.",
       },
-      { property: "og:title", content: "DotMail — Gmail Dot Trick Generator" },
+      { name: "robots", content: "index, follow" },
+      { property: "og:title", content: "DotMail — Generator Variasi Titik Gmail" },
       {
         property: "og:description",
         content:
           "Tool gratis untuk menghasilkan seluruh kombinasi titik pada alamat Gmail. Privasi terjaga, tanpa server.",
       },
+      { property: "og:url", content: "https://dotmail.lovable.app/" },
     ],
+    links: [{ rel: "canonical", href: "https://dotmail.lovable.app/" }],
   }),
   component: Index,
 });
