@@ -97,6 +97,41 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: "https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap",
       },
     ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebSite",
+              "@id": "https://dotmail.lovable.app/#website",
+              url: "https://dotmail.lovable.app/",
+              name: "DotMail",
+              description:
+                "Generator variasi titik (dot trick) alamat Gmail. Gratis, privat, berjalan di browser.",
+              inLanguage: "id-ID",
+              potentialAction: {
+                "@type": "SearchAction",
+                target: {
+                  "@type": "EntryPoint",
+                  urlTemplate: "https://dotmail.lovable.app/?u={search_term_string}",
+                },
+                "query-input": "required name=search_term_string",
+              },
+            },
+            {
+              "@type": "WebApplication",
+              name: "DotMail",
+              url: "https://dotmail.lovable.app/",
+              applicationCategory: "UtilitiesApplication",
+              operatingSystem: "Any",
+              offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+            },
+          ],
+        }),
+      },
+    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,
