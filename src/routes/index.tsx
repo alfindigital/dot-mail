@@ -34,6 +34,49 @@ export const Route = createFileRoute("/")({
       { property: "og:url", content: "https://dotmail.lovable.app/" },
     ],
     links: [{ rel: "canonical", href: "https://dotmail.lovable.app/" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: [
+            {
+              "@type": "Question",
+              name: "Apakah dot trick legal?",
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: "Ya. Ini fitur resmi Gmail — Google mengabaikan titik di bagian username, jadi semua variasi diarahkan ke inbox yang sama. Bukan eksploit, bukan hack.",
+              },
+            },
+            {
+              "@type": "Question",
+              name: "Apakah Gmail bisa memblokir akun saya?",
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: "Selama pemakaian wajar (mendaftar layanan, memfilter email), tidak ada masalah. Penyalahgunaan untuk spam atau pendaftaran massal yang melanggar ToS layanan lain tentu berisiko di sisi layanan tersebut, bukan di Gmail.",
+              },
+            },
+            {
+              "@type": "Question",
+              name: "Apakah data saya disimpan?",
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: "Tidak. Semua perhitungan berjalan sepenuhnya di browser kamu. Tidak ada server, tidak ada database, tidak ada tracking input.",
+              },
+            },
+            {
+              "@type": "Question",
+              name: "Untuk apa biasanya digunakan?",
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: "Filter email per layanan, mendeteksi siapa yang membocorkan email kamu (mis. dengan alamat unik per pendaftaran), dan mengelola banyak akun dari satu inbox.",
+              },
+            },
+          ],
+        }),
+      },
+    ],
   }),
   component: Index,
 });
