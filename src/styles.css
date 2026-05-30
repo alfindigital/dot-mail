@@ -163,3 +163,15 @@
     letter-spacing: -0.01em;
   }
 }
+
+@keyframes dot-stagger-in {
+  0% { opacity: 0; transform: translateY(-2px) scale(0.6); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.dot-stagger {
+  display: inline-block;
+  opacity: 0;
+  animation: dot-stagger-in 280ms ease-out forwards;
+  animation-delay: var(--dot-delay, 0ms);
+}
