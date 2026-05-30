@@ -1,20 +1,62 @@
-import { useMemo, useState, type FormEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { countVariants, validateUsername } from "@/lib/dot-variants";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ShieldCheck, X } from "lucide-react";
+import { getRecent, removeRecent } from "@/lib/recent-usernames";
 
 interface Props {
   onGenerate: (username: string) => void;
   isGenerating?: boolean;
+  externalValue?: string;
+  recentVersion?: number;
 }
 
-export function GeneratorCard({ onGenerate, isGenerating }: Props) {
+function useCountUp(target: number, duration = 400) {
+  const [value, setValue] = useState(target);
+  const fromRef = useRef(target);
+  const rafRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    const from = fromRef.current;
+    const to = target;
+    if (from === to) return;
+    const start = performance.now();
+    const tick = (now: number) => {
+      const t = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - t, 3);
+      const current = Math.round(from + (to - from) * eased);
+      setValue(current);
+      if (t < 1) rafRef.current = requestAnimationFrame(tick);
+      else fromRef.current = to;
+    };
+    rafRef.current = requestAnimationFrame(tick);
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      fromRef.current = to;
+    };
+  }, [target, duration]);
+
+  return value;
+}
+
+export function GeneratorCard({ onGenerate, isGenerating, externalValue, recentVersion }: Props) {
   const [value, setValue] = useState("");
   const [touched, setTouched] = useState(false);
+  const [recent, setRecent] = useState<string[]>([]);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    setRecent(getRecent());
+  }, [recentVersion]);
+
+  useEffect(() => {
+    if (externalValue !== undefined) setValue(externalValue);
+  }, [externalValue]);
 
   const validation = useMemo(() => validateUsername(value), [value]);
   const total = validation.valid ? countVariants(validation.username) : 0;
+  const animatedTotal = useCountUp(total);
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -25,15 +67,23 @@ export function GeneratorCard({ onGenerate, isGenerating }: Props) {
   const showError = touched && !validation.valid && value.length > 0;
 
   return (
-    <form onSubmit={handleSubmit} className="w-full">
+    <form onSubmit={handleSubmit} className="w-full" data-generator-form>
       <div className="rounded-2xl border border-border bg-card p-5 sm:p-7 shadow-sm">
-        <label htmlFor="username" className="text-sm font-medium text-muted-foreground">
-          Alamat Gmail kamu
-        </label>
-        <div className="mt-3 flex flex-col sm:flex-row gap-3">
+        <div className="flex items-center justify-between gap-3 mb-3">
+          <label htmlFor="username" className="text-sm font-medium text-muted-foreground">
+            Alamat Gmail kamu
+          </label>
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-muted px-2.5 py-1 text-[11px] font-medium text-muted-foreground">
+            <ShieldCheck className="size-3.5" />
+            100% di browser
+          </span>
+        </div>
+        <div className="flex flex-col sm:flex-row gap-3">
           <div className="flex-1 flex items-stretch rounded-xl border border-input bg-background focus-within:ring-2 focus-within:ring-ring focus-within:border-ring transition">
             <Input
               id="username"
+              ref={inputRef}
+              data-username-input
               autoComplete="off"
               autoCapitalize="off"
               spellCheck={false}
@@ -64,17 +114,50 @@ export function GeneratorCard({ onGenerate, isGenerating }: Props) {
           ) : validation.valid ? (
             <span className="text-muted-foreground">
               {validation.username.length} karakter ·{" "}
-              <span className="text-foreground font-medium">
-                {total.toLocaleString("id-ID")}
+              <span className="text-foreground font-medium tabular-nums">
+                {animatedTotal.toLocaleString("id-ID")}
               </span>{" "}
               kombinasi
             </span>
           ) : (
             <span className="text-muted-foreground">
-              Tanpa <span className="font-mono">@gmail.com</span>, hanya huruf & angka.
+              Tanpa <span className="font-mono">@gmail.com</span> — kami menambahkannya otomatis.
             </span>
           )}
         </div>
+
+        {recent.length > 0 && (
+          <div className="mt-4 pt-4 border-t border-border/60">
+            <p className="text-xs text-muted-foreground mb-2">Username terakhir</p>
+            <div className="flex flex-wrap gap-2">
+              {recent.map((u) => (
+                <span
+                  key={u}
+                  className="group/chip inline-flex items-center gap-1 rounded-full border border-border bg-background pl-3 pr-1 py-1 text-xs font-mono hover:border-accent transition"
+                >
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setValue(u);
+                      onGenerate(u);
+                    }}
+                    className="hover:text-accent transition"
+                  >
+                    {u}
+                  </button>
+                  <button
+                    type="button"
+                    aria-label={`Hapus ${u}`}
+                    onClick={() => setRecent(removeRecent(u))}
+                    className="ml-0.5 rounded-full p-0.5 text-muted-foreground hover:text-foreground hover:bg-muted transition"
+                  >
+                    <X className="size-3" />
+                  </button>
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </form>
   );
