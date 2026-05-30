@@ -1,82 +1,72 @@
-# Plan — Polish DotMail (Fase 1.5)
+# UI/UX Improvements for DotMail
 
-Sepuluh perubahan terarah, semuanya di frontend/presentation. Tidak ada perubahan algoritma atau struktur data.
+Scope: frontend-only changes to `GeneratorCard`, `ResultsList`, and `routes/index.tsx`. No backend, no schema, no new routes. Skipping #20 (dynamic OG image) — it needs server-side image generation, out of scope here.
 
-## 1. Contoh username generik
-- `src/routes/index.tsx` hero copy: ganti contoh `a.lfin / al.fin / alfin` → `s.atu / sa.tu / sat.u / satu`.
-- `src/components/generator/GeneratorCard.tsx` placeholder `contoh: alfinjulianto` → `contoh: satu`.
+## What gets built
 
-## 2. Hapus eyebrow "Gmail dot trick generator"
-- Hilangkan `<p class="uppercase tracking …">Gmail dot trick generator</p>` di hero.
+### 1. Multi-select + bulk copy (ResultsList)
+- Add a checkbox column on each row.
+- Header gets a "Pilih semua di halaman" master checkbox + a "Salin terpilih (N)" button that only appears when N > 0.
+- Selection state stored in a `Set<number>` keyed by variant index. Resets when `username` changes.
 
-## 3. Warna brand → merah Gmail
-Di `src/styles.css`, ganti accent brass jadi merah Gmail (`#EA4335` ≈ `oklch(0.62 0.22 27)`), termasuk:
-- `--accent`, `--ring`, `--chart-1` (light + dark)
-- Dot logo di header pakai token `bg-accent` (sudah otomatis ikut)
-- Italic "Ratusan" di hero pakai `text-accent` (sudah otomatis ikut)
+### 2. Download .txt / .csv (ResultsList header)
+- Two buttons next to "Salin semua": **Unduh .txt** and **Unduh .csv**.
+- `.txt`: one email per line. `.csv`: header `email,dots` + rows. File name: `dotmail-<username>.txt|csv`.
+- Trigger via Blob + `URL.createObjectURL` + temporary `<a download>`.
 
-## 4. Logo DotMail merah Gmail
-- Header: dot bulat (`size-2.5`) tetap, jadikan logomark: lingkaran kecil merah + wordmark `DotMail` di font yang sama dengan hero (lihat #8). Wordmark pakai `text-foreground`, titik merah pakai `bg-accent`.
+### 3. Toast feedback per copy item (ResultsList)
+- `CopyButton` already shows a check icon; also fire `toast.success("Disalin")` so feedback matches "Salin semua".
 
-## 5. Hapus badge versi / local-only di header
-- Buang `v0.1 · local-only` di header kanan.
+### 6. Recent usernames (GeneratorCard)
+- Persist last 5 valid usernames to `localStorage` key `dotmail:recent`.
+- Render as small chips under the input. Click chip → fill input + auto-submit. Include a small "×" per chip to remove.
 
-## 6. Toggle dark / light di pojok kanan atas
-- Komponen baru `src/components/layout/ThemeToggle.tsx`:
-  - State default = `prefers-color-scheme`.
-  - Persist ke `localStorage` (`dotmail-theme`).
-  - Toggle class `.dark` pada `<html>`.
-  - Icon `Sun` / `Moon` dari lucide, tombol `ghost` ukuran `icon`, rounded-full.
-- Slot di header kanan, menggantikan badge versi.
+### 7. Keyboard shortcuts (index.tsx)
+- Global listener: `/` focuses the username input (ignored when already typing in input/textarea).
+- `Cmd/Ctrl+A` while results are visible AND focus is outside an input → copy all (preventDefault).
 
-## 7. Hapus kalimat "Buat semua variasinya sekaligus."
-- Potong kalimat tersebut di hero subcopy.
+### 9. Animated count-up (GeneratorCard)
+- Replace the static combination number with a count-up animation (~400ms ease-out) using `requestAnimationFrame`. Animates from previous value to new value whenever `total` changes.
 
-## 8. Rephrase label input
-- `Username Gmail kamu` → `Alamat Gmail kamu` (lebih natural; kita sudah render suffix `@gmail.com` jadi nuansanya alamat, bukan username).
+### 10. "Bagaimana cara pakai?" section (index.tsx)
+- 3-step row below generator (only shown when no results yet, to avoid pushing results down):
+  1. Ketik username Gmail
+  2. Klik Generate
+  3. Salin & gunakan
+- Each step: lucide icon in a rounded square + short label + 1-line description.
 
-## 9. Ganti icon Generate
-- `Sparkles` → `ArrowRight` (lucide). To-the-point, bukan icon AI/magic cliché. Posisi icon di kanan teks.
+### 11. FAQ accordion (index.tsx)
+- Use existing `@/components/ui/accordion`. Placed near the bottom of `<main>`.
+- 4 items: legality, Gmail blocking, data privacy, use cases. Static copy in Indonesian.
+- Good for SEO — rendered as real DOM, includes `<h2>` heading.
 
-## 10. Konsistensi tipografi & komponen
-- **Header semua pakai `font-serif`** (Instrument Serif):
-  - `h1` hero ✓ (sudah)
-  - `h2` "N variasi" ✓ (sudah)
-  - Wordmark `DotMail` → tambahkan `font-serif` (saat ini default sans, hanya `tracking-tight`)
-- **Body text** semua pakai default `font-sans` Inter (sudah konsisten).
-- **Button**: pakai varian shadcn standar (jangan override warna manual).
-  - Generate: `<Button>` default (otomatis `bg-primary text-primary-foreground`) — buang `bg-foreground text-background hover:bg-foreground/90`.
-  - Salin semua: `<Button variant="outline">` ✓ (sudah).
-  - Tampilkan-lagi: `<Button variant="ghost">` ✓ (sudah).
-  - Semua tombol pakai `rounded-xl h-10` atau ukuran default; samakan jadi `size="lg"` untuk Generate + Salin semua agar visual seimbang.
+### 12. Privacy badge (GeneratorCard)
+- Small pill above the input: shield icon + "100% di browser — tidak ada data dikirim". Muted styling, not loud.
 
-## 11. Footer disalin persis dari drawdowncal.lovable.app
-Markup target (Indonesia, satu baris, center di mobile):
+### 14. Highlight dot stagger animation (ResultsList)
+- When results first render (and on new generation), each row's dots fade-in with a small staggered delay. Implement with a CSS keyframe + `animation-delay: calc(var(--i) * 8ms)` capped at ~400ms total so long lists don't lag. Only animate the first page (200 rows).
 
-```
-by @alfindigital  |  [globe] [facebook] [youtube] [tiktok] [x] [telegram]
-```
+### 15. Sticky results header (ResultsList)
+- Wrap the header (`Salin semua`, multi-select bar, download buttons) in a `sticky top-0 z-10 bg-background/80 backdrop-blur` container so it stays visible on scroll.
 
-Implementasi `src/routes/index.tsx` footer:
-- Container: `border-t border-border/60`, inner `mx-auto max-w-3xl px-5 py-6 flex items-center justify-center gap-3 text-sm text-muted-foreground`.
-- Teks: `by` + link `@alfindigital` (bold, `text-foreground`, href `https://www.instagram.com/alfindigital`).
-- Separator vertikal `|` (`text-border`).
-- Row icon (`size-4`, `text-muted-foreground hover:text-accent transition`):
-  - Globe → `https://alfindigital.com`
-  - Facebook → `https://facebook.com/alfindigital`
-  - Youtube → `https://youtube.com/@alfindigital`
-  - Tiktok → `https://tiktok.com/@alfindigital`
-  - X (Twitter) → `https://x.com/alfindigital`
-  - Telegram (`Send` icon lucide) → `https://t.me/alfindigital`
-- Hapus dua baris footer lama ("100% lokal…" dan "DotMail · made with care").
+### 16. Mobile @gmail.com helper (GeneratorCard)
+- Keep the inline suffix hidden on mobile (avoids layout cramping), but add a helper line under the input: "Tanpa @gmail.com — kami menambahkannya otomatis." Visible on all sizes; replaces the current placeholder hint when the field is empty.
 
-## File yang disentuh
-- `src/styles.css` — token accent merah Gmail (light + dark)
-- `src/routes/index.tsx` — header, hero copy, footer, mount ThemeToggle
-- `src/components/generator/GeneratorCard.tsx` — placeholder, label, icon, button styling
-- `src/components/layout/ThemeToggle.tsx` — baru
+## Files touched
 
-## Yang TIDAK berubah
-- Algoritma `dot-variants.ts`, `ResultsList.tsx` interaksi, struktur SEO meta, route tree.
+- `src/components/generator/GeneratorCard.tsx` — privacy badge, recent chips, animated counter, updated helper text.
+- `src/components/generator/ResultsList.tsx` — checkboxes, bulk copy, download buttons, per-item toast, sticky header, stagger animation.
+- `src/routes/index.tsx` — keyboard shortcuts, "Bagaimana cara pakai?" section, FAQ accordion, wire `recent` callback.
+- `src/styles.css` — add `@keyframes dot-stagger-in` utility class.
+- New small util: `src/lib/recent-usernames.ts` for localStorage get/add/remove (keeps component clean).
 
-Setelah approve, saya implement langsung tanpa pertanyaan lanjutan.
+## Out of scope
+
+- #20 OG image dinamis (needs server-side image generation route — separate task if you want it).
+- Sort/filter/search on results, empty-state illustration, share button, focus-ring/aria-live polish — not in this batch (you can request them next).
+
+## Notes
+
+- All copy in Indonesian to match existing tone.
+- No changes to `dot-variants.ts` logic.
+- No new dependencies.
