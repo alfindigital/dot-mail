@@ -32,6 +32,22 @@ function extractJsonLdBlocks(html) {
   return out;
 }
 
+function inferName(item) {
+  if (!item || typeof item !== "object") return "(unknown)";
+  if (item["@graph"] && Array.isArray(item["@graph"])) {
+    const types = item["@graph"]
+      .map((n) => n?.["@type"])
+      .filter(Boolean)
+      .join(", ");
+    return `@graph → ${types || "(unknown)"}`;
+  }
+  if (Array.isArray(item)) {
+    const types = item.map((n) => n?.["@type"]).filter(Boolean).join(", ");
+    return `[array] → ${types || "(unknown)"}`;
+  }
+  return item["@type"] || item.name || "(unknown)";
+}
+
 async function validateUrl(url) {
   const res = await fetch(url, {
     headers: { "user-agent": "lovable-jsonld-validator/1.0" },
@@ -43,53 +59,101 @@ async function validateUrl(url) {
     throw new Error("no JSON-LD blocks found");
   }
 
+  const summaries = [];
   const errors = [];
   blocks.forEach((raw, i) => {
+    const idx = i + 1;
     try {
       const parsed = JSON.parse(raw);
       const items = Array.isArray(parsed) ? parsed : [parsed];
       for (const item of items) {
         if (!item || typeof item !== "object") {
-          errors.push(`block #${i + 1}: not an object`);
+          summaries.push({ idx, name: "(invalid)", status: "FAIL" });
+          errors.push(`block #${idx}: not an object`);
           continue;
         }
         if (!item["@context"]) {
-          errors.push(`block #${i + 1}: missing @context`);
+          summaries.push({ idx, name: inferName(item), status: "FAIL" });
+          errors.push(`block #${idx}: missing @context`);
+          continue;
         }
         if (!item["@type"] && !item["@graph"]) {
-          errors.push(`block #${i + 1}: missing @type or @graph`);
+          summaries.push({ idx, name: inferName(item), status: "FAIL" });
+          errors.push(`block #${idx}: missing @type or @graph`);
+          continue;
         }
+        summaries.push({ idx, name: inferName(item), status: "OK" });
       }
     } catch (e) {
-      errors.push(`block #${i + 1}: invalid JSON — ${e.message}`);
+      summaries.push({ idx, name: "(invalid JSON)", status: "FAIL" });
+      errors.push(`block #${idx}: invalid JSON — ${e.message}`);
     }
   });
 
-  return { url, count: blocks.length, errors };
+  return { url, count: blocks.length, summaries, errors };
+}
+
+function printSummary(result) {
+  const { url, count, summaries, errors } = result;
+  const okCount = summaries.filter((s) => s.status === "OK").length;
+  const failCount = summaries.filter((s) => s.status === "FAIL").length;
+
+  console.log(`\n  ╔══════════════════════════════════════════════════════╗`);
+  console.log(`  ║  JSON-LD Validation Summary                          ║`);
+  console.log(`  ╠══════════════════════════════════════════════════════╣`);
+  console.log(`  ║  URL:     ${url.slice(0, 48).padEnd(48)} ║`);
+  console.log(`  ║  Blocks:  ${String(count).padEnd(48)} ║`);
+  console.log(`  ║  Valid:   ${String(okCount).padEnd(48)} ║`);
+  console.log(`  ║  Invalid: ${String(failCount).padEnd(48)} ║`);
+  console.log(`  ╠══════════════════════════════════════════════════════╣`);
+
+  if (summaries.length) {
+    console.log(`  ║  #   Status  Name                                   ║`);
+    console.log(`  ╠══════════════════════════════════════════════════════╣`);
+    for (const s of summaries) {
+      const status = s.status === "OK" ? "✓ OK   " : "✗ FAIL ";
+      const name = s.name.slice(0, 38).padEnd(38);
+      console.log(`  ║  ${String(s.idx).padEnd(3)} ${status} ${name} ║`);
+    }
+  }
+
+  if (errors.length) {
+    console.log(`  ╠══════════════════════════════════════════════════════╣`);
+    console.log(`  ║  Errors:                                             ║`);
+    for (const e of errors) {
+      const line = `  • ${e}`.slice(0, 50).padEnd(50);
+      console.log(`  ║  ${line} ║`);
+    }
+  }
+  console.log(`  ╚══════════════════════════════════════════════════════╝`);
 }
 
 const urls = urlsFromArgs();
 let failed = false;
+const results = [];
 
 for (const url of urls) {
-  process.stdout.write(`→ ${url}\n`);
+  console.log(`\n→ ${url}`);
   try {
-    const { count, errors } = await validateUrl(url);
-    if (errors.length) {
-      failed = true;
-      console.error(`  ✗ ${count} block(s), ${errors.length} error(s):`);
-      for (const e of errors) console.error(`    - ${e}`);
-    } else {
-      console.log(`  ✓ ${count} JSON-LD block(s) valid`);
-    }
+    const result = await validateUrl(url);
+    results.push(result);
+    printSummary(result);
+    if (result.errors.length) failed = true;
   } catch (e) {
     failed = true;
     console.error(`  ✗ ${e.message}`);
+    results.push({ url, count: 0, summaries: [], errors: [e.message] });
   }
 }
 
+const totalBlocks = results.reduce((a, r) => a + r.count, 0);
+const totalErrors = results.reduce((a, r) => a + r.errors.length, 0);
+
+console.log(`\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
+console.log(`Grand total: ${totalBlocks} block(s) across ${urls.length} URL(s), ${totalErrors} error(s).`);
+
 if (failed) {
-  console.error("\nJSON-LD validation failed.");
+  console.error(`\nJSON-LD validation FAILED.`);
   process.exit(1);
 }
-console.log("\nAll JSON-LD blocks valid.");
+console.log(`\nAll JSON-LD blocks valid.`);
