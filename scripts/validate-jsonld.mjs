@@ -7,20 +7,36 @@
  *   node scripts/validate-jsonld.mjs [url1] [url2] ...
  *   JSONLD_URLS="https://a.com,https://b.com/page" node scripts/validate-jsonld.mjs
  *
+ * Export machine-readable report (great for CI artifacts):
+ *   node scripts/validate-jsonld.mjs --out=report.json https://site.com/
+ *   JSONLD_OUT=report.json node scripts/validate-jsonld.mjs
+ *
  * Defaults to https://dotmail.lovable.app/ when no URLs are provided.
  */
 
+import { writeFileSync, mkdirSync } from "node:fs";
+import { dirname, resolve } from "node:path";
+
 const DEFAULT_URLS = ["https://dotmail.lovable.app/"];
 
-function urlsFromArgs() {
+function parseArgs() {
   const cli = process.argv.slice(2).filter(Boolean);
-  if (cli.length) return cli;
-  const env = (process.env.JSONLD_URLS || "")
-    .split(",")
-    .map((s) => s.trim())
-    .filter(Boolean);
-  if (env.length) return env;
-  return DEFAULT_URLS;
+  let out = process.env.JSONLD_OUT || "";
+  const urls = [];
+  for (const a of cli) {
+    if (a.startsWith("--out=")) out = a.slice("--out=".length);
+    else if (a === "--out") out = "__NEXT__";
+    else if (out === "__NEXT__") out = a;
+    else urls.push(a);
+  }
+  if (!urls.length) {
+    const env = (process.env.JSONLD_URLS || "")
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean);
+    if (env.length) urls.push(...env);
+  }
+  return { urls: urls.length ? urls : DEFAULT_URLS, out };
 }
 
 function extractJsonLdBlocks(html) {
@@ -48,6 +64,24 @@ function inferName(item) {
   return item["@type"] || item.name || "(unknown)";
 }
 
+function collectTypes(parsed) {
+  const items = Array.isArray(parsed) ? parsed : [parsed];
+  const types = [];
+  for (const item of items) {
+    if (!item || typeof item !== "object") continue;
+    if (item["@type"]) types.push(item["@type"]);
+    if (Array.isArray(item["@graph"])) {
+      for (const n of item["@graph"]) if (n?.["@type"]) types.push(n["@type"]);
+    }
+  }
+  return types;
+}
+
+function snippet(raw, max = 240) {
+  const clean = raw.replace(/\s+/g, " ").trim();
+  return clean.length > max ? clean.slice(0, max) + "…" : clean;
+}
+
 async function validateUrl(url) {
   const res = await fetch(url, {
     headers: { "user-agent": "lovable-jsonld-validator/1.0" },
@@ -55,42 +89,54 @@ async function validateUrl(url) {
   if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText}`);
   const html = await res.text();
   const blocks = extractJsonLdBlocks(html);
-  if (blocks.length === 0) {
-    throw new Error("no JSON-LD blocks found");
-  }
+  if (blocks.length === 0) throw new Error("no JSON-LD blocks found");
 
   const summaries = [];
+  const scripts = [];
   const errors = [];
+
   blocks.forEach((raw, i) => {
     const idx = i + 1;
+    const entry = {
+      index: idx,
+      status: "OK",
+      parseOk: false,
+      name: "(unknown)",
+      types: [],
+      bytes: raw.length,
+      rawSnippet: snippet(raw),
+      raw,
+      errors: [],
+    };
     try {
       const parsed = JSON.parse(raw);
+      entry.parseOk = true;
+      entry.types = collectTypes(parsed);
+      entry.name = inferName(Array.isArray(parsed) ? parsed[0] : parsed);
+
       const items = Array.isArray(parsed) ? parsed : [parsed];
       for (const item of items) {
         if (!item || typeof item !== "object") {
-          summaries.push({ idx, name: "(invalid)", status: "FAIL" });
-          errors.push(`block #${idx}: not an object`);
-          continue;
+          entry.errors.push("not an object");
+        } else {
+          if (!item["@context"]) entry.errors.push("missing @context");
+          if (!item["@type"] && !item["@graph"])
+            entry.errors.push("missing @type or @graph");
         }
-        if (!item["@context"]) {
-          summaries.push({ idx, name: inferName(item), status: "FAIL" });
-          errors.push(`block #${idx}: missing @context`);
-          continue;
-        }
-        if (!item["@type"] && !item["@graph"]) {
-          summaries.push({ idx, name: inferName(item), status: "FAIL" });
-          errors.push(`block #${idx}: missing @type or @graph`);
-          continue;
-        }
-        summaries.push({ idx, name: inferName(item), status: "OK" });
       }
     } catch (e) {
-      summaries.push({ idx, name: "(invalid JSON)", status: "FAIL" });
-      errors.push(`block #${idx}: invalid JSON — ${e.message}`);
+      entry.errors.push(`invalid JSON — ${e.message}`);
+      entry.name = "(invalid JSON)";
     }
+
+    if (entry.errors.length) entry.status = "FAIL";
+
+    scripts.push(entry);
+    summaries.push({ idx, name: entry.name, status: entry.status });
+    for (const err of entry.errors) errors.push(`block #${idx}: ${err}`);
   });
 
-  return { url, count: blocks.length, summaries, errors };
+  return { url, count: blocks.length, summaries, scripts, errors };
 }
 
 function printSummary(result) {
@@ -128,7 +174,7 @@ function printSummary(result) {
   console.log(`  ╚══════════════════════════════════════════════════════╝`);
 }
 
-const urls = urlsFromArgs();
+const { urls, out } = parseArgs();
 let failed = false;
 const results = [];
 
@@ -142,7 +188,14 @@ for (const url of urls) {
   } catch (e) {
     failed = true;
     console.error(`  ✗ ${e.message}`);
-    results.push({ url, count: 0, summaries: [], errors: [e.message] });
+    results.push({
+      url,
+      count: 0,
+      summaries: [],
+      scripts: [],
+      errors: [e.message],
+      fetchError: e.message,
+    });
   }
 }
 
@@ -150,7 +203,27 @@ const totalBlocks = results.reduce((a, r) => a + r.count, 0);
 const totalErrors = results.reduce((a, r) => a + r.errors.length, 0);
 
 console.log(`\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
-console.log(`Grand total: ${totalBlocks} block(s) across ${urls.length} URL(s), ${totalErrors} error(s).`);
+console.log(
+  `Grand total: ${totalBlocks} block(s) across ${urls.length} URL(s), ${totalErrors} error(s).`,
+);
+
+if (out) {
+  const report = {
+    generatedAt: new Date().toISOString(),
+    tool: "lovable-jsonld-validator/1.0",
+    status: failed ? "fail" : "pass",
+    totals: {
+      urls: urls.length,
+      blocks: totalBlocks,
+      errors: totalErrors,
+    },
+    results,
+  };
+  const outPath = resolve(process.cwd(), out);
+  mkdirSync(dirname(outPath), { recursive: true });
+  writeFileSync(outPath, JSON.stringify(report, null, 2), "utf8");
+  console.log(`Report written to ${outPath}`);
+}
 
 if (failed) {
   console.error(`\nJSON-LD validation FAILED.`);
