@@ -107,11 +107,7 @@ export function GeneratorCard({ onGenerate, isGenerating, externalValue }: Props
               </span>{" "}
               kombinasi
             </span>
-          ) : (
-            <span className="text-muted-foreground">
-              Tanpa <span className="font-mono">@gmail.com</span> — kami menambahkannya otomatis.
-            </span>
-          )}
+          ) : null}
         </div>
       </div>
     </form>
