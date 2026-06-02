@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { countVariants, validateUsername } from "@/lib/dot-variants";
-import { ArrowRight, ShieldCheck } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 interface Props {
   onGenerate: (username: string) => void;
@@ -63,15 +63,9 @@ export function GeneratorCard({ onGenerate, isGenerating, externalValue }: Props
   return (
     <form onSubmit={handleSubmit} className="w-full" data-generator-form>
       <div className="rounded-2xl border border-border bg-card p-5 sm:p-7 shadow-sm">
-        <div className="flex items-center justify-between gap-3 mb-3">
-          <label htmlFor="username" className="text-sm font-medium text-muted-foreground">
-            Alamat Gmail kamu
-          </label>
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-muted px-2.5 py-1 text-[11px] font-medium text-muted-foreground">
-            <ShieldCheck className="size-3.5" />
-            100% di browser
-          </span>
-        </div>
+        <label htmlFor="username" className="sr-only">
+          Alamat Gmail kamu
+        </label>
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="flex-1 flex items-stretch rounded-xl border border-input bg-background focus-within:ring-2 focus-within:ring-ring focus-within:border-ring transition">
             <Input
@@ -113,11 +107,7 @@ export function GeneratorCard({ onGenerate, isGenerating, externalValue }: Props
               </span>{" "}
               kombinasi
             </span>
-          ) : (
-            <span className="text-muted-foreground">
-              Tanpa <span className="font-mono">@gmail.com</span> — kami menambahkannya otomatis.
-            </span>
-          )}
+          ) : null}
         </div>
       </div>
     </form>

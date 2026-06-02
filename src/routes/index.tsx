@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Globe, Facebook, Youtube, Send, Keyboard, MousePointerClick, ClipboardCopy } from "lucide-react";
+import { Globe, Facebook, Youtube, Send } from "lucide-react";
 import { Toaster } from "@/components/ui/sonner";
 import {
   Accordion,
@@ -155,21 +155,9 @@ function Index() {
   ];
 
   const steps = [
-    {
-      Icon: Keyboard,
-      title: "1. Ketik username",
-      desc: "Masukkan bagian sebelum @gmail.com — minimal 2 karakter.",
-    },
-    {
-      Icon: MousePointerClick,
-      title: "2. Generate",
-      desc: "DotMail menghitung semua kombinasi titik secara instan di browser.",
-    },
-    {
-      Icon: ClipboardCopy,
-      title: "3. Salin & pakai",
-      desc: "Pilih per baris, salin terpilih, salin semua, atau unduh .txt/.csv.",
-    },
+    { title: "1. Ketik username", desc: "Bagian sebelum @gmail.com." },
+    { title: "2. Generate", desc: "Semua kombinasi titik instan." },
+    { title: "3. Salin & pakai", desc: "Salin atau unduh .txt/.csv." },
   ];
 
   const faqs = [
@@ -234,17 +222,14 @@ function Index() {
             <h2 className="font-serif text-2xl sm:text-3xl text-foreground text-center mb-6">
               Bagaimana cara pakai?
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              {steps.map(({ Icon, title, desc }) => (
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {steps.map(({ title, desc }) => (
                 <div
                   key={title}
-                  className="rounded-2xl border border-border bg-card p-5 flex flex-col gap-3"
+                  className="rounded-xl border border-border bg-card px-4 py-3"
                 >
-                  <span className="inline-flex items-center justify-center size-10 rounded-xl bg-accent/10 text-accent">
-                    <Icon className="size-5" />
-                  </span>
-                  <h3 className="font-serif text-lg text-foreground">{title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
+                  <h3 className="font-serif text-base text-foreground">{title}</h3>
+                  <p className="text-sm text-muted-foreground leading-snug mt-0.5">{desc}</p>
                 </div>
               ))}
             </div>
