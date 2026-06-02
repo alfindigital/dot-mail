@@ -49,7 +49,7 @@ function CopyButton({ text }: { text: string }) {
         toast.success("Disalin", { duration: 1200 });
         setTimeout(() => setCopied(false), 1200);
       }}
-      className="opacity-0 group-hover:opacity-100 focus:opacity-100 transition rounded-md p-1.5 hover:bg-muted text-muted-foreground"
+      className="sm:opacity-0 sm:group-hover:opacity-100 focus:opacity-100 transition rounded-md p-1.5 hover:bg-muted text-muted-foreground shrink-0"
     >
       {copied ? <Check className="size-4 text-accent" /> : <Copy className="size-4" />}
     </button>
