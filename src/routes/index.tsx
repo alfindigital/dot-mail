@@ -11,6 +11,7 @@ import {
 import { GeneratorCard } from "@/components/generator/GeneratorCard";
 import { ResultsList } from "@/components/generator/ResultsList";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
+import { HistoryButton } from "@/components/layout/HistoryButton";
 import { generateDotVariants } from "@/lib/dot-variants";
 import { addRecent } from "@/lib/recent-usernames";
 import { toast } from "sonner";
