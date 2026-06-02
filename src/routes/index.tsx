@@ -225,7 +225,6 @@ function Index() {
         <GeneratorCard
           onGenerate={handleGenerate}
           externalValue={externalValue}
-          recentVersion={recentVersion}
         />
 
         {variants.length > 0 ? (
