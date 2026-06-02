@@ -75,13 +75,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "DotMail" },
       { property: "og:locale", content: "id_ID" },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/c918d94b-9049-4ed8-8db4-05a7d310337f/id-preview-724bb462--3736bd3f-707b-480b-b4ef-edcf589bc154.lovable.app-1779972617720.png" },
-      { property: "og:image:width", content: "1200" },
-      { property: "og:image:height", content: "630" },
-      { property: "og:image:alt", content: "DotMail — Gmail Dot Trick Generator" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/c918d94b-9049-4ed8-8db4-05a7d310337f/id-preview-724bb462--3736bd3f-707b-480b-b4ef-edcf589bc154.lovable.app-1779972617720.png" },
-      { name: "twitter:image:alt", content: "DotMail — Gmail Dot Trick Generator" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },

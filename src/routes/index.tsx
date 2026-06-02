@@ -33,6 +33,19 @@ export const Route = createFileRoute("/")({
           "Tool gratis untuk menghasilkan seluruh kombinasi titik pada alamat Gmail. Privasi terjaga, tanpa server.",
       },
       { property: "og:url", content: "https://dotmail.lovable.app/" },
+      { property: "og:image", content: "https://dotmail.lovable.app/og-image.png" },
+      { property: "og:image:width", content: "1216" },
+      { property: "og:image:height", content: "640" },
+      { property: "og:image:type", content: "image/png" },
+      { property: "og:image:alt", content: "DotMail — Generator Variasi Titik Gmail" },
+      { name: "twitter:title", content: "DotMail — Generator Variasi Titik Gmail" },
+      {
+        name: "twitter:description",
+        content:
+          "Tool gratis untuk menghasilkan seluruh kombinasi titik pada alamat Gmail. Privasi terjaga, tanpa server.",
+      },
+      { name: "twitter:image", content: "https://dotmail.lovable.app/og-image.png" },
+      { name: "twitter:image:alt", content: "DotMail — Generator Variasi Titik Gmail" },
     ],
     links: [{ rel: "canonical", href: "https://dotmail.lovable.app/" }],
     scripts: [
