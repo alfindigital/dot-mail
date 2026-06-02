@@ -8,7 +8,7 @@ interface Props {
   onGenerate: (username: string) => void;
   isGenerating?: boolean;
   externalValue?: string;
-  recentVersion?: number;
+  
 }
 
 function useCountUp(target: number, duration = 400) {
