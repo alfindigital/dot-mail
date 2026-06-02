@@ -119,39 +119,6 @@ export function GeneratorCard({ onGenerate, isGenerating, externalValue }: Props
             </span>
           )}
         </div>
-
-        {recent.length > 0 && (
-          <div className="mt-4 pt-4 border-t border-border/60">
-            <p className="text-xs text-muted-foreground mb-2">Username terakhir</p>
-            <div className="flex flex-wrap gap-2">
-              {recent.map((u) => (
-                <span
-                  key={u}
-                  className="group/chip inline-flex items-center gap-1 rounded-full border border-border bg-background pl-3 pr-1 py-1 text-xs font-mono hover:border-accent transition"
-                >
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setValue(u);
-                      onGenerate(u);
-                    }}
-                    className="hover:text-accent transition"
-                  >
-                    {u}
-                  </button>
-                  <button
-                    type="button"
-                    aria-label={`Hapus ${u}`}
-                    onClick={() => setRecent(removeRecent(u))}
-                    className="ml-0.5 rounded-full p-0.5 text-muted-foreground hover:text-foreground hover:bg-muted transition"
-                  >
-                    <X className="size-3" />
-                  </button>
-                </span>
-              ))}
-            </div>
-          </div>
-        )}
       </div>
     </form>
   );
