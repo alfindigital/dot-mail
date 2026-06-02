@@ -155,21 +155,9 @@ function Index() {
   ];
 
   const steps = [
-    {
-      Icon: Keyboard,
-      title: "1. Ketik username",
-      desc: "Masukkan bagian sebelum @gmail.com — minimal 2 karakter.",
-    },
-    {
-      Icon: MousePointerClick,
-      title: "2. Generate",
-      desc: "DotMail menghitung semua kombinasi titik secara instan di browser.",
-    },
-    {
-      Icon: ClipboardCopy,
-      title: "3. Salin & pakai",
-      desc: "Pilih per baris, salin terpilih, salin semua, atau unduh .txt/.csv.",
-    },
+    { title: "1. Ketik username", desc: "Bagian sebelum @gmail.com." },
+    { title: "2. Generate", desc: "Semua kombinasi titik instan." },
+    { title: "3. Salin & pakai", desc: "Salin atau unduh .txt/.csv." },
   ];
 
   const faqs = [
