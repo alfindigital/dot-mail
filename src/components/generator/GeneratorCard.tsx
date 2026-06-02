@@ -63,15 +63,9 @@ export function GeneratorCard({ onGenerate, isGenerating, externalValue }: Props
   return (
     <form onSubmit={handleSubmit} className="w-full" data-generator-form>
       <div className="rounded-2xl border border-border bg-card p-5 sm:p-7 shadow-sm">
-        <div className="flex items-center justify-between gap-3 mb-3">
-          <label htmlFor="username" className="text-sm font-medium text-muted-foreground">
-            Alamat Gmail kamu
-          </label>
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-muted px-2.5 py-1 text-[11px] font-medium text-muted-foreground">
-            <ShieldCheck className="size-3.5" />
-            100% di browser
-          </span>
-        </div>
+        <label htmlFor="username" className="sr-only">
+          Alamat Gmail kamu
+        </label>
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="flex-1 flex items-stretch rounded-xl border border-input bg-background focus-within:ring-2 focus-within:ring-ring focus-within:border-ring transition">
             <Input
