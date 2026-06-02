@@ -39,15 +39,10 @@ function useCountUp(target: number, duration = 400) {
   return value;
 }
 
-export function GeneratorCard({ onGenerate, isGenerating, externalValue, recentVersion }: Props) {
+export function GeneratorCard({ onGenerate, isGenerating, externalValue }: Props) {
   const [value, setValue] = useState("");
   const [touched, setTouched] = useState(false);
-  const [recent, setRecent] = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    setRecent(getRecent());
-  }, [recentVersion]);
 
   useEffect(() => {
     if (externalValue !== undefined) setValue(externalValue);
