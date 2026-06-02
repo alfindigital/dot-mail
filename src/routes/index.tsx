@@ -11,6 +11,7 @@ import {
 import { GeneratorCard } from "@/components/generator/GeneratorCard";
 import { ResultsList } from "@/components/generator/ResultsList";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
+import { HistoryButton } from "@/components/layout/HistoryButton";
 import { generateDotVariants } from "@/lib/dot-variants";
 import { addRecent } from "@/lib/recent-usernames";
 import { toast } from "sonner";
@@ -200,7 +201,10 @@ function Index() {
             <span className="size-2.5 rounded-full bg-accent" />
             <span className="font-serif text-xl tracking-tight">DotMail</span>
           </div>
-          <ThemeToggle />
+          <div className="flex items-center gap-1">
+            <HistoryButton onPick={handleGenerate} recentVersion={recentVersion} />
+            <ThemeToggle />
+          </div>
         </div>
       </header>
 
@@ -221,7 +225,6 @@ function Index() {
         <GeneratorCard
           onGenerate={handleGenerate}
           externalValue={externalValue}
-          recentVersion={recentVersion}
         />
 
         {variants.length > 0 ? (
