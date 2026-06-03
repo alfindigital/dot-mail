@@ -23,14 +23,14 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Hasilkan semua variasi titik (dot trick) alamat Gmail kamu secara instan. Gratis, privat, berjalan sepenuhnya di browser.",
+          "Buat semua variasi titik Gmail dalam sekejap. Gratis, privat, jalan sepenuhnya di browser.",
       },
       { name: "robots", content: "index, follow" },
       { property: "og:title", content: "DotMail | Generator Variasi Titik Gmail" },
       {
         property: "og:description",
         content:
-          "Tool gratis untuk menghasilkan seluruh kombinasi titik pada alamat Gmail. Privasi terjaga, tanpa server.",
+          "Tool gratis buat nge-generate semua kombinasi titik Gmail. Privasi aman, tanpa server.",
       },
       { property: "og:url", content: "https://dotmail.lovable.app/" },
       { property: "og:image", content: "https://dotmail.lovable.app/og-image.png" },
@@ -42,7 +42,7 @@ export const Route = createFileRoute("/")({
       {
         name: "twitter:description",
         content:
-          "Tool gratis untuk menghasilkan seluruh kombinasi titik pada alamat Gmail. Privasi terjaga, tanpa server.",
+          "Tool gratis buat nge-generate semua kombinasi titik Gmail. Privasi aman, tanpa server.",
       },
       { name: "twitter:image", content: "https://dotmail.lovable.app/og-image.png" },
       { name: "twitter:image:alt", content: "DotMail | Generator Variasi Titik Gmail" },
