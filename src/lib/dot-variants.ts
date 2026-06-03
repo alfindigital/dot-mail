@@ -44,7 +44,7 @@ export function validateUsername(raw: string): ValidationResult {
   if (!/^[a-z0-9]+$/.test(username))
     return {
       valid: false,
-      error: "Hanya huruf a–z dan angka 0–9. Tanpa titik, spasi, atau simbol.",
+      error: "Hanya huruf a-z dan angka 0-9. Tanpa titik, spasi, atau simbol.",
     };
   return { valid: true, username };
 }
