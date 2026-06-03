@@ -19,14 +19,14 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "DotMail — Generator Variasi Titik Gmail" },
+      { title: "DotMail | Generator Variasi Titik Gmail" },
       {
         name: "description",
         content:
           "Hasilkan semua variasi titik (dot trick) alamat Gmail kamu secara instan. Gratis, privat, berjalan sepenuhnya di browser.",
       },
       { name: "robots", content: "index, follow" },
-      { property: "og:title", content: "DotMail — Generator Variasi Titik Gmail" },
+      { property: "og:title", content: "DotMail | Generator Variasi Titik Gmail" },
       {
         property: "og:description",
         content:
@@ -37,15 +37,15 @@ export const Route = createFileRoute("/")({
       { property: "og:image:width", content: "1216" },
       { property: "og:image:height", content: "640" },
       { property: "og:image:type", content: "image/png" },
-      { property: "og:image:alt", content: "DotMail — Generator Variasi Titik Gmail" },
-      { name: "twitter:title", content: "DotMail — Generator Variasi Titik Gmail" },
+      { property: "og:image:alt", content: "DotMail | Generator Variasi Titik Gmail" },
+      { name: "twitter:title", content: "DotMail | Generator Variasi Titik Gmail" },
       {
         name: "twitter:description",
         content:
           "Tool gratis untuk menghasilkan seluruh kombinasi titik pada alamat Gmail. Privasi terjaga, tanpa server.",
       },
       { name: "twitter:image", content: "https://dotmail.lovable.app/og-image.png" },
-      { name: "twitter:image:alt", content: "DotMail — Generator Variasi Titik Gmail" },
+      { name: "twitter:image:alt", content: "DotMail | Generator Variasi Titik Gmail" },
     ],
     links: [{ rel: "canonical", href: "https://dotmail.lovable.app/" }],
     scripts: [
