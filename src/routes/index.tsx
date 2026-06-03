@@ -168,7 +168,7 @@ function Index() {
   ];
 
   const steps = [
-    { title: "1. Ketik username", desc: "Bagian sebelum @gmail.com." },
+    { title: "1. Ketik username", desc: "sebelum @gmail.com." },
     { title: "2. Generate", desc: "Semua kombinasi titik instan." },
     { title: "3. Salin & pakai", desc: "Salin atau unduh .txt/.csv." },
   ];
