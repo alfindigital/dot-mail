@@ -57,34 +57,34 @@ export const Route = createFileRoute("/")({
           mainEntity: [
             {
               "@type": "Question",
-              name: "Apakah dot trick legal?",
+              name: "Legal?",
               acceptedAnswer: {
                 "@type": "Answer",
-                text: "Ya. Ini fitur resmi Gmail — Google mengabaikan titik di bagian username, jadi semua variasi diarahkan ke inbox yang sama. Bukan eksploit, bukan hack.",
+                text: "Iya. Ini fitur bawaan Gmail. Google nggak peduli titik di username, jadi semua variasi tetap masuk inbox yang sama. Bukan hack.",
               },
             },
             {
               "@type": "Question",
-              name: "Apakah Gmail bisa memblokir akun saya?",
+              name: "Akun saya bisa diblokir?",
               acceptedAnswer: {
                 "@type": "Answer",
-                text: "Selama pemakaian wajar (mendaftar layanan, memfilter email), tidak ada masalah. Penyalahgunaan untuk spam atau pendaftaran massal yang melanggar ToS layanan lain tentu berisiko di sisi layanan tersebut, bukan di Gmail.",
+                text: "Kalau dipakai normal, aman-aman aja. Risikonya cuma kalau disalahgunain buat spam atau daftar masif yang melanggar aturan layanan lain.",
               },
             },
             {
               "@type": "Question",
-              name: "Apakah data saya disimpan?",
+              name: "Data simpan di mana?",
               acceptedAnswer: {
                 "@type": "Answer",
-                text: "Tidak. Semua perhitungan berjalan sepenuhnya di browser kamu. Tidak ada server, tidak ada database, tidak ada tracking input.",
+                text: "Nggak disimpan di mana-mana. Semua dihitung di browser kamu sendiri. Nggak ada server, nggak ada database, nggak ada yang ngintip input.",
               },
             },
             {
               "@type": "Question",
-              name: "Untuk apa biasanya digunakan?",
+              name: "Bisa buat apa aja?",
               acceptedAnswer: {
                 "@type": "Answer",
-                text: "Filter email per layanan, mendeteksi siapa yang membocorkan email kamu (mis. dengan alamat unik per pendaftaran), dan mengelola banyak akun dari satu inbox.",
+                text: "Filter email per layanan, ngecek siapa yang bocorin email kamu (pakai alamat unik tiap daftar), atau kelola banyak akun dari satu inbox.",
               },
             },
           ],
@@ -175,20 +175,20 @@ function Index() {
 
   const faqs = [
     {
-      q: "Apakah dot trick legal?",
-      a: "Ya. Ini fitur resmi Gmail — Google mengabaikan titik di bagian username, jadi semua variasi diarahkan ke inbox yang sama. Bukan eksploit, bukan hack.",
+      q: "Legal?",
+      a: "Iya. Ini fitur bawaan Gmail. Google nggak peduli titik di username, jadi semua variasi tetap masuk inbox yang sama. Bukan hack.",
     },
     {
-      q: "Apakah Gmail bisa memblokir akun saya?",
-      a: "Selama pemakaian wajar (mendaftar layanan, memfilter email), tidak ada masalah. Penyalahgunaan untuk spam atau pendaftaran massal yang melanggar ToS layanan lain tentu berisiko di sisi layanan tersebut, bukan di Gmail.",
+      q: "Akun saya bisa diblokir?",
+      a: "Kalau dipakai normal, aman-aman aja. Risikonya cuma kalau disalahgunain buat spam atau daftar masif yang melanggar aturan layanan lain.",
     },
     {
-      q: "Apakah data saya disimpan?",
-      a: "Tidak. Semua perhitungan berjalan sepenuhnya di browser kamu. Tidak ada server, tidak ada database, tidak ada tracking input.",
+      q: "Data simpan di mana?",
+      a: "Nggak disimpan di mana-mana. Semua dihitung di browser kamu sendiri. Nggak ada server, nggak ada database, nggak ada yang ngintip input.",
     },
     {
-      q: "Untuk apa biasanya digunakan?",
-      a: "Filter email per layanan, mendeteksi siapa yang membocorkan email kamu (mis. dengan alamat unik per pendaftaran), dan mengelola banyak akun dari satu inbox.",
+      q: "Bisa buat apa aja?",
+      a: "Filter email per layanan, ngecek siapa yang bocorin email kamu (pakai alamat unik tiap daftar), atau kelola banyak akun dari satu inbox.",
     },
   ];
 
