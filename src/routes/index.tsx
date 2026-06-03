@@ -19,33 +19,33 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "DotMail — Generator Variasi Titik Gmail" },
+      { title: "DotMail | Generator Variasi Titik Gmail" },
       {
         name: "description",
         content:
-          "Hasilkan semua variasi titik (dot trick) alamat Gmail kamu secara instan. Gratis, privat, berjalan sepenuhnya di browser.",
+          "Buat semua variasi titik Gmail dalam sekejap. Gratis, privat, jalan sepenuhnya di browser.",
       },
       { name: "robots", content: "index, follow" },
-      { property: "og:title", content: "DotMail — Generator Variasi Titik Gmail" },
+      { property: "og:title", content: "DotMail | Generator Variasi Titik Gmail" },
       {
         property: "og:description",
         content:
-          "Tool gratis untuk menghasilkan seluruh kombinasi titik pada alamat Gmail. Privasi terjaga, tanpa server.",
+          "Tool gratis buat nge-generate semua kombinasi titik Gmail. Privasi aman, tanpa server.",
       },
       { property: "og:url", content: "https://dotmail.lovable.app/" },
       { property: "og:image", content: "https://dotmail.lovable.app/og-image.png" },
       { property: "og:image:width", content: "1216" },
       { property: "og:image:height", content: "640" },
       { property: "og:image:type", content: "image/png" },
-      { property: "og:image:alt", content: "DotMail — Generator Variasi Titik Gmail" },
-      { name: "twitter:title", content: "DotMail — Generator Variasi Titik Gmail" },
+      { property: "og:image:alt", content: "DotMail | Generator Variasi Titik Gmail" },
+      { name: "twitter:title", content: "DotMail | Generator Variasi Titik Gmail" },
       {
         name: "twitter:description",
         content:
-          "Tool gratis untuk menghasilkan seluruh kombinasi titik pada alamat Gmail. Privasi terjaga, tanpa server.",
+          "Tool gratis buat nge-generate semua kombinasi titik Gmail. Privasi aman, tanpa server.",
       },
       { name: "twitter:image", content: "https://dotmail.lovable.app/og-image.png" },
-      { name: "twitter:image:alt", content: "DotMail — Generator Variasi Titik Gmail" },
+      { name: "twitter:image:alt", content: "DotMail | Generator Variasi Titik Gmail" },
     ],
     links: [{ rel: "canonical", href: "https://dotmail.lovable.app/" }],
     scripts: [
@@ -57,34 +57,34 @@ export const Route = createFileRoute("/")({
           mainEntity: [
             {
               "@type": "Question",
-              name: "Apakah dot trick legal?",
+              name: "Legal?",
               acceptedAnswer: {
                 "@type": "Answer",
-                text: "Ya. Ini fitur resmi Gmail — Google mengabaikan titik di bagian username, jadi semua variasi diarahkan ke inbox yang sama. Bukan eksploit, bukan hack.",
+                text: "Iya. Ini fitur bawaan Gmail. Google nggak peduli titik di username, jadi semua variasi tetap masuk inbox yang sama. Bukan hack.",
               },
             },
             {
               "@type": "Question",
-              name: "Apakah Gmail bisa memblokir akun saya?",
+              name: "Akun saya bisa diblokir?",
               acceptedAnswer: {
                 "@type": "Answer",
-                text: "Selama pemakaian wajar (mendaftar layanan, memfilter email), tidak ada masalah. Penyalahgunaan untuk spam atau pendaftaran massal yang melanggar ToS layanan lain tentu berisiko di sisi layanan tersebut, bukan di Gmail.",
+                text: "Kalau dipakai normal, aman-aman aja. Risikonya cuma kalau disalahgunain buat spam atau daftar masif yang melanggar aturan layanan lain.",
               },
             },
             {
               "@type": "Question",
-              name: "Apakah data saya disimpan?",
+              name: "Data simpan di mana?",
               acceptedAnswer: {
                 "@type": "Answer",
-                text: "Tidak. Semua perhitungan berjalan sepenuhnya di browser kamu. Tidak ada server, tidak ada database, tidak ada tracking input.",
+                text: "Nggak disimpan di mana-mana. Semua dihitung di browser kamu sendiri. Nggak ada server, nggak ada database, nggak ada yang ngintip input.",
               },
             },
             {
               "@type": "Question",
-              name: "Untuk apa biasanya digunakan?",
+              name: "Bisa buat apa aja?",
               acceptedAnswer: {
                 "@type": "Answer",
-                text: "Filter email per layanan, mendeteksi siapa yang membocorkan email kamu (mis. dengan alamat unik per pendaftaran), dan mengelola banyak akun dari satu inbox.",
+                text: "Filter email per layanan, ngecek siapa yang bocorin email kamu (pakai alamat unik tiap daftar), atau kelola banyak akun dari satu inbox.",
               },
             },
           ],
@@ -169,26 +169,26 @@ function Index() {
 
   const steps = [
     { title: "1. Ketik username", desc: "sebelum @gmail.com." },
-    { title: "2. Generate", desc: "Semua kombinasi titik instan." },
+    { title: "2. Generate", desc: "Langsung keluar semua kombinasi." },
     { title: "3. Salin & pakai", desc: "Salin atau unduh .txt/.csv." },
   ];
 
   const faqs = [
     {
-      q: "Apakah dot trick legal?",
-      a: "Ya. Ini fitur resmi Gmail — Google mengabaikan titik di bagian username, jadi semua variasi diarahkan ke inbox yang sama. Bukan eksploit, bukan hack.",
+      q: "Legal?",
+      a: "Iya. Ini fitur bawaan Gmail. Google nggak peduli titik di username, jadi semua variasi tetap masuk inbox yang sama. Bukan hack.",
     },
     {
-      q: "Apakah Gmail bisa memblokir akun saya?",
-      a: "Selama pemakaian wajar (mendaftar layanan, memfilter email), tidak ada masalah. Penyalahgunaan untuk spam atau pendaftaran massal yang melanggar ToS layanan lain tentu berisiko di sisi layanan tersebut, bukan di Gmail.",
+      q: "Akun saya bisa diblokir?",
+      a: "Kalau dipakai normal, aman-aman aja. Risikonya cuma kalau disalahgunain buat spam atau daftar masif yang melanggar aturan layanan lain.",
     },
     {
-      q: "Apakah data saya disimpan?",
-      a: "Tidak. Semua perhitungan berjalan sepenuhnya di browser kamu. Tidak ada server, tidak ada database, tidak ada tracking input.",
+      q: "Data simpan di mana?",
+      a: "Nggak disimpan di mana-mana. Semua dihitung di browser kamu sendiri. Nggak ada server, nggak ada database, nggak ada yang ngintip input.",
     },
     {
-      q: "Untuk apa biasanya digunakan?",
-      a: "Filter email per layanan, mendeteksi siapa yang membocorkan email kamu (mis. dengan alamat unik per pendaftaran), dan mengelola banyak akun dari satu inbox.",
+      q: "Bisa buat apa aja?",
+      a: "Filter email per layanan, ngecek siapa yang bocorin email kamu (pakai alamat unik tiap daftar), atau kelola banyak akun dari satu inbox.",
     },
   ];
 
@@ -216,9 +216,10 @@ function Index() {
             <span className="italic text-accent">Ratusan</span> alamat.
           </h1>
           <p className="mt-5 text-base sm:text-lg text-muted-foreground max-w-xl mx-auto">
-            Gmail mengabaikan titik di username — <span className="font-mono">s.atu</span>,{" "}
+            Gmail nggak peduli titik di username. Jadi{" "}
+            <span className="font-mono">s.atu</span>,{" "}
             <span className="font-mono">sa.tu</span>,{" "}
-            <span className="font-mono">sat.u</span>, dan{" "}
+            <span className="font-mono">sat.u</span>, sampai{" "}
             <span className="font-mono">satu</span> semua masuk ke inbox yang sama.
           </p>
         </section>
@@ -233,7 +234,7 @@ function Index() {
         ) : (
           <section className="mt-10 sm:mt-14">
             <h2 className="font-serif text-2xl sm:text-3xl text-foreground text-center mb-6">
-              Bagaimana cara pakai?
+              Cara Pakai
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {steps.map(({ title, desc }) => (
@@ -251,7 +252,7 @@ function Index() {
 
         <section className="mt-16">
           <h2 className="font-serif text-2xl sm:text-3xl text-foreground mb-4">
-            Pertanyaan umum
+            Pertanyaan
           </h2>
           <Accordion type="single" collapsible className="rounded-2xl border border-border bg-card divide-y divide-border overflow-hidden">
             {faqs.map((f, i) => (
