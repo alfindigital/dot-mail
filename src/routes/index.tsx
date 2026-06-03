@@ -169,7 +169,7 @@ function Index() {
 
   const steps = [
     { title: "1. Ketik username", desc: "sebelum @gmail.com." },
-    { title: "2. Generate", desc: "Semua kombinasi titik instan." },
+    { title: "2. Generate", desc: "Langsung keluar semua kombinasi." },
     { title: "3. Salin & pakai", desc: "Salin atau unduh .txt/.csv." },
   ];
 
@@ -216,9 +216,10 @@ function Index() {
             <span className="italic text-accent">Ratusan</span> alamat.
           </h1>
           <p className="mt-5 text-base sm:text-lg text-muted-foreground max-w-xl mx-auto">
-            Gmail mengabaikan titik di username — <span className="font-mono">s.atu</span>,{" "}
+            Gmail nggak peduli titik di username. Jadi{" "}
+            <span className="font-mono">s.atu</span>,{" "}
             <span className="font-mono">sa.tu</span>,{" "}
-            <span className="font-mono">sat.u</span>, dan{" "}
+            <span className="font-mono">sat.u</span>, sampai{" "}
             <span className="font-mono">satu</span> semua masuk ke inbox yang sama.
           </p>
         </section>
@@ -233,7 +234,7 @@ function Index() {
         ) : (
           <section className="mt-10 sm:mt-14">
             <h2 className="font-serif text-2xl sm:text-3xl text-foreground text-center mb-6">
-              Bagaimana cara pakai?
+              Cara Pakai
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {steps.map(({ title, desc }) => (
