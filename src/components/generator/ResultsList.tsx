@@ -152,7 +152,7 @@ export function ResultsList({ variants, username }: Props) {
             )}
             <Button onClick={copyAll} variant="outline" className="rounded-xl h-10">
               <Copy className="size-4" />
-              Salin aja
+              Salin
             </Button>
             <Button onClick={downloadTxt} variant="outline" className="rounded-xl h-10" title="Unduh sebagai .txt">
               <FileText className="size-4" />
