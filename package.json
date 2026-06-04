@@ -11,7 +11,9 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "validate:jsonld": "node scripts/validate-jsonld.mjs",
-    "postbuild": "node scripts/validate-jsonld.mjs || echo '⚠ JSON-LD validation skipped (published URL unreachable from build env)'"
+    "audit:emdash": "node scripts/audit-em-dash.mjs",
+    "test:e2e": "playwright test",
+    "postbuild": "node scripts/audit-em-dash.mjs && (node scripts/validate-jsonld.mjs || echo '⚠ JSON-LD validation skipped (published URL unreachable from build env)')"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
