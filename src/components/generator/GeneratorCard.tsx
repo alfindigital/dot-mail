@@ -58,14 +58,13 @@ export function GeneratorCard({ onGenerate, isGenerating, externalValue }: Props
     // Read latest value from DOM to handle autofill / password managers
     // that bypass React's onChange events.
     const raw = inputRef.current?.value ?? value;
+    const normalized = raw.trim().toLowerCase();
+    if (normalized !== value) setValue(normalized);
     const result = validateUsername(raw);
-    if (result.valid) {
-      if (raw !== value) setValue(result.username);
-      onGenerate(result.username);
-    }
+    if (result.valid) onGenerate(result.username);
   }
 
-  const showError = !validation.valid && value.length > 0;
+  const showError = (touched || value.length > 0) && !validation.valid;
 
   return (
     <form onSubmit={handleSubmit} className="w-full" data-generator-form>
