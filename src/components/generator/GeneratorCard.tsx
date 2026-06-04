@@ -55,10 +55,17 @@ export function GeneratorCard({ onGenerate, isGenerating, externalValue }: Props
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setTouched(true);
-    if (validation.valid) onGenerate(validation.username);
+    // Read latest value from DOM to handle autofill / password managers
+    // that bypass React's onChange events.
+    const raw = inputRef.current?.value ?? value;
+    const result = validateUsername(raw);
+    if (result.valid) {
+      if (raw !== value) setValue(result.username);
+      onGenerate(result.username);
+    }
   }
 
-  const showError = touched && !validation.valid && value.length > 0;
+  const showError = !validation.valid && value.length > 0;
 
   return (
     <form onSubmit={handleSubmit} className="w-full" data-generator-form>
