@@ -55,10 +55,16 @@ export function GeneratorCard({ onGenerate, isGenerating, externalValue }: Props
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setTouched(true);
-    if (validation.valid) onGenerate(validation.username);
+    // Read latest value from DOM to handle autofill / password managers
+    // that bypass React's onChange events.
+    const raw = inputRef.current?.value ?? value;
+    const normalized = raw.trim().toLowerCase();
+    if (normalized !== value) setValue(normalized);
+    const result = validateUsername(raw);
+    if (result.valid) onGenerate(result.username);
   }
 
-  const showError = touched && !validation.valid && value.length > 0;
+  const showError = (touched || value.length > 0) && !validation.valid;
 
   return (
     <form onSubmit={handleSubmit} className="w-full" data-generator-form>
@@ -88,7 +94,7 @@ export function GeneratorCard({ onGenerate, isGenerating, externalValue }: Props
           <Button
             type="submit"
             size="lg"
-            disabled={!validation.valid || isGenerating}
+            disabled={isGenerating}
             className="h-12 px-6 rounded-xl"
           >
             {isGenerating ? "Membuat…" : "Generate"}
