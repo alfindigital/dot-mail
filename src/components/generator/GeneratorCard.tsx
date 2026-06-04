@@ -95,7 +95,7 @@ export function GeneratorCard({ onGenerate, isGenerating, externalValue }: Props
           <Button
             type="submit"
             size="lg"
-            disabled={!validation.valid || isGenerating}
+            disabled={isGenerating}
             className="h-12 px-6 rounded-xl"
           >
             {isGenerating ? "Membuat…" : "Generate"}
