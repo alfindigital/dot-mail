@@ -46,15 +46,20 @@ function CopyButton({ text }: { text: string }) {
         e.stopPropagation();
         await navigator.clipboard.writeText(text);
         setCopied(true);
-        toast.success("Disalin", { duration: 1200 });
+        toast.success("Disalin", { duration: 1000 });
         setTimeout(() => setCopied(false), 1200);
       }}
-      className="sm:opacity-0 sm:group-hover:opacity-100 focus:opacity-100 transition rounded-md p-1.5 hover:bg-muted text-muted-foreground shrink-0"
+      className="opacity-30 sm:group-hover:opacity-100 hover:opacity-100 focus:opacity-100 transition rounded-md p-1.5 hover:bg-muted text-muted-foreground shrink-0"
     >
-      {copied ? <Check className="size-4 text-accent" /> : <Copy className="size-4" />}
+      {copied ? (
+        <Check className="size-4 text-accent copy-pop" />
+      ) : (
+        <Copy className="size-4" />
+      )}
     </button>
   );
 }
+
 
 function download(filename: string, content: string, mime: string) {
   const blob = new Blob([content], { type: mime });
