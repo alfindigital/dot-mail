@@ -122,6 +122,18 @@ function Index() {
     setExternalValue(u);
     addRecent(u);
     setRecentVersion((v) => v + 1);
+
+    // Smooth scroll to results after render
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const el = document.querySelector<HTMLElement>("[data-results-section]");
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        // Skip if user is already at/near results
+        if (rect.top > 0 && rect.top < 200) return;
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
   }
 
   // Keyboard shortcuts
