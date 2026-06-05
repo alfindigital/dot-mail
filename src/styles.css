@@ -175,3 +175,13 @@
   animation: dot-stagger-in 280ms ease-out forwards;
   animation-delay: var(--dot-delay, 0ms);
 }
+
+@keyframes copy-pop {
+  0% { transform: scale(0.8); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+.copy-pop {
+  animation: copy-pop 260ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
