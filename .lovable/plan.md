@@ -1,72 +1,53 @@
-# UI/UX Improvements for DotMail
+# Batch 1 — Quick wins UI/UX
 
-Scope: frontend-only changes to `GeneratorCard`, `ResultsList`, and `routes/index.tsx`. No backend, no schema, no new routes. Skipping #20 (dynamic OG image) — it needs server-side image generation, out of scope here.
+Scope: frontend-only di `routes/index.tsx`, `GeneratorCard.tsx`, `ResultsList.tsx`, dan `styles.css`. Tidak ada backend, dependencies, atau route baru.
 
-## What gets built
+## Yang dibangun
 
-### 1. Multi-select + bulk copy (ResultsList)
-- Add a checkbox column on each row.
-- Header gets a "Pilih semua di halaman" master checkbox + a "Salin terpilih (N)" button that only appears when N > 0.
-- Selection state stored in a `Set<number>` keyed by variant index. Resets when `username` changes.
+### 1. Social proof tipis (index.tsx)
+Tambah 1 baris muted di bawah hero, sebelum generator:
+"Dipakai buat filter Gmail, testing form, dan kelola multi-akun."
+Style: text-xs, muted-foreground, center, dot separator antar use case.
 
-### 2. Download .txt / .csv (ResultsList header)
-- Two buttons next to "Salin semua": **Unduh .txt** and **Unduh .csv**.
-- `.txt`: one email per line. `.csv`: header `email,dots` + rows. File name: `dotmail-<username>.txt|csv`.
-- Trigger via Blob + `URL.createObjectURL` + temporary `<a download>`.
+### 2. Helper @gmail.com jelas di mobile (GeneratorCard.tsx)
+- Saat ini suffix `@gmail.com` cuma muncul di sm+. Di mobile, kosong.
+- Tambah baris preview kecil di bawah input (mobile only, hidden di sm+):
+  `akan jadi: namamu@gmail.com` — live update mengikuti `value`, muted, font-mono untuk bagian email.
+- Saat input kosong, fallback ke hint: "Tanpa @gmail.com, kami tambahkan otomatis."
 
-### 3. Toast feedback per copy item (ResultsList)
-- `CopyButton` already shows a check icon; also fire `toast.success("Disalin")` so feedback matches "Salin semua".
+### 3. Header hasil lebih scannable (ResultsList.tsx)
+Reorganisasi sticky header:
+- Kiri: angka + label tetap (sudah ok).
+- Kanan: action group dikelompokkan jadi 2 cluster dengan separator tipis:
+  - Cluster "Salin": `Salin terpilih` (kalau ada) + `Salin semua`.
+  - Cluster "Unduh": `.txt` + `.csv` digabung jadi satu split-style group (border bersama, lebih ringkas).
+- Di mobile, action group full-width di baris kedua biar nggak crammed.
 
-### 6. Recent usernames (GeneratorCard)
-- Persist last 5 valid usernames to `localStorage` key `dotmail:recent`.
-- Render as small chips under the input. Click chip → fill input + auto-submit. Include a small "×" per chip to remove.
+### 4. Hover row highlight + quick copy lebih afford (ResultsList.tsx)
+- Row sudah ada hover bg + opacity-0 copy button. Tweak:
+  - Copy icon: dari `opacity-0` jadi `opacity-30` di idle, `opacity-100` di hover. Lebih ke-discover tanpa berisik.
+  - Tambah subtle left border accent (2px) yang muncul di hover/selected biar row terasa "diraih".
 
-### 7. Keyboard shortcuts (index.tsx)
-- Global listener: `/` focuses the username input (ignored when already typing in input/textarea).
-- `Cmd/Ctrl+A` while results are visible AND focus is outside an input → copy all (preventDefault).
+### 5. Smooth scroll ke hasil (index.tsx)
+Setelah `handleGenerate` jalan dan `variants` ke-set, scroll ke section results dengan offset header. Pakai `requestAnimationFrame` + `scrollIntoView({ behavior: "smooth", block: "start" })`. Skip kalau user sudah di posisi results (cek via `getBoundingClientRect`).
 
-### 9. Animated count-up (GeneratorCard)
-- Replace the static combination number with a count-up animation (~400ms ease-out) using `requestAnimationFrame`. Animates from previous value to new value whenever `total` changes.
-
-### 10. "Bagaimana cara pakai?" section (index.tsx)
-- 3-step row below generator (only shown when no results yet, to avoid pushing results down):
-  1. Ketik username Gmail
-  2. Klik Generate
-  3. Salin & gunakan
-- Each step: lucide icon in a rounded square + short label + 1-line description.
-
-### 11. FAQ accordion (index.tsx)
-- Use existing `@/components/ui/accordion`. Placed near the bottom of `<main>`.
-- 4 items: legality, Gmail blocking, data privacy, use cases. Static copy in Indonesian.
-- Good for SEO — rendered as real DOM, includes `<h2>` heading.
-
-### 12. Privacy badge (GeneratorCard)
-- Small pill above the input: shield icon + "100% di browser — tidak ada data dikirim". Muted styling, not loud.
-
-### 14. Highlight dot stagger animation (ResultsList)
-- When results first render (and on new generation), each row's dots fade-in with a small staggered delay. Implement with a CSS keyframe + `animation-delay: calc(var(--i) * 8ms)` capped at ~400ms total so long lists don't lag. Only animate the first page (200 rows).
-
-### 15. Sticky results header (ResultsList)
-- Wrap the header (`Salin semua`, multi-select bar, download buttons) in a `sticky top-0 z-10 bg-background/80 backdrop-blur` container so it stays visible on scroll.
-
-### 16. Mobile @gmail.com helper (GeneratorCard)
-- Keep the inline suffix hidden on mobile (avoids layout cramping), but add a helper line under the input: "Tanpa @gmail.com — kami menambahkannya otomatis." Visible on all sizes; replaces the current placeholder hint when the field is empty.
+### 6. Micro animasi saat copy (ResultsList.tsx + styles.css)
+- `CopyButton`: saat sukses, checkmark dapat scale-spring kecil (scale 0.8 → 1.1 → 1, 250ms). Tambah keyframe `copy-pop` di styles.css.
+- Toast tetap, tapi durasi diperpendek jadi 1000ms biar nggak numpuk.
 
 ## Files touched
 
-- `src/components/generator/GeneratorCard.tsx` — privacy badge, recent chips, animated counter, updated helper text.
-- `src/components/generator/ResultsList.tsx` — checkboxes, bulk copy, download buttons, per-item toast, sticky header, stagger animation.
-- `src/routes/index.tsx` — keyboard shortcuts, "Bagaimana cara pakai?" section, FAQ accordion, wire `recent` callback.
-- `src/styles.css` — add `@keyframes dot-stagger-in` utility class.
-- New small util: `src/lib/recent-usernames.ts` for localStorage get/add/remove (keeps component clean).
+- `src/routes/index.tsx` — social proof line, smooth scroll handler.
+- `src/components/generator/GeneratorCard.tsx` — mobile preview helper.
+- `src/components/generator/ResultsList.tsx` — header reorg, hover polish, copy animasi.
+- `src/styles.css` — keyframe `copy-pop`.
 
-## Out of scope
+## Out of scope (untuk batch berikutnya)
 
-- #20 OG image dinamis (needs server-side image generation route — separate task if you want it).
-- Sort/filter/search on results, empty-state illustration, share button, focus-ring/aria-live polish — not in this batch (you can request them next).
+Batch 2 (1, 4, 8, 14, 19), Batch 3 (11, 13, 15, 22), dan ide lain dari list sebelumnya.
 
-## Notes
+## Catatan
 
-- All copy in Indonesian to match existing tone.
-- No changes to `dot-variants.ts` logic.
-- No new dependencies.
+- Semua copy bahasa Indonesia, tone tetap santai.
+- Tidak ada em dash (—) di teks user-facing — pakai koma, titik, atau "·".
+- Tidak ada dependency baru.
