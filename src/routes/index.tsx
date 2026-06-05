@@ -122,6 +122,18 @@ function Index() {
     setExternalValue(u);
     addRecent(u);
     setRecentVersion((v) => v + 1);
+
+    // Smooth scroll to results after render
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const el = document.querySelector<HTMLElement>("[data-results-section]");
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        // Skip if user is already at/near results
+        if (rect.top > 0 && rect.top < 200) return;
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
   }
 
   // Keyboard shortcuts
@@ -222,7 +234,15 @@ function Index() {
             <span className="font-mono">sat.u</span>, sampai{" "}
             <span className="font-mono">satu</span> semua masuk ke inbox yang sama.
           </p>
+          <p className="mt-4 text-xs text-muted-foreground/80 flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
+            <span>Filter Gmail</span>
+            <span aria-hidden>·</span>
+            <span>Testing form</span>
+            <span aria-hidden>·</span>
+            <span>Kelola multi-akun</span>
+          </p>
         </section>
+
 
         <GeneratorCard
           onGenerate={handleGenerate}

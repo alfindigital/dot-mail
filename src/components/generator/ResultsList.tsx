@@ -46,15 +46,20 @@ function CopyButton({ text }: { text: string }) {
         e.stopPropagation();
         await navigator.clipboard.writeText(text);
         setCopied(true);
-        toast.success("Disalin", { duration: 1200 });
+        toast.success("Disalin", { duration: 1000 });
         setTimeout(() => setCopied(false), 1200);
       }}
-      className="sm:opacity-0 sm:group-hover:opacity-100 focus:opacity-100 transition rounded-md p-1.5 hover:bg-muted text-muted-foreground shrink-0"
+      className="opacity-30 sm:group-hover:opacity-100 hover:opacity-100 focus:opacity-100 transition rounded-md p-1.5 hover:bg-muted text-muted-foreground shrink-0"
     >
-      {copied ? <Check className="size-4 text-accent" /> : <Copy className="size-4" />}
+      {copied ? (
+        <Check className="size-4 text-accent copy-pop" />
+      ) : (
+        <Copy className="size-4" />
+      )}
     </button>
   );
 }
+
 
 function download(filename: string, content: string, mime: string) {
   const blob = new Blob([content], { type: mime });
@@ -132,9 +137,9 @@ export function ResultsList({ variants, username }: Props) {
   }
 
   return (
-    <section className="mt-8">
+    <section className="mt-8" data-results-section>
       <div className="sticky top-0 z-10 -mx-5 sm:-mx-8 px-5 sm:px-8 py-3 bg-background/85 backdrop-blur border-b border-border/60 mb-4">
-        <header className="flex flex-wrap items-end justify-between gap-3">
+        <header className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
           <div>
             <h2 className="font-serif text-2xl sm:text-3xl text-foreground">
               {variants.length.toLocaleString("id-ID")} variasi
@@ -143,25 +148,36 @@ export function ResultsList({ variants, username }: Props) {
               untuk <span className="font-mono text-foreground">{username}@gmail.com</span>
             </p>
           </div>
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
             {selected.size > 0 && (
-              <Button onClick={copySelected} variant="default" className="rounded-xl h-10">
+              <Button onClick={copySelected} variant="default" className="rounded-xl h-10 flex-1 sm:flex-none">
                 <Copy className="size-4" />
                 Salin terpilih ({selected.size.toLocaleString("id-ID")})
               </Button>
             )}
-            <Button onClick={copyAll} variant="outline" className="rounded-xl h-10">
+            <Button onClick={copyAll} variant="outline" className="rounded-xl h-10 flex-1 sm:flex-none">
               <Copy className="size-4" />
               Salin
             </Button>
-            <Button onClick={downloadTxt} variant="outline" className="rounded-xl h-10" title="Unduh sebagai .txt">
-              <FileText className="size-4" />
-              .txt
-            </Button>
-            <Button onClick={downloadCsv} variant="outline" className="rounded-xl h-10" title="Unduh sebagai .csv">
-              <Download className="size-4" />
-              .csv
-            </Button>
+            <div className="inline-flex rounded-xl border border-input overflow-hidden h-10">
+              <button
+                onClick={downloadTxt}
+                title="Unduh sebagai .txt"
+                className="flex items-center gap-1.5 px-3 text-sm hover:bg-muted transition"
+              >
+                <FileText className="size-4" />
+                .txt
+              </button>
+              <span aria-hidden className="w-px bg-border" />
+              <button
+                onClick={downloadCsv}
+                title="Unduh sebagai .csv"
+                className="flex items-center gap-1.5 px-3 text-sm hover:bg-muted transition"
+              >
+                <Download className="size-4" />
+                .csv
+              </button>
+            </div>
           </div>
         </header>
       </div>
@@ -182,11 +198,14 @@ export function ResultsList({ variants, username }: Props) {
           return (
             <li
               key={i}
-              className={`group flex items-center justify-between gap-3 px-4 py-3 transition cursor-pointer ${
-                isSelected ? "bg-accent/5" : "hover:bg-muted/40"
+              className={`group relative flex items-center justify-between gap-3 px-4 py-3 transition cursor-pointer border-l-2 ${
+                isSelected
+                  ? "bg-accent/5 border-l-accent"
+                  : "border-l-transparent hover:bg-muted/40 hover:border-l-accent/40"
               }`}
               onClick={() => toggleOne(i)}
             >
+
               <div className="flex items-center gap-3 min-w-0">
                 <Checkbox
                   checked={isSelected}
