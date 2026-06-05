@@ -234,7 +234,15 @@ function Index() {
             <span className="font-mono">sat.u</span>, sampai{" "}
             <span className="font-mono">satu</span> semua masuk ke inbox yang sama.
           </p>
+          <p className="mt-4 text-xs text-muted-foreground/80 flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
+            <span>Filter Gmail</span>
+            <span aria-hidden>·</span>
+            <span>Testing form</span>
+            <span aria-hidden>·</span>
+            <span>Kelola multi-akun</span>
+          </p>
         </section>
+
 
         <GeneratorCard
           onGenerate={handleGenerate}
