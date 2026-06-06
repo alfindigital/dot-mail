@@ -333,32 +333,42 @@ function Index() {
       </section>
 
       <footer className="border-t border-border/60">
-        <div className="mx-auto max-w-3xl px-5 sm:px-8 py-6 flex flex-wrap items-center justify-center gap-3 text-sm text-muted-foreground">
-          <span>
-            by{" "}
-            <a
-              href="https://www.instagram.com/alfindigital"
-              target="_blank"
-              rel="noreferrer"
-              className="font-semibold text-foreground hover:text-accent transition"
-            >
-              @alfindigital
-            </a>
-          </span>
-          <span className="text-border">|</span>
-          <div className="flex items-center gap-3">
-            {socials.map(({ href, Icon, label }) => (
+        <div className="mx-auto max-w-3xl px-5 sm:px-8 py-6 flex flex-col items-center gap-3">
+          <div className="hidden sm:flex items-center gap-2 text-xs text-muted-foreground">
+            <span>Tekan</span>
+            <kbd className="inline-flex items-center px-1.5 py-0.5 rounded border border-border bg-muted/40 font-mono text-[10px] text-foreground">/</kbd>
+            <span>untuk fokus input</span>
+            <span aria-hidden>·</span>
+            <kbd className="inline-flex items-center px-1.5 py-0.5 rounded border border-border bg-muted/40 font-mono text-[10px] text-foreground">⌘ A</kbd>
+            <span>untuk salin semua</span>
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-3 text-sm text-muted-foreground">
+            <span>
+              by{" "}
               <a
-                key={label}
-                href={href}
+                href="https://www.instagram.com/alfindigital"
                 target="_blank"
                 rel="noreferrer"
-                aria-label={label}
-                className="text-muted-foreground hover:text-accent transition"
+                className="font-semibold text-foreground hover:text-accent transition"
               >
-                <Icon className="size-4" />
+                @alfindigital
               </a>
-            ))}
+            </span>
+            <span className="text-border">|</span>
+            <div className="flex items-center gap-3">
+              {socials.map(({ href, Icon, label }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={label}
+                  className="text-muted-foreground hover:text-accent transition"
+                >
+                  <Icon className="size-4" />
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       </footer>
