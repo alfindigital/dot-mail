@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Globe, Facebook, Youtube, Send } from "lucide-react";
+import { Globe, Facebook, Youtube, Send, ShieldCheck, Lock, Zap, Sparkles } from "lucide-react";
 import { Toaster } from "@/components/ui/sonner";
 import {
   Accordion,
@@ -223,16 +223,19 @@ function Index() {
 
       <main className="mx-auto max-w-3xl px-5 sm:px-8 pt-12 sm:pt-20 pb-24">
         <section className="text-center mb-10 sm:mb-14">
+          <p className="mb-4 text-[10px] sm:text-xs uppercase tracking-[0.18em] text-muted-foreground flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
+            <span>Gratis</span>
+            <span aria-hidden>·</span>
+            <span>Jalan di browser</span>
+            <span aria-hidden>·</span>
+            <span>Tanpa login</span>
+          </p>
           <h1 className="font-serif text-4xl sm:text-6xl leading-[1.05] text-foreground">
             Satu inbox.{" "}
             <span className="italic text-accent">Ratusan</span> alamat.
           </h1>
           <p className="mt-5 text-base sm:text-lg text-muted-foreground max-w-xl mx-auto">
-            Gmail nggak peduli titik di username. Jadi{" "}
-            <span className="font-mono">s.atu</span>,{" "}
-            <span className="font-mono">sa.tu</span>,{" "}
-            <span className="font-mono">sat.u</span>, sampai{" "}
-            <span className="font-mono">satu</span> semua masuk ke inbox yang sama.
+            Gmail nggak peduli titik di username. Semua variasi masuk ke inbox yang sama.
           </p>
           <p className="mt-4 text-xs text-muted-foreground/80 flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
             <span>Filter Gmail</span>
@@ -241,7 +244,18 @@ function Index() {
             <span aria-hidden>·</span>
             <span>Kelola multi-akun</span>
           </p>
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
+            {["s.atu", "sa.tu", "sat.u", "satu"].map((ex) => (
+              <span
+                key={ex}
+                className="font-mono text-xs px-2.5 py-1 rounded-full border border-border bg-muted/30 text-muted-foreground"
+              >
+                {ex}
+              </span>
+            ))}
+          </div>
         </section>
+
 
 
         <GeneratorCard
@@ -252,23 +266,32 @@ function Index() {
         {variants.length > 0 ? (
           <ResultsList variants={variants} username={username} />
         ) : (
-          <section className="mt-10 sm:mt-14">
-            <h2 className="font-serif text-2xl sm:text-3xl text-foreground text-center mb-6">
-              Cara Pakai
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              {steps.map(({ title, desc }) => (
-                <div
-                  key={title}
-                  className="rounded-xl border border-border bg-card px-4 py-3"
-                >
-                  <h3 className="font-serif text-base text-foreground">{title}</h3>
-                  <p className="text-sm text-muted-foreground leading-snug mt-0.5">{desc}</p>
-                </div>
-              ))}
+          <>
+            <div className="mt-8 rounded-2xl border border-dashed border-border bg-muted/20 px-6 py-10 flex flex-col items-center justify-center text-center">
+              <Sparkles className="size-5 text-muted-foreground/60 mb-2" />
+              <p className="text-sm text-muted-foreground">
+                Hasil akan muncul di sini setelah kamu generate.
+              </p>
             </div>
-          </section>
+            <section className="mt-10 sm:mt-14">
+              <h2 className="font-serif text-2xl sm:text-3xl text-foreground text-center mb-6">
+                Cara Pakai
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                {steps.map(({ title, desc }) => (
+                  <div
+                    key={title}
+                    className="rounded-xl border border-border bg-card px-4 py-3"
+                  >
+                    <h3 className="font-serif text-base text-foreground">{title}</h3>
+                    <p className="text-sm text-muted-foreground leading-snug mt-0.5">{desc}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          </>
         )}
+
 
         <section className="mt-16">
           <h2 className="font-serif text-2xl sm:text-3xl text-foreground mb-4">
@@ -289,33 +312,63 @@ function Index() {
         </section>
       </main>
 
+      <section className="border-t border-border/60 bg-muted/30">
+        <div className="mx-auto max-w-3xl px-5 sm:px-8 py-10 grid grid-cols-1 sm:grid-cols-3 gap-6">
+          {[
+            { Icon: ShieldCheck, label: "100% di browser", desc: "Nggak ada yang dikirim ke server." },
+            { Icon: Lock, label: "Tanpa login", desc: "Pakai langsung, nggak perlu daftar." },
+            { Icon: Zap, label: "Instan", desc: "Ribuan kombinasi dihitung di laptopmu." },
+          ].map(({ Icon, label, desc }) => (
+            <div key={label} className="flex items-start gap-3">
+              <div className="flex size-9 items-center justify-center rounded-lg border border-border bg-background shrink-0">
+                <Icon className="size-5 text-foreground" />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-foreground">{label}</p>
+                <p className="text-xs text-muted-foreground mt-0.5">{desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
       <footer className="border-t border-border/60">
-        <div className="mx-auto max-w-3xl px-5 sm:px-8 py-6 flex flex-wrap items-center justify-center gap-3 text-sm text-muted-foreground">
-          <span>
-            by{" "}
-            <a
-              href="https://www.instagram.com/alfindigital"
-              target="_blank"
-              rel="noreferrer"
-              className="font-semibold text-foreground hover:text-accent transition"
-            >
-              @alfindigital
-            </a>
-          </span>
-          <span className="text-border">|</span>
-          <div className="flex items-center gap-3">
-            {socials.map(({ href, Icon, label }) => (
+        <div className="mx-auto max-w-3xl px-5 sm:px-8 py-6 flex flex-col items-center gap-3">
+          <div className="hidden sm:flex items-center gap-2 text-xs text-muted-foreground">
+            <span>Tekan</span>
+            <kbd className="inline-flex items-center px-1.5 py-0.5 rounded border border-border bg-muted/40 font-mono text-[10px] text-foreground">/</kbd>
+            <span>untuk fokus input</span>
+            <span aria-hidden>·</span>
+            <kbd className="inline-flex items-center px-1.5 py-0.5 rounded border border-border bg-muted/40 font-mono text-[10px] text-foreground">⌘ A</kbd>
+            <span>untuk salin semua</span>
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-3 text-sm text-muted-foreground">
+            <span>
+              by{" "}
               <a
-                key={label}
-                href={href}
+                href="https://www.instagram.com/alfindigital"
                 target="_blank"
                 rel="noreferrer"
-                aria-label={label}
-                className="text-muted-foreground hover:text-accent transition"
+                className="font-semibold text-foreground hover:text-accent transition"
               >
-                <Icon className="size-4" />
+                @alfindigital
               </a>
-            ))}
+            </span>
+            <span className="text-border">|</span>
+            <div className="flex items-center gap-3">
+              {socials.map(({ href, Icon, label }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={label}
+                  className="text-muted-foreground hover:text-accent transition"
+                >
+                  <Icon className="size-4" />
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       </footer>

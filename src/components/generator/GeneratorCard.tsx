@@ -117,13 +117,15 @@ export function GeneratorCard({ onGenerate, isGenerating, externalValue }: Props
           {showError ? (
             <span className="text-destructive">{(validation as { error: string }).error}</span>
           ) : validation.valid ? (
-            <span className="text-muted-foreground">
-              {validation.username.length} karakter ·{" "}
-              <span className="text-foreground font-medium tabular-nums">
+            <div className="flex items-end gap-3 rounded-xl bg-muted/40 px-4 py-3">
+              <span className="font-serif text-3xl sm:text-4xl leading-none text-foreground tabular-nums">
                 {animatedTotal.toLocaleString("id-ID")}
-              </span>{" "}
-              kombinasi
-            </span>
+              </span>
+              <div className="flex flex-col leading-tight pb-0.5">
+                <span className="text-sm text-foreground">kombinasi siap dibuat</span>
+                <span className="text-xs text-muted-foreground">dari {validation.username.length} karakter</span>
+              </div>
+            </div>
           ) : null}
         </div>
 
