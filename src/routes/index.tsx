@@ -223,16 +223,19 @@ function Index() {
 
       <main className="mx-auto max-w-3xl px-5 sm:px-8 pt-12 sm:pt-20 pb-24">
         <section className="text-center mb-10 sm:mb-14">
+          <p className="mb-4 text-[10px] sm:text-xs uppercase tracking-[0.18em] text-muted-foreground flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
+            <span>Gratis</span>
+            <span aria-hidden>·</span>
+            <span>Jalan di browser</span>
+            <span aria-hidden>·</span>
+            <span>Tanpa login</span>
+          </p>
           <h1 className="font-serif text-4xl sm:text-6xl leading-[1.05] text-foreground">
             Satu inbox.{" "}
             <span className="italic text-accent">Ratusan</span> alamat.
           </h1>
           <p className="mt-5 text-base sm:text-lg text-muted-foreground max-w-xl mx-auto">
-            Gmail nggak peduli titik di username. Jadi{" "}
-            <span className="font-mono">s.atu</span>,{" "}
-            <span className="font-mono">sa.tu</span>,{" "}
-            <span className="font-mono">sat.u</span>, sampai{" "}
-            <span className="font-mono">satu</span> semua masuk ke inbox yang sama.
+            Gmail nggak peduli titik di username. Semua variasi masuk ke inbox yang sama.
           </p>
           <p className="mt-4 text-xs text-muted-foreground/80 flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
             <span>Filter Gmail</span>
@@ -241,7 +244,18 @@ function Index() {
             <span aria-hidden>·</span>
             <span>Kelola multi-akun</span>
           </p>
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
+            {["s.atu", "sa.tu", "sat.u", "satu"].map((ex) => (
+              <span
+                key={ex}
+                className="font-mono text-xs px-2.5 py-1 rounded-full border border-border bg-muted/30 text-muted-foreground"
+              >
+                {ex}
+              </span>
+            ))}
+          </div>
         </section>
+
 
 
         <GeneratorCard
