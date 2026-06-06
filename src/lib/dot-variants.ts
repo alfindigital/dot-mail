@@ -40,7 +40,7 @@ export function validateUsername(raw: string): ValidationResult {
   const username = raw.trim().toLowerCase();
   if (username.length === 0) return { valid: false, error: "Masukkan username Gmail." };
   if (username.length < 2) return { valid: false, error: "Minimal 2 karakter." };
-  if (username.length > 30) return { valid: false, error: "Maksimal 30 karakter." };
+  if (username.length > 15) return { valid: false, error: "Maksimal 15 karakter." };
   if (!/^[a-z0-9]+$/.test(username))
     return {
       valid: false,
