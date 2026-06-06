@@ -266,23 +266,32 @@ function Index() {
         {variants.length > 0 ? (
           <ResultsList variants={variants} username={username} />
         ) : (
-          <section className="mt-10 sm:mt-14">
-            <h2 className="font-serif text-2xl sm:text-3xl text-foreground text-center mb-6">
-              Cara Pakai
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              {steps.map(({ title, desc }) => (
-                <div
-                  key={title}
-                  className="rounded-xl border border-border bg-card px-4 py-3"
-                >
-                  <h3 className="font-serif text-base text-foreground">{title}</h3>
-                  <p className="text-sm text-muted-foreground leading-snug mt-0.5">{desc}</p>
-                </div>
-              ))}
+          <>
+            <div className="mt-8 rounded-2xl border border-dashed border-border bg-muted/20 px-6 py-10 flex flex-col items-center justify-center text-center">
+              <Sparkles className="size-5 text-muted-foreground/60 mb-2" />
+              <p className="text-sm text-muted-foreground">
+                Hasil akan muncul di sini setelah kamu generate.
+              </p>
             </div>
-          </section>
+            <section className="mt-10 sm:mt-14">
+              <h2 className="font-serif text-2xl sm:text-3xl text-foreground text-center mb-6">
+                Cara Pakai
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                {steps.map(({ title, desc }) => (
+                  <div
+                    key={title}
+                    className="rounded-xl border border-border bg-card px-4 py-3"
+                  >
+                    <h3 className="font-serif text-base text-foreground">{title}</h3>
+                    <p className="text-sm text-muted-foreground leading-snug mt-0.5">{desc}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          </>
         )}
+
 
         <section className="mt-16">
           <h2 className="font-serif text-2xl sm:text-3xl text-foreground mb-4">
