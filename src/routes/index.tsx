@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Globe, Facebook, Youtube, Send } from "lucide-react";
+import { Globe, Facebook, Youtube, Send, ShieldCheck, Lock, Zap, Sparkles } from "lucide-react";
 import { Toaster } from "@/components/ui/sonner";
 import {
   Accordion,
