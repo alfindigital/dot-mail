@@ -156,8 +156,8 @@ function Index() {
         return;
       }
 
-      // Cmd/Ctrl+A copies all when results exist and focus is outside input
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "a" && variants.length > 0 && !isTyping(e.target)) {
+      // Cmd/Ctrl+Shift+C copies all when results exist and focus is outside input
+      if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key.toLowerCase() === "c" && variants.length > 0 && !isTyping(e.target)) {
         e.preventDefault();
         const all = variants.map((v) => `${v}@gmail.com`).join("\n");
         navigator.clipboard.writeText(all).then(() => {
@@ -339,7 +339,7 @@ function Index() {
             <kbd className="inline-flex items-center px-1.5 py-0.5 rounded border border-border bg-muted/40 font-mono text-[10px] text-foreground">/</kbd>
             <span>untuk fokus input</span>
             <span aria-hidden>·</span>
-            <kbd className="inline-flex items-center px-1.5 py-0.5 rounded border border-border bg-muted/40 font-mono text-[10px] text-foreground">⌘ A</kbd>
+            <kbd className="inline-flex items-center px-1.5 py-0.5 rounded border border-border bg-muted/40 font-mono text-[10px] text-foreground">⌘ Shift C</kbd>
             <span>untuk salin semua</span>
           </div>
           <div className="flex flex-wrap items-center justify-center gap-3 text-sm text-muted-foreground">
