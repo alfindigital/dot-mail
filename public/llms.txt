@@ -2,10 +2,10 @@
 
 > Generator gmail dot trick (variasi titik) untuk alamat Gmail. Gratis, privat, jalan sepenuhnya di browser.
 
-DotMail memanfaatkan fakta bahwa Gmail mengabaikan titik (.) di bagian username sebuah alamat email. Artinya s.atu@gmail.com, sa.tu@gmail.com, dan satu@gmail.com semuanya masuk ke inbox yang sama. Tool ini menghasilkan seluruh kombinasi titik dari satu username Gmail — berguna untuk testing form, signup multi-akun, filter Gmail per layanan, atau melacak siapa yang membocorkan alamat email kamu.
+DotMail memanfaatkan fakta bahwa Gmail mengabaikan titik (.) di bagian username sebuah alamat email. Artinya s.atu@gmail.com, sa.tu@gmail.com, dan satu@gmail.com semuanya masuk ke inbox yang sama. Tool ini menghasilkan seluruh kombinasi titik dari satu username Gmail - berguna untuk testing form, signup multi-akun, filter Gmail per layanan, atau melacak siapa yang membocorkan alamat email kamu.
 
 Bahasa: Bahasa Indonesia. Sepenuhnya client-side: tidak ada server, tidak ada database, tidak ada login. Input dan hasil tidak pernah meninggalkan browser.
 
 ## Pages
 
-- [Home — Gmail Dot Trick Generator](/): Generator utama untuk membuat seluruh variasi titik dari sebuah alamat Gmail, plus FAQ tentang dot trick.
+- [Home - Gmail Dot Trick Generator](/): Generator utama untuk membuat seluruh variasi titik dari sebuah alamat Gmail, plus FAQ tentang dot trick.
