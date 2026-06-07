@@ -246,13 +246,17 @@ function Index() {
             <span aria-hidden>·</span>
             <span>Tanpa login</span>
           </p>
+          <p className="mb-3 font-mono text-[11px] sm:text-xs uppercase tracking-[0.22em] text-accent">
+            Gmail Dot Trick Generator
+          </p>
           <h1 className="font-serif text-4xl sm:text-6xl leading-[1.05] text-foreground">
             Satu inbox.{" "}
             <span className="italic text-accent">Ratusan</span> alamat.
           </h1>
           <p className="mt-5 text-base sm:text-lg text-muted-foreground max-w-xl mx-auto">
-            Gmail nggak peduli titik di username. Semua variasi masuk ke inbox yang sama.
+            Gmail mengabaikan titik di username — semua variasi gmail dot trick masuk ke inbox yang sama. Generate semuanya sekaligus.
           </p>
+
           <p className="mt-4 text-xs text-muted-foreground/80 flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
             <span>Filter Gmail</span>
             <span aria-hidden>·</span>
