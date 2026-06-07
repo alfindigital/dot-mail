@@ -156,8 +156,8 @@ function Index() {
         return;
       }
 
-      // Cmd/Ctrl+A copies all when results exist and focus is outside input
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "a" && variants.length > 0 && !isTyping(e.target)) {
+      // Cmd/Ctrl+Shift+C copies all when results exist and focus is outside input
+      if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key.toLowerCase() === "c" && variants.length > 0 && !isTyping(e.target)) {
         e.preventDefault();
         const all = variants.map((v) => `${v}@gmail.com`).join("\n");
         navigator.clipboard.writeText(all).then(() => {
