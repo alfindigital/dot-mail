@@ -198,6 +198,10 @@ function Index() {
 
   const faqs = [
     {
+      q: "Apa itu Gmail dot trick?",
+      a: "Gmail dot trick adalah fitur bawaan Gmail yang mengabaikan titik (.) di bagian username sebuah alamat. Jadi s.atu@gmail.com, sa.tu@gmail.com, dan satu@gmail.com semuanya masuk ke inbox yang sama. DotMail menghasilkan seluruh kombinasi titik dari satu username sekaligus.",
+    },
+    {
       q: "Legal?",
       a: "Iya. Ini fitur bawaan Gmail. Google nggak peduli titik di username, jadi semua variasi tetap masuk inbox yang sama. Bukan hack.",
     },
@@ -214,6 +218,7 @@ function Index() {
       a: "Filter email per layanan, ngecek siapa yang bocorin email kamu (pakai alamat unik tiap daftar), atau kelola banyak akun dari satu inbox.",
     },
   ];
+
 
   return (
     <div className="min-h-screen bg-background text-foreground">
