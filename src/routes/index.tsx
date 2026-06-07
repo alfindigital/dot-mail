@@ -19,33 +19,35 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "DotMail | Generator Variasi Titik Gmail" },
+      { title: "Gmail Dot Trick: Generator Variasi Titik — DotMail" },
       {
         name: "description",
         content:
-          "Buat semua variasi titik Gmail dalam sekejap. Gratis, privat, jalan sepenuhnya di browser.",
+          "Generator gmail dot trick gratis. Buat semua variasi titik untuk satu username Gmail dalam sekejap — privat, jalan di browser, tanpa login.",
       },
       { name: "robots", content: "index, follow" },
-      { property: "og:title", content: "DotMail | Generator Variasi Titik Gmail" },
+      { property: "og:title", content: "Gmail Dot Trick: Generator Variasi Titik — DotMail" },
       {
         property: "og:description",
         content:
-          "Tool gratis buat nge-generate semua kombinasi titik Gmail. Privasi aman, tanpa server.",
+          "Generator gmail dot trick gratis. Buat semua variasi titik untuk satu username Gmail dalam sekejap — privat, jalan di browser, tanpa login.",
       },
+
       { property: "og:url", content: "https://dotmail.lovable.app/" },
       { property: "og:image", content: "https://dotmail.lovable.app/og-image.png" },
       { property: "og:image:width", content: "1216" },
       { property: "og:image:height", content: "640" },
       { property: "og:image:type", content: "image/png" },
       { property: "og:image:alt", content: "DotMail | Generator Variasi Titik Gmail" },
-      { name: "twitter:title", content: "DotMail | Generator Variasi Titik Gmail" },
+      { name: "twitter:title", content: "Gmail Dot Trick: Generator Variasi Titik — DotMail" },
       {
         name: "twitter:description",
         content:
-          "Tool gratis buat nge-generate semua kombinasi titik Gmail. Privasi aman, tanpa server.",
+          "Generator gmail dot trick gratis. Buat semua variasi titik untuk satu username Gmail dalam sekejap — privat, jalan di browser, tanpa login.",
       },
       { name: "twitter:image", content: "https://dotmail.lovable.app/og-image.png" },
-      { name: "twitter:image:alt", content: "DotMail | Generator Variasi Titik Gmail" },
+      { name: "twitter:image:alt", content: "DotMail — Gmail Dot Trick Generator" },
+
     ],
     links: [{ rel: "canonical", href: "https://dotmail.lovable.app/" }],
     scripts: [
@@ -55,6 +57,14 @@ export const Route = createFileRoute("/")({
           "@context": "https://schema.org",
           "@type": "FAQPage",
           mainEntity: [
+            {
+              "@type": "Question",
+              name: "Apa itu Gmail dot trick?",
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: "Gmail dot trick adalah fitur bawaan Gmail yang mengabaikan titik (.) di bagian username sebuah alamat. Jadi s.atu@gmail.com, sa.tu@gmail.com, dan satu@gmail.com semuanya masuk ke inbox yang sama. DotMail menghasilkan seluruh kombinasi titik dari satu username sekaligus.",
+              },
+            },
             {
               "@type": "Question",
               name: "Legal?",
@@ -88,6 +98,7 @@ export const Route = createFileRoute("/")({
               },
             },
           ],
+
         }),
       },
     ],
