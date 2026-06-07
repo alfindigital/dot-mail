@@ -72,6 +72,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { name: "theme-color", content: "#f5f3ee", media: "(prefers-color-scheme: light)" },
+      { name: "theme-color", content: "#1a1a1a", media: "(prefers-color-scheme: dark)" },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "DotMail" },
       { property: "og:locale", content: "id_ID" },
@@ -79,6 +81,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     links: [
       { rel: "stylesheet", href: appCss },
+      { rel: "icon", href: "/favicon.ico", sizes: "any" },
+      { rel: "icon", type: "image/png", sizes: "16x16", href: "/favicon-16x16.png" },
+      { rel: "icon", type: "image/png", sizes: "32x32", href: "/favicon-32x32.png" },
+      { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png" },
+      { rel: "manifest", href: "/site.webmanifest" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
@@ -98,7 +105,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
               url: "https://dotmail.lovable.app/",
               name: "DotMail",
               description:
-                "Generator variasi titik (dot trick) alamat Gmail. Gratis, privat, berjalan di browser.",
+                "Generator gmail dot trick: buat semua variasi titik alamat Gmail. Gratis, privat, berjalan di browser.",
               inLanguage: "id-ID",
               potentialAction: {
                 "@type": "SearchAction",
@@ -110,11 +117,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
               },
             },
             {
-              "@type": "WebApplication",
-              name: "DotMail",
+              "@type": "SoftwareApplication",
+              name: "DotMail — Gmail Dot Trick Generator",
               url: "https://dotmail.lovable.app/",
               applicationCategory: "UtilitiesApplication",
               operatingSystem: "Any",
+              inLanguage: "id-ID",
               offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
             },
           ],
@@ -122,6 +130,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
     ],
   }),
+
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
