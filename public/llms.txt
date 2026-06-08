@@ -9,3 +9,18 @@ Bahasa: Bahasa Indonesia. Sepenuhnya client-side: tidak ada server, tidak ada da
 ## Pages
 
 - [Home - Gmail Dot Trick Generator](/): Generator utama untuk membuat seluruh variasi titik dari sebuah alamat Gmail, plus FAQ tentang dot trick.
+- [Sitemap](/sitemap.xml): Daftar URL terindeks.
+- [Robots](/robots.txt): Aturan crawler.
+
+## Key Facts
+
+- Jumlah variasi untuk username n karakter: 2^(n-1). Contoh: "satu" (4 char) menghasilkan 8 variasi.
+- Batas input: 2-15 karakter, hanya a-z dan 0-9 (Gmail tidak mengizinkan simbol selain titik di username).
+- Semua variasi diarahkan ke satu inbox Gmail yang sama oleh server Google.
+- Use case: filter email per layanan, testing form/signup, kelola multi-akun dari satu inbox, deteksi kebocoran data.
+
+## FAQ
+
+- Apa itu Gmail dot trick? Fitur bawaan Gmail yang mengabaikan titik di username; semua variasi masuk ke inbox yang sama.
+- Apakah legal? Ya, ini perilaku resmi Gmail, bukan eksploit.
+- Apakah data disimpan? Tidak, semua perhitungan di browser, tanpa server.
