@@ -167,14 +167,7 @@ function Index() {
         return;
       }
 
-      // Cmd/Ctrl+Shift+C copies all when results exist and focus is outside input
-      if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key.toLowerCase() === "c" && variants.length > 0 && !isTyping(e.target)) {
-        e.preventDefault();
-        const all = variants.map((v) => `${v}@gmail.com`).join("\n");
-        navigator.clipboard.writeText(all).then(() => {
-          toast.success(`Disalin ${variants.length.toLocaleString("id-ID")} email`);
-        });
-      }
+      // Cmd/Ctrl+Shift+C is handled inside ResultsList (smart copy: selection > filtered > all).
     }
 
     window.addEventListener("keydown", handler);
