@@ -118,7 +118,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
             },
             {
               "@type": "SoftwareApplication",
-              name: "DotMail — Gmail Dot Trick Generator",
+              name: "DotMail - Gmail Dot Trick Generator",
               url: "https://dotmail.lovable.app/",
               applicationCategory: "UtilitiesApplication",
               operatingSystem: "Any",
