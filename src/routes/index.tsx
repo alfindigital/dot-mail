@@ -34,10 +34,10 @@ export const Route = createFileRoute("/")({
       },
 
       { property: "og:url", content: "https://dotmail.lovable.app/" },
-      { property: "og:image", content: "https://dotmail.lovable.app/og-image.png" },
-      { property: "og:image:width", content: "1216" },
-      { property: "og:image:height", content: "640" },
-      { property: "og:image:type", content: "image/png" },
+      { property: "og:image", content: "https://dotmail.lovable.app/og.jpg" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:type", content: "image/jpeg" },
       { property: "og:image:alt", content: "DotMail | Generator Variasi Titik Gmail" },
       { name: "twitter:title", content: "Gmail Dot Trick: Generator Variasi Titik - DotMail" },
       {
@@ -45,7 +45,7 @@ export const Route = createFileRoute("/")({
         content:
           "Generator gmail dot trick gratis. Buat semua variasi titik untuk satu username Gmail dalam sekejap - privat, jalan di browser, tanpa login.",
       },
-      { name: "twitter:image", content: "https://dotmail.lovable.app/og-image.png" },
+      { name: "twitter:image", content: "https://dotmail.lovable.app/og.jpg" },
       { name: "twitter:image:alt", content: "DotMail - Gmail Dot Trick Generator" },
 
     ],
