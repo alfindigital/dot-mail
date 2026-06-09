@@ -43,11 +43,5 @@ export function registerPWA() {
     return;
   }
 
-  // Lazy import so workbox-window isn't bundled into refused contexts.
-  import("workbox-window")
-    .then(({ Workbox }) => {
-      const wb = new Workbox("/sw.js");
-      wb.register().catch(() => {});
-    })
-    .catch(() => {});
+  navigator.serviceWorker.register("/sw.js").catch(() => {});
 }
