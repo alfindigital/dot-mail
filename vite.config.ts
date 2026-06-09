@@ -14,6 +14,36 @@ export default defineConfig({
     server: { entry: "server" },
   },
   vite: {
+    cacheDir: "node_modules/.vite-dotmail",
+    optimizeDeps: {
+      include: [
+        "react",
+        "react/jsx-runtime",
+        "react/jsx-dev-runtime",
+        "react-dom",
+        "react-dom/client",
+        "@tanstack/react-query",
+        "@tanstack/react-router",
+        "@tanstack/react-store",
+        "@tanstack/react-virtual",
+        "@tanstack/store",
+        "lucide-react",
+        "workbox-window",
+      ],
+      esbuildOptions: {
+        target: "es2022",
+      },
+    },
+    server: {
+      warmup: {
+        clientFiles: [
+          "./src/routes/__root.tsx",
+          "./src/routes/index.tsx",
+          "./src/components/generator/GeneratorCard.tsx",
+          "./src/components/generator/ResultsList.tsx",
+        ],
+      },
+    },
     plugins: [
       VitePWA({
         registerType: "autoUpdate",
@@ -21,32 +51,25 @@ export default defineConfig({
         filename: "sw.js",
         devOptions: { enabled: false },
         manifest: false, // we ship our own /site.webmanifest
+        cleanupOutdatedCaches: true,
         workbox: {
           navigateFallback: "/",
           navigateFallbackDenylist: [/^\/api\//, /^\/~oauth/, /^\/sitemap\.xml$/],
-          globPatterns: ["**/*.{js,css,html,svg,png,jpg,jpeg,webp,ico,woff2}"],
+          globPatterns: ["**/*.{js,css,html,svg,png,jpg,jpeg,webp,ico,woff2,webmanifest}"],
+          globIgnores: ["**/robots.txt", "**/llms.txt", "**/sitemap.xml"],
+          dontCacheBustURLsMatching: /\.[a-f0-9]{8,}\./,
           runtimeCaching: [
             {
-              urlPattern: ({ request }) => request.mode === "navigate",
-              handler: "NetworkFirst",
-              options: {
-                cacheName: "dotmail-pages",
-                networkTimeoutSeconds: 4,
-                expiration: { maxEntries: 20, maxAgeSeconds: 60 * 60 * 24 * 7 },
-              },
-            },
-            {
-              urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
-              handler: "StaleWhileRevalidate",
-              options: { cacheName: "google-fonts-stylesheets" },
-            },
-            {
-              urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
+              urlPattern: ({ url, request }) =>
+                url.origin === self.location.origin &&
+                ["script", "style", "worker", "image", "font", "manifest"].includes(
+                  request.destination,
+                ),
               handler: "CacheFirst",
               options: {
-                cacheName: "google-fonts-webfonts",
-                expiration: { maxEntries: 30, maxAgeSeconds: 60 * 60 * 24 * 365 },
-                cacheableResponse: { statuses: [0, 200] },
+                cacheName: "dotmail-static-assets",
+                expiration: { maxEntries: 120, maxAgeSeconds: 60 * 60 * 24 * 30 },
+                cacheableResponse: { statuses: [200] },
               },
             },
           ],
