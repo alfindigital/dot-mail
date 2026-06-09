@@ -51,8 +51,8 @@ export default defineConfig({
         filename: "sw.js",
         devOptions: { enabled: false },
         manifest: false, // we ship our own /site.webmanifest
-        cleanupOutdatedCaches: true,
         workbox: {
+          cleanupOutdatedCaches: true,
           navigateFallback: "/",
           navigateFallbackDenylist: [/^\/api\//, /^\/~oauth/, /^\/sitemap\.xml$/],
           globPatterns: ["**/*.{js,css,html,svg,png,jpg,jpeg,webp,ico,woff2,webmanifest}"],
@@ -60,8 +60,8 @@ export default defineConfig({
           dontCacheBustURLsMatching: /\.[a-f0-9]{8,}\./,
           runtimeCaching: [
             {
-              urlPattern: ({ url, request }) =>
-                url.origin === self.location.origin &&
+              urlPattern: ({ sameOrigin, request }) =>
+                sameOrigin &&
                 ["script", "style", "worker", "image", "font", "manifest"].includes(
                   request.destination,
                 ),
