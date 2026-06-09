@@ -28,7 +28,6 @@ export default defineConfig({
         "@tanstack/react-virtual",
         "@tanstack/store",
         "lucide-react",
-        "workbox-window",
       ],
       esbuildOptions: {
         target: "es2022",
