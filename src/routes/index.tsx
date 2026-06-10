@@ -217,8 +217,8 @@ function Index() {
     <div className="min-h-screen bg-background text-foreground">
       <Toaster position="top-center" />
 
-      <header className="border-b border-border/60">
-        <div className="mx-auto max-w-3xl px-5 sm:px-8 py-5 flex items-center justify-between">
+      <header className="bg-primary text-primary-foreground">
+        <div className="mx-auto max-w-3xl px-5 sm:px-8 py-2.5 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="size-2.5 rounded-full bg-accent" />
             <span className="font-serif text-xl tracking-tight">DotMail</span>
