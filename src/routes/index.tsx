@@ -316,14 +316,6 @@ function Index() {
 
       <footer className="border-t border-border/60">
         <div className="mx-auto max-w-3xl px-5 sm:px-8 py-6 flex flex-col items-center gap-3">
-          <div className="hidden sm:flex items-center gap-2 text-xs text-muted-foreground">
-            <span>Tekan</span>
-            <kbd className="inline-flex items-center px-1.5 py-0.5 rounded border border-border bg-muted/40 font-mono text-[10px] text-foreground">/</kbd>
-            <span>untuk fokus input</span>
-            <span aria-hidden>·</span>
-            <kbd className="inline-flex items-center px-1.5 py-0.5 rounded border border-border bg-muted/40 font-mono text-[10px] text-foreground">⌘ Shift C</kbd>
-            <span>untuk salin semua</span>
-          </div>
           <div className="flex flex-wrap items-center justify-center gap-3 text-sm text-muted-foreground">
             <span>
               by{" "}
