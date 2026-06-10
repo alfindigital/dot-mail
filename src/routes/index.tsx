@@ -295,7 +295,7 @@ function Index() {
 
 
         <section className="mt-16">
-          <h2 className="font-serif text-2xl sm:text-3xl text-foreground mb-4">
+          <h2 className="font-serif text-2xl sm:text-3xl text-foreground text-center mb-6">
             Pertanyaan
           </h2>
           <Accordion type="single" collapsible className="rounded-2xl border border-border bg-card divide-y divide-border overflow-hidden">
