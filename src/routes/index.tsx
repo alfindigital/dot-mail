@@ -293,7 +293,7 @@ function Index() {
           <Accordion type="single" collapsible className="rounded-2xl border border-border bg-card divide-y divide-border overflow-hidden">
             {faqs.map((f, i) => (
               <AccordionItem key={i} value={`item-${i}`} className="border-0 px-5">
-                <AccordionTrigger className="text-left text-base font-medium hover:no-underline py-4">
+                <AccordionTrigger className="text-left text-base font-serif font-medium hover:no-underline py-4">
                   {f.q}
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground text-sm leading-relaxed pb-4">
