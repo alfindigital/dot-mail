@@ -210,6 +210,14 @@ function Index() {
       q: "Bisa buat apa aja?",
       a: "Filter email per layanan, ngecek siapa yang bocorin email kamu (pakai alamat unik tiap daftar), atau kelola banyak akun dari satu inbox.",
     },
+    {
+      q: "Perlu login?",
+      a: "Nggak. Buka laman ini, langsung pakai. Nggak perlu daftar akun atau verifikasi apa pun.",
+    },
+    {
+      q: "Seberapa cepat?",
+      a: "Instan. Ribuan kombinasi dihitung langsung di browser laptop atau ponselmu dalam hitungan milidetik.",
+    },
   ];
 
 
@@ -305,25 +313,6 @@ function Index() {
         </section>
       </main>
 
-      <section className="border-t border-border/60 bg-muted/30">
-        <div className="mx-auto max-w-3xl px-5 sm:px-8 py-10 grid grid-cols-1 sm:grid-cols-3 gap-6">
-          {[
-            { Icon: ShieldCheck, label: "100% di browser", desc: "Nggak ada yang dikirim ke server." },
-            { Icon: Lock, label: "Tanpa login", desc: "Pakai langsung, nggak perlu daftar." },
-            { Icon: Zap, label: "Instan", desc: "Ribuan kombinasi dihitung di laptopmu." },
-          ].map(({ Icon, label, desc }) => (
-            <div key={label} className="flex items-start gap-3">
-              <div className="flex size-9 items-center justify-center rounded-lg border border-border bg-background shrink-0">
-                <Icon className="size-5 text-foreground" />
-              </div>
-              <div>
-                <p className="text-sm font-medium text-foreground">{label}</p>
-                <p className="text-xs text-muted-foreground mt-0.5">{desc}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
 
       <footer className="border-t border-border/60">
         <div className="mx-auto max-w-3xl px-5 sm:px-8 py-6 flex flex-col items-center gap-3">
