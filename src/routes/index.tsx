@@ -239,9 +239,6 @@ function Index() {
             <span aria-hidden>·</span>
             <span>Tanpa login</span>
           </p>
-          <p className="mb-3 font-mono text-[11px] sm:text-xs uppercase tracking-[0.22em] text-accent">
-            Gmail Dot Trick Generator
-          </p>
           <h1 className="font-serif text-4xl sm:text-6xl leading-[1.05] text-foreground">
             Satu inbox.{" "}
             <span className="italic text-accent">Ratusan</span> alamat.
