@@ -254,16 +254,6 @@ function Index() {
             <span aria-hidden>·</span>
             <span>Kelola multi-akun</span>
           </p>
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
-            {["s.atu", "sa.tu", "sat.u", "satu"].map((ex) => (
-              <span
-                key={ex}
-                className="font-mono text-xs px-2.5 py-1 rounded-full border border-border bg-muted/30 text-muted-foreground"
-              >
-                {ex}
-              </span>
-            ))}
-          </div>
         </section>
 
 
