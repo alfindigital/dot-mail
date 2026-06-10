@@ -214,10 +214,6 @@ function Index() {
       q: "Perlu login?",
       a: "Nggak. Buka laman ini, langsung pakai. Nggak perlu daftar akun atau verifikasi apa pun.",
     },
-    {
-      q: "Seberapa cepat?",
-      a: "Instan. Ribuan kombinasi dihitung langsung di browser laptop atau ponselmu dalam hitungan milidetik.",
-    },
   ];
 
 
