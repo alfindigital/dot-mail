@@ -230,7 +230,7 @@ function Index() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-3xl px-5 sm:px-8 pt-12 sm:pt-20 pb-24">
+      <main className="mx-auto max-w-3xl px-5 sm:px-8 pt-4 sm:pt-6 pb-24">
         <section className="text-center mb-10 sm:mb-14">
           <p className="mb-4 text-[10px] sm:text-xs uppercase tracking-[0.18em] text-muted-foreground flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
             <span>Gratis</span>
