@@ -232,13 +232,6 @@ function Index() {
 
       <main className="mx-auto max-w-3xl px-5 sm:px-8 pt-4 sm:pt-6 pb-24">
         <section className="text-center mb-10 sm:mb-14">
-          <p className="mb-4 text-[10px] sm:text-xs uppercase tracking-[0.18em] text-muted-foreground flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
-            <span>Gratis</span>
-            <span aria-hidden>·</span>
-            <span>Jalan di browser</span>
-            <span aria-hidden>·</span>
-            <span>Tanpa login</span>
-          </p>
           <h1 className="font-serif text-4xl sm:text-6xl leading-[1.05] text-foreground">
             Satu inbox.{" "}
             <span className="italic text-accent">Ratusan</span> alamat.
