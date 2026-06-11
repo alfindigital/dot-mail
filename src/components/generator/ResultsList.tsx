@@ -352,9 +352,6 @@ export function ResultsList({ variants, username }: Props) {
             <h2 className="font-serif text-2xl sm:text-3xl text-foreground">
               {variants.length.toLocaleString("id-ID")} variasi
             </h2>
-            <p className="text-sm text-muted-foreground mt-1">
-              untuk <span className="font-mono text-foreground">{username}@gmail.com</span>
-            </p>
           </div>
           <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
             {selected.size > 0 && (
