@@ -86,7 +86,7 @@ export const Route = createFileRoute("/")({
               name: "Data simpan di mana?",
               acceptedAnswer: {
                 "@type": "Answer",
-                text: "Nggak disimpan di mana-mana. Semua dihitung di browser kamu sendiri. Nggak ada server, nggak ada database, nggak ada yang ngintip input.",
+                text: "Semua diproses di browser kamu sendiri. Nggak ada server, nggak ada database, nggak ada yang ngintip input.",
               },
             },
             {
@@ -204,7 +204,7 @@ function Index() {
     },
     {
       q: "Data simpan di mana?",
-      a: "Nggak disimpan di mana-mana. Semua dihitung di browser kamu sendiri. Nggak ada server, nggak ada database, nggak ada yang ngintip input.",
+      a: "Semua diproses di browser kamu sendiri. Nggak ada server, nggak ada database, nggak ada yang ngintip input.",
     },
     {
       q: "Bisa buat apa aja?",
