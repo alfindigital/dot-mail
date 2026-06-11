@@ -94,7 +94,7 @@ export const Route = createFileRoute("/")({
               name: "Bisa buat apa aja?",
               acceptedAnswer: {
                 "@type": "Answer",
-                text: "Filter email per layanan, ngecek siapa yang bocorin email kamu (pakai alamat unik tiap daftar), atau kelola banyak akun dari satu inbox.",
+                text: "Filter email per layanan, ngecek siapa yang bocorin email kamu, atau kelola banyak akun dari satu inbox.",
               },
             },
           ],
@@ -208,7 +208,7 @@ function Index() {
     },
     {
       q: "Bisa buat apa aja?",
-      a: "Filter email per layanan, ngecek siapa yang bocorin email kamu (pakai alamat unik tiap daftar), atau kelola banyak akun dari satu inbox.",
+      a: "Filter email per layanan, ngecek siapa yang bocorin email kamu, atau kelola banyak akun dari satu inbox.",
     },
     {
       q: "Perlu login?",
