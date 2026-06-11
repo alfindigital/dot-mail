@@ -23,14 +23,6 @@ function dotCount(s: string) {
   return c;
 }
 
-function matchesDotFilter(v: string, f: DotFilter) {
-  if (f === "all") return true;
-  const c = dotCount(v);
-  if (f === "0") return c === 0;
-  if (f === "1-2") return c >= 1 && c <= 2;
-  if (f === "3-4") return c >= 3 && c <= 4;
-  return c >= 5;
-}
 
 function isTyping(el: EventTarget | null) {
   if (!(el instanceof HTMLElement)) return false;
