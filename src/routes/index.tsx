@@ -331,8 +331,6 @@ function Index() {
               </a>
             ))}
           </div>
-          <span className="text-border">|</span>
-          <span className="text-muted-foreground/70">v1.0.0</span>
         </div>
       </footer>
     </div>
