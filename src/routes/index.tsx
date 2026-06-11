@@ -210,10 +210,6 @@ function Index() {
       q: "Bisa buat apa aja?",
       a: "Filter email per layanan, ngecek siapa yang bocorin email kamu, atau kelola banyak akun dari satu inbox.",
     },
-    {
-      q: "Perlu login?",
-      a: "Nggak. Buka laman ini, langsung pakai. Nggak perlu daftar akun atau verifikasi apa pun.",
-    },
   ];
 
 
