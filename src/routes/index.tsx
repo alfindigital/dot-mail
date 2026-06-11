@@ -237,11 +237,11 @@ function Index() {
       <main className="mx-auto max-w-3xl px-5 sm:px-8 pt-4 sm:pt-6 pb-24">
         <section className="text-center mb-10 sm:mb-14">
           <h1 className="font-serif text-4xl sm:text-6xl leading-[1.05] text-foreground">
-            Satu inbox.{" "}
+            Satu inbox.<br />
             <span className="italic text-accent">Ratusan</span> alamat.
           </h1>
           <p className="mt-5 text-base sm:text-lg text-muted-foreground max-w-xl mx-auto">
-            Gmail mengabaikan titik di username. Semua variasi gmail dot trick masuk ke inbox yang sama. Generate semuanya sekaligus.
+            Gmail mengabaikan titik di username. Semua variasi dibawah masuk ke inbox yang sama. Generate pakai tools ini.
           </p>
 
         </section>
