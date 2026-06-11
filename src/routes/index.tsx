@@ -244,13 +244,6 @@ function Index() {
             Gmail mengabaikan titik di username. Semua variasi gmail dot trick masuk ke inbox yang sama. Generate semuanya sekaligus.
           </p>
 
-          <p className="mt-4 text-xs text-muted-foreground/80 flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
-            <span>Filter Gmail</span>
-            <span aria-hidden>·</span>
-            <span>Testing form</span>
-            <span aria-hidden>·</span>
-            <span>Kelola multi-akun</span>
-          </p>
         </section>
 
 
