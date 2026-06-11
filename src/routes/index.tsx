@@ -340,6 +340,7 @@ function Index() {
               ))}
             </div>
           </div>
+          <span className="text-xs text-muted-foreground/70">v1.0.0</span>
         </div>
       </footer>
     </div>
