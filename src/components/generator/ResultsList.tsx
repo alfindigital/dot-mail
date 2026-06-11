@@ -11,15 +11,6 @@ interface Props {
   username: string;
 }
 
-type DotFilter = "all" | "0" | "1-2" | "3-4" | "5+";
-
-const DOT_FILTERS: { key: DotFilter; label: string }[] = [
-  { key: "all", label: "Semua" },
-  { key: "0", label: "Tanpa titik" },
-  { key: "1-2", label: "1–2 titik" },
-  { key: "3-4", label: "3–4 titik" },
-  { key: "5+", label: "5+ titik" },
-];
 
 // Threshold above which we switch to virtualized rendering.
 const VIRTUALIZE_THRESHOLD = 100;
@@ -32,20 +23,7 @@ function dotCount(s: string) {
   return c;
 }
 
-function matchesDotFilter(v: string, f: DotFilter) {
-  if (f === "all") return true;
-  const c = dotCount(v);
-  if (f === "0") return c === 0;
-  if (f === "1-2") return c >= 1 && c <= 2;
-  if (f === "3-4") return c >= 3 && c <= 4;
-  return c >= 5;
-}
 
-function isTyping(el: EventTarget | null) {
-  if (!(el instanceof HTMLElement)) return false;
-  const tag = el.tagName;
-  return tag === "INPUT" || tag === "TEXTAREA" || el.isContentEditable;
-}
 
 function HighlightedEmail({
   value,
@@ -163,7 +141,6 @@ export function ResultsList({ variants, username }: Props) {
   // Selection keyed by variant string so it survives filtering.
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [query, setQuery] = useState("");
-  const [dotFilter, setDotFilter] = useState<DotFilter>("all");
   const searchRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
 
@@ -171,7 +148,6 @@ export function ResultsList({ variants, username }: Props) {
   useEffect(() => {
     setSelected(new Set());
     setQuery("");
-    setDotFilter("all");
   }, [username, variants]);
 
   const filtered = useMemo(() => {
@@ -180,13 +156,12 @@ export function ResultsList({ variants, username }: Props) {
     for (let i = 0; i < variants.length; i++) {
       const v = variants[i];
       if (q && !v.toLowerCase().includes(q)) continue;
-      if (!matchesDotFilter(v, dotFilter)) continue;
       out.push({ v, idx: i });
     }
     return out;
-  }, [variants, query, dotFilter]);
+  }, [variants, query]);
 
-  const filterActive = query.trim().length > 0 || dotFilter !== "all";
+  const filterActive = query.trim().length > 0;
   const shouldVirtualize = filtered.length > VIRTUALIZE_THRESHOLD;
 
   // Window virtualizer — uses page scroll, preserves sticky header.
@@ -202,7 +177,7 @@ export function ResultsList({ variants, username }: Props) {
   useEffect(() => {
     virtualizer.measure();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query, dotFilter, variants]);
+  }, [query, variants]);
 
   function selectAllVisible(rangeStart: number, rangeEnd: number) {
     const next = new Set(selected);
@@ -319,21 +294,12 @@ export function ResultsList({ variants, username }: Props) {
         return;
       }
 
-      // Digit 1..5 → toggle dot filter chips (only when not typing)
-      if (!isTyping(e.target) && !mod && !e.shiftKey && /^[1-5]$/.test(e.key)) {
-        const idx = parseInt(e.key, 10) - 1;
-        if (DOT_FILTERS[idx]) {
-          e.preventDefault();
-          setDotFilter(DOT_FILTERS[idx].key);
-        }
-        return;
-      }
     }
 
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [variants, filtered, selected, filterActive, query, dotFilter]);
+  }, [variants, filtered, selected, filterActive, query]);
 
   if (variants.length === 0) return null;
 
@@ -422,32 +388,6 @@ export function ResultsList({ variants, username }: Props) {
             >
               <X className="size-4" />
             </button>
-          )}
-        </div>
-        <div className="flex flex-wrap items-center gap-1.5">
-          {DOT_FILTERS.map((f, i) => {
-            const active = dotFilter === f.key;
-            return (
-              <button
-                key={f.key}
-                type="button"
-                onClick={() => setDotFilter(f.key)}
-                title={`Pintasan: ${i + 1}`}
-                className={`text-xs px-2.5 py-1 rounded-full border transition ${
-                  active
-                    ? "bg-accent text-accent-foreground border-accent"
-                    : "bg-muted/30 text-muted-foreground border-border hover:border-accent/50"
-                }`}
-              >
-                <span className="font-mono text-[10px] opacity-60 mr-1">{i + 1}</span>
-                {f.label}
-              </button>
-            );
-          })}
-          {filterActive && (
-            <span className="text-xs text-muted-foreground ml-1">
-              {filtered.length.toLocaleString("id-ID")} cocok
-            </span>
           )}
         </div>
       </div>
