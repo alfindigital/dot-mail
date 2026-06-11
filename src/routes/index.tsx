@@ -304,7 +304,7 @@ function Index() {
 
 
       <footer className="border-t border-border/60">
-        <div className="mx-auto max-w-3xl px-5 sm:px-8 py-6 flex flex-col items-center gap-3">
+        <div className="mx-auto max-w-3xl px-5 sm:px-8 py-3 flex flex-col items-center gap-2">
           <div className="flex flex-wrap items-center justify-center gap-3 text-sm text-muted-foreground">
             <span>
               by{" "}
