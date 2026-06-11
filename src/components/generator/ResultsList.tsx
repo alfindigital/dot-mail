@@ -11,15 +11,6 @@ interface Props {
   username: string;
 }
 
-type DotFilter = "all" | "0" | "1-2" | "3-4" | "5+";
-
-const DOT_FILTERS: { key: DotFilter; label: string }[] = [
-  { key: "all", label: "Semua" },
-  { key: "0", label: "Tanpa titik" },
-  { key: "1-2", label: "1–2 titik" },
-  { key: "3-4", label: "3–4 titik" },
-  { key: "5+", label: "5+ titik" },
-];
 
 // Threshold above which we switch to virtualized rendering.
 const VIRTUALIZE_THRESHOLD = 100;
