@@ -230,7 +230,7 @@ function Index() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-3xl px-5 sm:px-8 pt-4 sm:pt-6 pb-24">
+      <main className="mx-auto max-w-3xl px-5 sm:px-8 pt-4 sm:pt-6 pb-12">
         <section className="text-center mb-10 sm:mb-14">
           <h1 className="font-serif text-4xl sm:text-6xl leading-[1.05] text-foreground">
             Satu inbox.<br />
@@ -279,7 +279,7 @@ function Index() {
         )}
 
 
-        <section className="mt-16">
+        <section className="mt-10">
           <h2 className="font-serif text-2xl sm:text-3xl text-foreground text-center mb-6">
             Pertanyaan
           </h2>
