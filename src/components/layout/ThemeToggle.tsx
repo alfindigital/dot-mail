@@ -6,8 +6,12 @@ const KEY = "dotmail-theme";
 
 function getInitial(): "light" | "dark" {
   if (typeof window === "undefined") return "light";
-  const stored = localStorage.getItem(KEY);
-  if (stored === "light" || stored === "dark") return stored;
+  try {
+    const stored = localStorage.getItem(KEY);
+    if (stored === "light" || stored === "dark") return stored;
+  } catch {
+    /* ignore */
+  }
   return "light";
 }
 
