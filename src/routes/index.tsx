@@ -210,6 +210,10 @@ function Index() {
       q: "Bisa buat apa aja?",
       a: "Filter email per layanan, ngecek siapa yang bocorin email kamu, atau kelola banyak akun dari satu inbox.",
     },
+    {
+      q: "Shortcut keyboard apa aja yang bisa dipakai?",
+      a: "Ctrl+K untuk fokus ke kolom cari. Ctrl+Shift+A untuk pilih / batal pilih semua hasil tersaring. Ctrl+Shift+C untuk salin pintar (pilihan > tersaring > semua). Esc untuk bersihkan pencarian saat sedang mengetik di kolom cari.",
+    },
   ];
 
 
