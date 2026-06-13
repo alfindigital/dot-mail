@@ -1,55 +1,42 @@
-# Batch 2 — Delight & trust
+# Revisi Validasi Input Username
 
-Scope: frontend-only di `routes/index.tsx` dan `GeneratorCard.tsx`. Tidak ada backend, dependencies, atau route baru.
+## Masalah
+User dengan email asli seperti `alfin.pbg@gmail.com` ditolak karena regex saat ini melarang titik. Padahal aturan Gmail: username boleh huruf, angka, dan titik — titik hanya diabaikan oleh Gmail (itulah dasar dot-trick ini).
 
-## Yang dibangun
+## Aturan Gmail (referensi terbaru)
+- Karakter yang diizinkan di username: `a–z`, `0–9`, dan `.` (titik).
+- Titik **diabaikan** Gmail (jadi `alfin.pbg` = `alfinpbg` = inbox yang sama).
+- Tidak boleh: spasi, simbol lain (`_`, `-`, `+`, dll. di local-part Gmail baru), huruf kapital diperlakukan sama.
+- Panjang username Gmail: 6–30 karakter (tanpa hitung titik).
 
-### 1. Hero lebih "berdiri" (index.tsx)
-- Tambah eyebrow kecil di atas H1: `Gratis · Jalan di browser · Tanpa login`. Uppercase tracking-wide, text-xs muted, dot separator.
-- Sub-headline diperpendek jadi 1 kalimat tenang: "Gmail nggak peduli titik di username. Semua variasi masuk ke inbox yang sama."
-- Contoh `s.atu`, `sa.tu`, `sat.u`, `satu` dipindah jadi chip kecil tepat di atas generator (bukan di hero), biar hero punya nafas.
-- Catatan: social-proof line dari batch 1 tetap, tapi digeser jadi tepat di bawah sub-headline (di atas chip examples).
+## Perubahan
 
-### 2. Footer credibility (index.tsx)
-- Tambah micro-section di atas footer (di luar `<main>`, sebelum `<footer>`):
-  - Background subtle (`bg-muted/30`), border-t.
-  - Grid 3 kolom (stack di mobile): tiap kolom punya lucide icon dalam square rounded, label pendek, dan 1-line desc:
-    - `ShieldCheck` — "100% di browser" / "Nggak ada yang dikirim ke server."
-    - `Lock` — "Tanpa login" / "Pakai langsung, nggak perlu daftar."
-    - `Zap` — "Instan" / "Ribuan kombinasi dihitung di laptopmu."
-- Style minimalis: icon size-5, label font-medium, desc text-xs muted.
+### 1. `src/lib/dot-variants.ts` — `validateUsername()`
+- Terima input yang mengandung titik.
+- Normalisasi: `trim().toLowerCase()` lalu **strip semua titik** sebelum validasi panjang & charset.
+- Regex baru pada raw input (setelah lowercase/trim): `^[a-z0-9.]+$` — tolak spasi & simbol lain.
+- Tolak jika ada titik di awal/akhir atau titik berurutan (`..`) — bukan format Gmail valid; opsional tapi mengikuti aturan Gmail.
+- Validasi panjang dilakukan pada string **tanpa titik** (yang dipakai untuk generate):
+  - min 2 (untuk dot-trick tetap bermakna), max 15 (batas saat ini agar `2^(n-1)` masih wajar).
+- Return `{ valid: true, username }` di mana `username` = versi tanpa titik (jadi `generateDotVariants` dan `countVariants` tetap bekerja apa adanya).
 
-### 3. Counter dramatis tapi tetap minimalis (GeneratorCard.tsx)
-- Saat input valid, area helper text di bawah generator (`mt-3 min-h-[1.25rem]`) ditingkatkan jadi panel kecil:
-  - Angka kombinasi font-serif besar (text-3xl) di kiri, tabular-nums, animated count-up (sudah ada).
-  - Di kanan/bawah angka: label kecil "kombinasi siap dibuat" + sub-label "dari N karakter".
-  - Saat invalid/empty: kembali ke 1-baris error/hint biasa, panel collapse.
-- Bikin "wow moment" sebelum klik Generate tanpa loud — angka jadi anchor visual.
+### 2. Pesan error & helper text
+- Pesan error charset: `"Hanya huruf a-z, angka 0-9, dan titik. Tanpa spasi atau simbol."`
+- Error tambahan untuk pola titik aneh: `"Titik tidak boleh di awal, akhir, atau berurutan."`
+- `GeneratorCard.tsx` helper "akan jadi" tetap tampilkan apa yang user ketik (boleh ada titik) — yang dihitung kombinasi tetap berdasar versi tanpa titik.
 
-### 4. Empty state hasil yang manis (index.tsx)
-- Saat belum generate, area bawah generator saat ini cuma punya section "Cara Pakai". Tweak:
-  - Tambah hint visual kecil di atas grid Cara Pakai: dashed-border rounded card dengan ikon `Sparkles` muted + teks "Hasil akan muncul di sini setelah kamu generate."
-  - Card tinggi modest (py-10), center, full muted style. Saat ada hasil, card disembunyikan otomatis (karena conditional render saat ini).
-- "Cara Pakai" tetap di bawah hint card.
+### 3. `GeneratorCard.tsx` — onChange
+- Saat ini: `e.target.value.toLowerCase()`. Tidak diubah (biarkan titik tersimpan di field).
+- Tidak mem-force-strip titik di field — supaya user lihat input aslinya. Strip terjadi di `validateUsername`.
 
-### 5. Keyboard hint visible (index.tsx)
-- Di pojok footer (kiri atau row tersendiri di atas credit line), tambah baris hint tipis (hidden di mobile, `hidden sm:flex`):
-  - Pakai `<kbd>` elements bergaya minimalis (border, rounded, text-xs, font-mono).
-  - Format: `Tekan [/] untuk fokus input · [⌘ A] untuk salin semua`.
-- Style `<kbd>`: `inline-flex items-center px-1.5 py-0.5 rounded border border-border bg-muted/40 font-mono text-[10px]`.
+## Yang TIDAK diubah
+- Algoritma `generateDotVariants` / `countVariants` — sudah benar.
+- UI/layout, history, theme.
+- Batas panjang 2–15 (tetap, hanya basisnya kini "tanpa titik").
 
-## Files touched
-
-- `src/routes/index.tsx` — eyebrow hero, sub-headline diperpendek, chip examples, social-proof reposition, trust section, empty-state hint, keyboard hint footer.
-- `src/components/generator/GeneratorCard.tsx` — counter panel dramatis.
+## File yang disentuh
+- `src/lib/dot-variants.ts` (validateUsername + 1-2 helper kecil)
+- Tidak perlu ubah `GeneratorCard.tsx` kecuali kamu mau, karena pesan error datang dari validator.
 
 ## Catatan
-
-- Tone tetap santai Bahasa Indonesia.
-- Tidak ada em dash (—) di teks user-facing.
-- Tidak ada dependency baru. Icon ambil dari lucide-react yang sudah dipakai.
-- Vibe minimalis bersih konsisten dengan batch 1.
-
-## Out of scope
-
-Batch 3 (search/filter hasil, pagination upgrade, format toggle, share button), serta ide 3, 5, 7, 9, 16, 17, 21, 23, 24 dari list awal.
+Setelah approve, saya juga cek `e2e/faq.spec.ts` apakah ada test yang assert pesan error lama — kalau ada, update assertion-nya.
