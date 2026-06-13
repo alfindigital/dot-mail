@@ -339,8 +339,6 @@ function Index() {
               </a>
             ))}
           </div>
-          <span className="text-border">|</span>
-          <span>v{import.meta.env.VITE_APP_VERSION}</span>
         </div>
       </footer>
     </div>
