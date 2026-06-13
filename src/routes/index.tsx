@@ -169,7 +169,7 @@ function Index() {
 
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen flex flex-col bg-background text-foreground">
       <Toaster position="top-center" />
 
       <header className="bg-background text-foreground border-b border-border/60">
