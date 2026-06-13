@@ -1,3 +1,5 @@
+import { execSync } from "child_process";
+
 // @lovable.dev/vite-tanstack-config already includes the following — do NOT add them manually
 // or the app will break with duplicate plugins:
 //   - tanstackStart, viteReact, tailwindcss, tsConfigPaths, nitro (build-only using cloudflare as a default target),
@@ -7,6 +9,8 @@
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 import { VitePWA } from "vite-plugin-pwa";
 
+const __APP_VERSION__ = execSync("git rev-parse --short HEAD").toString().trim();
+
 export default defineConfig({
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
@@ -15,6 +19,9 @@ export default defineConfig({
   },
   vite: {
     cacheDir: "node_modules/.vite-dotmail",
+    define: {
+      "import.meta.env.VITE_APP_VERSION": JSON.stringify(__APP_VERSION__),
+    },
     optimizeDeps: {
       include: [
         "react",
