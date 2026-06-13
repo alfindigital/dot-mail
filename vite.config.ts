@@ -9,7 +9,9 @@ import { execSync } from "child_process";
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 import { VitePWA } from "vite-plugin-pwa";
 
-const __APP_VERSION__ = execSync("git rev-parse --short HEAD").toString().trim();
+const __APP_COMMIT__ = execSync("git rev-parse --short HEAD").toString().trim();
+const __APP_DATE__ = execSync("git log -1 --format=%cd --date=short").toString().trim();
+const __APP_VERSION__ = `${__APP_DATE__}·${__APP_COMMIT__}`;
 
 export default defineConfig({
   tanstackStart: {
