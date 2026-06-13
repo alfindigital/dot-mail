@@ -7,6 +7,7 @@ import { ResultsList } from "@/components/generator/ResultsList";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { HistoryButton } from "@/components/layout/HistoryButton";
 import { InfoButton } from "@/components/layout/InfoButton";
+import { SiteFooter } from "@/components/layout/SiteFooter";
 import { generateDotVariants } from "@/lib/dot-variants";
 import { addRecent } from "@/lib/recent-usernames";
 
