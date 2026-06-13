@@ -444,7 +444,7 @@ export function ResultsList({ variants, username }: Props) {
             }}
           >
             {virtualItems.map((vi) => {
-              const item = filtered[vi.index];
+              const item = displayed[vi.index];
               return (
                 <div
                   key={vi.key}
@@ -478,7 +478,7 @@ export function ResultsList({ variants, username }: Props) {
           className="rounded-2xl border border-border bg-card overflow-hidden"
           role="list"
         >
-          {filtered.map((item, pos) => (
+          {displayed.map((item, pos) => (
             <Row
               key={item.v}
               v={item.v}
