@@ -2,19 +2,13 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Globe, Facebook, Youtube, Send, Sparkles } from "lucide-react";
 import { Toaster } from "@/components/ui/sonner";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import { GeneratorCard } from "@/components/generator/GeneratorCard";
 import { ResultsList } from "@/components/generator/ResultsList";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { HistoryButton } from "@/components/layout/HistoryButton";
+import { InfoButton } from "@/components/layout/InfoButton";
 import { generateDotVariants } from "@/lib/dot-variants";
 import { addRecent } from "@/lib/recent-usernames";
-import { toast } from "sonner";
 
 export const Route = createFileRoute("/")({
   head: () => ({
