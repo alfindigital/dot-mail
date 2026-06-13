@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Globe, Facebook, Youtube, Send, Sparkles } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import { Toaster } from "@/components/ui/sonner";
 import { GeneratorCard } from "@/components/generator/GeneratorCard";
 import { ResultsList } from "@/components/generator/ResultsList";
