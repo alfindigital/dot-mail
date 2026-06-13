@@ -8,7 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { getRecent, removeRecent } from "@/lib/recent-usernames";
+import { getRecent, removeRecent, subscribeRecent } from "@/lib/recent-usernames";
 
 interface Props {
   onPick: (username: string) => void;
@@ -22,6 +22,9 @@ export function HistoryButton({ onPick, recentVersion }: Props) {
   useEffect(() => {
     setRecent(getRecent());
   }, [recentVersion, open]);
+
+  // Multi-tab sync: refresh list when another tab changes it.
+  useEffect(() => subscribeRecent(setRecent), []);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
