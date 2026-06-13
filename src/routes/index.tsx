@@ -2,19 +2,13 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Globe, Facebook, Youtube, Send, Sparkles } from "lucide-react";
 import { Toaster } from "@/components/ui/sonner";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import { GeneratorCard } from "@/components/generator/GeneratorCard";
 import { ResultsList } from "@/components/generator/ResultsList";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { HistoryButton } from "@/components/layout/HistoryButton";
+import { InfoButton } from "@/components/layout/InfoButton";
 import { generateDotVariants } from "@/lib/dot-variants";
 import { addRecent } from "@/lib/recent-usernames";
-import { toast } from "sonner";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -191,38 +185,8 @@ function Index() {
     { href: "https://t.me/alfindigital", Icon: Send, label: "Telegram" },
   ];
 
-  const steps = [
-    { title: "1. Ketik username", desc: "sebelum @gmail.com." },
-    { title: "2. Generate", desc: "Langsung keluar semua kombinasi." },
-    { title: "3. Salin & pakai", desc: "Salin atau unduh .txt/.csv." },
-  ];
 
-  const faqs = [
-    {
-      q: "Apa itu Gmail dot trick?",
-      a: "Gmail dot trick adalah fitur bawaan Gmail yang mengabaikan titik (.) di bagian username sebuah alamat. Jadi s.atu@gmail.com, sa.tu@gmail.com, dan satu@gmail.com semuanya masuk ke inbox yang sama. DotMail menghasilkan seluruh kombinasi titik dari satu username sekaligus.",
-    },
-    {
-      q: "Legal?",
-      a: "Iya. Ini fitur bawaan Gmail. Google nggak peduli titik di username, jadi semua variasi tetap masuk inbox yang sama. Bukan hack.",
-    },
-    {
-      q: "Akun saya bisa diblokir?",
-      a: "Kalau dipakai normal, aman-aman aja. Risikonya cuma kalau disalahgunain buat spam atau daftar masif yang melanggar aturan layanan lain.",
-    },
-    {
-      q: "Data simpan di mana?",
-      a: "Semua diproses di browser kamu sendiri. Nggak ada server, nggak ada database, nggak ada yang ngintip input.",
-    },
-    {
-      q: "Bisa buat apa aja?",
-      a: "Filter email per layanan, ngecek siapa yang bocorin email kamu, atau kelola banyak akun dari satu inbox.",
-    },
-    {
-      q: "Shortcut keyboard apa aja yang bisa dipakai?",
-      a: "Ctrl+K untuk fokus ke kolom cari. Ctrl+Shift+A untuk pilih / batal pilih semua hasil tersaring. Ctrl+Shift+C untuk salin pintar (pilihan > tersaring > semua). Esc untuk bersihkan pencarian saat sedang mengetik di kolom cari.",
-    },
-  ];
+
 
 
   return (
@@ -236,11 +200,13 @@ function Index() {
             <span className="font-serif text-xl tracking-tight">DotMail</span>
           </div>
           <div className="flex items-center gap-1">
+            <InfoButton />
             <HistoryButton onPick={handleGenerate} recentVersion={recentVersion} />
             <ThemeToggle />
           </div>
         </div>
       </header>
+
 
       <main className="mx-auto max-w-3xl px-5 sm:px-8 pt-4 sm:pt-6 pb-12">
         <section className="text-center mb-10 sm:mb-14">
@@ -264,51 +230,15 @@ function Index() {
         {variants.length > 0 ? (
           <ResultsList variants={variants} username={username} />
         ) : (
-          <>
-            <div className="mt-8 rounded-2xl border border-dashed border-border bg-muted/20 px-6 py-10 flex flex-col items-center justify-center text-center">
-              <Sparkles className="size-5 text-muted-foreground/60 mb-2" />
-              <p className="text-sm text-muted-foreground">
-                Hasil akan muncul di sini
-              </p>
-            </div>
-            <section className="mt-10 sm:mt-14">
-              <h2 className="font-serif text-2xl sm:text-3xl text-foreground text-center mb-6">
-                Cara Pakai
-              </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                {steps.map(({ title, desc }) => (
-                  <div
-                    key={title}
-                    className="rounded-xl border border-border bg-card px-4 py-3"
-                  >
-                    <h3 className="font-serif text-base text-foreground">{title}</h3>
-                    <p className="text-sm text-muted-foreground leading-snug mt-0.5">{desc}</p>
-                  </div>
-                ))}
-              </div>
-            </section>
-          </>
+          <div className="mt-8 rounded-2xl border border-dashed border-border bg-muted/20 px-6 py-10 flex flex-col items-center justify-center text-center">
+            <Sparkles className="size-5 text-muted-foreground/60 mb-2" />
+            <p className="text-sm text-muted-foreground">
+              Hasil akan muncul di sini
+            </p>
+          </div>
         )}
-
-
-        <section className="mt-10">
-          <h2 className="font-serif text-2xl sm:text-3xl text-foreground text-center mb-6">
-            Pertanyaan
-          </h2>
-          <Accordion type="single" collapsible className="rounded-2xl border border-border bg-card divide-y divide-border overflow-hidden">
-            {faqs.map((f, i) => (
-              <AccordionItem key={i} value={`item-${i}`} className="border-0 px-5">
-                <AccordionTrigger className="text-left text-base font-serif font-medium hover:no-underline py-4">
-                  {f.q}
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground text-sm leading-relaxed pb-4">
-                  {f.a}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </section>
       </main>
+
 
 
       <footer className="border-t border-border/60">
