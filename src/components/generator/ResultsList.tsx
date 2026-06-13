@@ -414,9 +414,6 @@ export function ResultsList({ variants, username }: Props) {
               Kosongkan pilihan
             </button>
           )}
-          {shouldVirtualize && (
-            <span className="hidden sm:inline">Virtual scroll aktif</span>
-          )}
         </div>
       </div>
 
