@@ -23,6 +23,9 @@ export function HistoryButton({ onPick, recentVersion }: Props) {
     setRecent(getRecent());
   }, [recentVersion, open]);
 
+  // Multi-tab sync: refresh list when another tab changes it.
+  useEffect(() => subscribeRecent(setRecent), []);
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
