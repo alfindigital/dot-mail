@@ -207,7 +207,7 @@
   font-family: inherit;
   background: var(--card, var(--background));
   border-top: 1px solid var(--border);
-  padding: 17px 22px;
+  padding: 8px 22px;
   display: flex;
   align-items: center;
   justify-content: space-between;
