@@ -340,7 +340,7 @@ function Index() {
             ))}
           </div>
           <span className="text-border">|</span>
-          <span>v{__APP_VERSION__}</span>
+          <span>v{import.meta.env.VITE_APP_VERSION}</span>
         </div>
       </footer>
     </div>
