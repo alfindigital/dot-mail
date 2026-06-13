@@ -504,24 +504,6 @@ export function ResultsList({ variants, username }: Props) {
         </div>
       )}
 
-      {/* Shortcut hint */}
-      <div className="mt-4 hidden sm:flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[11px] text-muted-foreground">
-        <span>
-          <kbd className="kbd-mini">⌘K</kbd> cari
-        </span>
-        <span>
-          <kbd className="kbd-mini">1</kbd>–<kbd className="kbd-mini">5</kbd> filter
-        </span>
-        <span>
-          <kbd className="kbd-mini">⌘⇧A</kbd> pilih semua tersaring
-        </span>
-        <span>
-          <kbd className="kbd-mini">⌘⇧C</kbd> salin pintar
-        </span>
-        <span>
-          <kbd className="kbd-mini">Esc</kbd> bersihkan cari
-        </span>
-      </div>
     </section>
   );
 }
