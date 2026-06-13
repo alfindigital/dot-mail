@@ -260,51 +260,15 @@ function Index() {
         {variants.length > 0 ? (
           <ResultsList variants={variants} username={username} />
         ) : (
-          <>
-            <div className="mt-8 rounded-2xl border border-dashed border-border bg-muted/20 px-6 py-10 flex flex-col items-center justify-center text-center">
-              <Sparkles className="size-5 text-muted-foreground/60 mb-2" />
-              <p className="text-sm text-muted-foreground">
-                Hasil akan muncul di sini
-              </p>
-            </div>
-            <section className="mt-10 sm:mt-14">
-              <h2 className="font-serif text-2xl sm:text-3xl text-foreground text-center mb-6">
-                Cara Pakai
-              </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                {steps.map(({ title, desc }) => (
-                  <div
-                    key={title}
-                    className="rounded-xl border border-border bg-card px-4 py-3"
-                  >
-                    <h3 className="font-serif text-base text-foreground">{title}</h3>
-                    <p className="text-sm text-muted-foreground leading-snug mt-0.5">{desc}</p>
-                  </div>
-                ))}
-              </div>
-            </section>
-          </>
+          <div className="mt-8 rounded-2xl border border-dashed border-border bg-muted/20 px-6 py-10 flex flex-col items-center justify-center text-center">
+            <Sparkles className="size-5 text-muted-foreground/60 mb-2" />
+            <p className="text-sm text-muted-foreground">
+              Hasil akan muncul di sini
+            </p>
+          </div>
         )}
-
-
-        <section className="mt-10">
-          <h2 className="font-serif text-2xl sm:text-3xl text-foreground text-center mb-6">
-            Pertanyaan
-          </h2>
-          <Accordion type="single" collapsible className="rounded-2xl border border-border bg-card divide-y divide-border overflow-hidden">
-            {faqs.map((f, i) => (
-              <AccordionItem key={i} value={`item-${i}`} className="border-0 px-5">
-                <AccordionTrigger className="text-left text-base font-serif font-medium hover:no-underline py-4">
-                  {f.q}
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground text-sm leading-relaxed pb-4">
-                  {f.a}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </section>
       </main>
+
 
 
       <footer className="border-t border-border/60">
