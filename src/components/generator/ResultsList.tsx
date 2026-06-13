@@ -327,30 +327,36 @@ export function ResultsList({ variants, username }: Props) {
             </h2>
           </div>
           <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
-            <Button onClick={copyAll} variant="outline" className="rounded-xl h-10 flex-1 sm:flex-none">
-              <Copy className="size-4" />
-              Salin semua
-            </Button>
             {selected.size > 0 && (
               <Button
                 onClick={copySelected}
                 variant="default"
-                className="rounded-xl h-10 w-10 p-0"
+                className="rounded-xl h-10 flex-1 sm:flex-none"
                 title={`Salin terpilih (${selected.size.toLocaleString("id-ID")})`}
               >
                 <Copy className="size-4" />
+                Salin
               </Button>
             )}
             {filterActive && selected.size === 0 && (
               <Button
                 onClick={copyFiltered}
                 variant="default"
-                className="rounded-xl h-10 w-10 p-0"
+                className="rounded-xl h-10 flex-1 sm:flex-none"
                 title={`Salin tersaring (${filtered.length.toLocaleString("id-ID")})`}
               >
                 <Copy className="size-4" />
+                Salin
               </Button>
             )}
+            <Button
+              onClick={copyAll}
+              variant="outline"
+              className="rounded-xl h-10 w-10 p-0"
+              title="Salin semua"
+            >
+              <Copy className="size-4" />
+            </Button>
             <Button
               onClick={downloadCsv}
               variant="outline"
