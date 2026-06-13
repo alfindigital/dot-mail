@@ -492,6 +492,18 @@ export function ResultsList({ variants, username }: Props) {
         </div>
       )}
 
+      {hasMore && (
+        <div className="flex justify-center py-4">
+          <Button
+            variant="outline"
+            className="rounded-xl h-10"
+            onClick={() => setVisibleCount((c) => c + PAGE_SIZE)}
+          >
+            Muat lebih banyak
+          </Button>
+        </div>
+      )}
+
       {/* Shortcut hint */}
       <div className="mt-4 hidden sm:flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[11px] text-muted-foreground">
         <span>
