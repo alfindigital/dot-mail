@@ -340,7 +340,7 @@ function Index() {
             ))}
           </div>
           <span className="text-border">|</span>
-          <span>v1.0.0</span>
+          <span>v{__APP_VERSION__}</span>
         </div>
       </footer>
     </div>
