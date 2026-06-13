@@ -177,14 +177,6 @@ function Index() {
     return () => window.removeEventListener("keydown", handler);
   }, [variants]);
 
-  const socials = [
-    { href: "https://alfindigital.com", Icon: Globe, label: "Website" },
-    { href: "https://facebook.com/alfindigital", Icon: Facebook, label: "Facebook" },
-    { href: "https://youtube.com/@alfindigital", Icon: Youtube, label: "YouTube" },
-    { href: "https://tiktok.com/@alfindigital", Icon: TiktokIcon, label: "TikTok" },
-    { href: "https://x.com/alfindigital", Icon: XIcon, label: "X" },
-    { href: "https://t.me/alfindigital", Icon: Send, label: "Telegram" },
-  ];
 
 
 
