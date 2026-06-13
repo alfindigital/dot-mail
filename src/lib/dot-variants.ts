@@ -37,14 +37,20 @@ export type ValidationResult =
   | { valid: false; error: string };
 
 export function validateUsername(raw: string): ValidationResult {
-  const username = raw.trim().toLowerCase();
-  if (username.length === 0) return { valid: false, error: "Masukkan username Gmail." };
-  if (username.length < 2) return { valid: false, error: "Minimal 2 karakter." };
-  if (username.length > 15) return { valid: false, error: "Maksimal 15 karakter." };
-  if (!/^[a-z0-9]+$/.test(username))
+  const input = raw.trim().toLowerCase();
+  if (input.length === 0) return { valid: false, error: "Masukkan username Gmail." };
+  if (!/^[a-z0-9.]+$/.test(input))
     return {
       valid: false,
-      error: "Hanya huruf a-z dan angka 0-9. Tanpa titik, spasi, atau simbol.",
+      error: "Hanya huruf a-z, angka 0-9, dan titik. Tanpa spasi atau simbol.",
     };
+  if (input.startsWith(".") || input.endsWith(".") || input.includes(".."))
+    return {
+      valid: false,
+      error: "Titik tidak boleh di awal, akhir, atau berurutan.",
+    };
+  const username = input.replace(/\./g, "");
+  if (username.length < 2) return { valid: false, error: "Minimal 2 karakter (tanpa titik)." };
+  if (username.length > 15) return { valid: false, error: "Maksimal 15 karakter (tanpa titik)." };
   return { valid: true, username };
 }
