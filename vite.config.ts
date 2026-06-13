@@ -9,8 +9,15 @@ import { execSync } from "child_process";
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 import { VitePWA } from "vite-plugin-pwa";
 
-const __APP_COMMIT__ = execSync("git rev-parse --short HEAD").toString().trim();
-const __APP_DATE__ = execSync("git log -1 --format=%cd --date=short").toString().trim();
+function safeExec(cmd: string, fallback = "") {
+  try {
+    return execSync(cmd, { stdio: ["ignore", "pipe", "ignore"] }).toString().trim();
+  } catch {
+    return fallback;
+  }
+}
+const __APP_COMMIT__ = safeExec("git rev-parse --short HEAD", "dev");
+const __APP_DATE__ = safeExec("git log -1 --format=%cd --date=short", new Date().toISOString().slice(0, 10));
 const __APP_VERSION__ = `${__APP_DATE__}·${__APP_COMMIT__}`;
 
 export default defineConfig({
