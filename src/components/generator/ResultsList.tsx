@@ -16,6 +16,8 @@ interface Props {
 const VIRTUALIZE_THRESHOLD = 100;
 // Estimated row height; the virtualizer measures the real one after mount.
 const ROW_HEIGHT_ESTIMATE = 52;
+// Items shown per batch with "Load more".
+const PAGE_SIZE = 30;
 
 function dotCount(s: string) {
   let c = 0;
@@ -141,6 +143,7 @@ export function ResultsList({ variants, username }: Props) {
   // Selection keyed by variant string so it survives filtering.
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [query, setQuery] = useState("");
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const searchRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
 
@@ -148,6 +151,7 @@ export function ResultsList({ variants, username }: Props) {
   useEffect(() => {
     setSelected(new Set());
     setQuery("");
+    setVisibleCount(PAGE_SIZE);
   }, [username, variants]);
 
   const filtered = useMemo(() => {
@@ -161,16 +165,19 @@ export function ResultsList({ variants, username }: Props) {
     return out;
   }, [variants, query]);
 
+  const displayed = useMemo(() => filtered.slice(0, visibleCount), [filtered, visibleCount]);
+  const hasMore = visibleCount < filtered.length;
+
   const filterActive = query.trim().length > 0;
-  const shouldVirtualize = filtered.length > VIRTUALIZE_THRESHOLD;
+  const shouldVirtualize = displayed.length > VIRTUALIZE_THRESHOLD;
 
   // Window virtualizer — uses page scroll, preserves sticky header.
   const virtualizer = useWindowVirtualizer({
-    count: filtered.length,
+    count: displayed.length,
     estimateSize: () => ROW_HEIGHT_ESTIMATE,
     overscan: 8,
     scrollMargin: listRef.current?.offsetTop ?? 0,
-    getItemKey: (i) => filtered[i].v,
+    getItemKey: (i) => displayed[i].v,
   });
 
   // Recompute scrollMargin when filter/list re-mounts.
@@ -437,7 +444,7 @@ export function ResultsList({ variants, username }: Props) {
             }}
           >
             {virtualItems.map((vi) => {
-              const item = filtered[vi.index];
+              const item = displayed[vi.index];
               return (
                 <div
                   key={vi.key}
@@ -471,7 +478,7 @@ export function ResultsList({ variants, username }: Props) {
           className="rounded-2xl border border-border bg-card overflow-hidden"
           role="list"
         >
-          {filtered.map((item, pos) => (
+          {displayed.map((item, pos) => (
             <Row
               key={item.v}
               v={item.v}
@@ -482,6 +489,18 @@ export function ResultsList({ variants, username }: Props) {
               withBorderTop={pos > 0}
             />
           ))}
+        </div>
+      )}
+
+      {hasMore && (
+        <div className="flex justify-center py-4">
+          <Button
+            variant="outline"
+            className="rounded-xl h-10"
+            onClick={() => setVisibleCount((c) => c + PAGE_SIZE)}
+          >
+            Muat lebih banyak
+          </Button>
         </div>
       )}
 
