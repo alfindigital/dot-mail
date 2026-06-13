@@ -19,6 +19,9 @@ export default defineConfig({
   },
   vite: {
     cacheDir: "node_modules/.vite-dotmail",
+    define: {
+      __APP_VERSION__: JSON.stringify(__APP_VERSION__),
+    },
     optimizeDeps: {
       include: [
         "react",
