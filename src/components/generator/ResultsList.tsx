@@ -3,7 +3,7 @@ import { useWindowVirtualizer } from "@tanstack/react-virtual";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
-import { Check, Copy, Download, FileText, Search, X } from "lucide-react";
+import { Check, Copy, Download, Search, X } from "lucide-react";
 import { toast } from "sonner";
 
 interface Props {
