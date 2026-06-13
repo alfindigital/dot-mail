@@ -3,7 +3,7 @@ import { useWindowVirtualizer } from "@tanstack/react-virtual";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
-import { Check, Copy, Download, FileText, Search, X } from "lucide-react";
+import { Check, Copy, Download, Search, X } from "lucide-react";
 import { toast } from "sonner";
 
 interface Props {
@@ -327,49 +327,38 @@ export function ResultsList({ variants, username }: Props) {
             </h2>
           </div>
           <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+            <Button onClick={copyAll} variant="outline" className="rounded-xl h-10 flex-1 sm:flex-none">
+              <Copy className="size-4" />
+              Salin semua
+            </Button>
             {selected.size > 0 && (
               <Button
                 onClick={copySelected}
                 variant="default"
-                className="rounded-xl h-10 flex-1 sm:flex-none"
+                className="rounded-xl h-10 w-10 p-0"
+                title={`Salin terpilih (${selected.size.toLocaleString("id-ID")})`}
               >
                 <Copy className="size-4" />
-                Salin terpilih ({selected.size.toLocaleString("id-ID")})
               </Button>
             )}
             {filterActive && selected.size === 0 && (
               <Button
                 onClick={copyFiltered}
                 variant="default"
-                className="rounded-xl h-10 flex-1 sm:flex-none"
+                className="rounded-xl h-10 w-10 p-0"
+                title={`Salin tersaring (${filtered.length.toLocaleString("id-ID")})`}
               >
                 <Copy className="size-4" />
-                Salin tersaring ({filtered.length.toLocaleString("id-ID")})
               </Button>
             )}
-            <Button onClick={copyAll} variant="outline" className="rounded-xl h-10 flex-1 sm:flex-none">
-              <Copy className="size-4" />
-              Salin semua
+            <Button
+              onClick={downloadCsv}
+              variant="outline"
+              className="rounded-xl h-10 w-10 p-0"
+              title={filterActive ? "Unduh hasil tersaring .csv" : "Unduh sebagai .csv"}
+            >
+              <Download className="size-4" />
             </Button>
-            <div className="inline-flex rounded-xl border border-input overflow-hidden h-10">
-              <button
-                onClick={downloadTxt}
-                title={filterActive ? "Unduh hasil tersaring .txt" : "Unduh sebagai .txt"}
-                className="flex items-center gap-1.5 px-3 text-sm hover:bg-muted transition"
-              >
-                <FileText className="size-4" />
-                .txt
-              </button>
-              <span aria-hidden className="w-px bg-border" />
-              <button
-                onClick={downloadCsv}
-                title={filterActive ? "Unduh hasil tersaring .csv" : "Unduh sebagai .csv"}
-                className="flex items-center gap-1.5 px-3 text-sm hover:bg-muted transition"
-              >
-                <Download className="size-4" />
-                .csv
-              </button>
-            </div>
           </div>
         </header>
       </div>
