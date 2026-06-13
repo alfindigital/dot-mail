@@ -339,6 +339,8 @@ function Index() {
               </a>
             ))}
           </div>
+          <span className="text-border">|</span>
+          <span>v1.0.0</span>
         </div>
       </footer>
     </div>
