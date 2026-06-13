@@ -109,20 +109,6 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-function TiktokIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
-      <path d="M19.5 8.4a6.6 6.6 0 0 1-4-1.3v7.5a5.6 5.6 0 1 1-5.6-5.6c.3 0 .6 0 .9.1v2.7a3 3 0 1 0 2 2.8V2h2.6a4 4 0 0 0 4 4z" />
-    </svg>
-  );
-}
-function XIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
-      <path d="M18.3 2H21l-6.5 7.4L22 22h-6.8l-5.3-6.9L3.8 22H1l7-8L1.5 2h6.9l4.8 6.3zM17 20h1.7L7.1 4H5.3z" />
-    </svg>
-  );
-}
 
 function Index() {
   const [variants, setVariants] = useState<string[]>([]);
