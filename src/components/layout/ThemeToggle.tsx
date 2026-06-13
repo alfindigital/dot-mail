@@ -35,6 +35,17 @@ export function ThemeToggle() {
     }
   }, [theme, mounted]);
 
+  // Multi-tab sync: react to theme changes from other tabs.
+  useEffect(() => {
+    const onStorage = (e: StorageEvent) => {
+      if (e.key !== KEY) return;
+      const next = e.newValue;
+      if (next === "light" || next === "dark") setTheme(next);
+    };
+    window.addEventListener("storage", onStorage);
+    return () => window.removeEventListener("storage", onStorage);
+  }, []);
+
   return (
     <Button
       variant="ghost"

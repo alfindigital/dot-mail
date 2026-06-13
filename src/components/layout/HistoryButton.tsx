@@ -8,7 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { getRecent, removeRecent } from "@/lib/recent-usernames";
+import { getRecent, removeRecent, subscribeRecent } from "@/lib/recent-usernames";
 
 interface Props {
   onPick: (username: string) => void;
