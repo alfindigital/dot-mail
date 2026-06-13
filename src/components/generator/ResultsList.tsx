@@ -173,11 +173,11 @@ export function ResultsList({ variants, username }: Props) {
 
   // Window virtualizer — uses page scroll, preserves sticky header.
   const virtualizer = useWindowVirtualizer({
-    count: filtered.length,
+    count: displayed.length,
     estimateSize: () => ROW_HEIGHT_ESTIMATE,
     overscan: 8,
     scrollMargin: listRef.current?.offsetTop ?? 0,
-    getItemKey: (i) => filtered[i].v,
+    getItemKey: (i) => displayed[i].v,
   });
 
   // Recompute scrollMargin when filter/list re-mounts.
