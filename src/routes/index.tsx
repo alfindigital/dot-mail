@@ -230,11 +230,13 @@ function Index() {
             <span className="font-serif text-xl tracking-tight">DotMail</span>
           </div>
           <div className="flex items-center gap-1">
+            <InfoButton />
             <HistoryButton onPick={handleGenerate} recentVersion={recentVersion} />
             <ThemeToggle />
           </div>
         </div>
       </header>
+
 
       <main className="mx-auto max-w-3xl px-5 sm:px-8 pt-4 sm:pt-6 pb-12">
         <section className="text-center mb-10 sm:mb-14">
