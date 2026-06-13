@@ -16,6 +16,8 @@ interface Props {
 const VIRTUALIZE_THRESHOLD = 100;
 // Estimated row height; the virtualizer measures the real one after mount.
 const ROW_HEIGHT_ESTIMATE = 52;
+// Items shown per batch with "Load more".
+const PAGE_SIZE = 30;
 
 function dotCount(s: string) {
   let c = 0;
@@ -141,6 +143,7 @@ export function ResultsList({ variants, username }: Props) {
   // Selection keyed by variant string so it survives filtering.
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [query, setQuery] = useState("");
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const searchRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
 
@@ -148,6 +151,7 @@ export function ResultsList({ variants, username }: Props) {
   useEffect(() => {
     setSelected(new Set());
     setQuery("");
+    setVisibleCount(PAGE_SIZE);
   }, [username, variants]);
 
   const filtered = useMemo(() => {
@@ -161,8 +165,11 @@ export function ResultsList({ variants, username }: Props) {
     return out;
   }, [variants, query]);
 
+  const displayed = useMemo(() => filtered.slice(0, visibleCount), [filtered, visibleCount]);
+  const hasMore = visibleCount < filtered.length;
+
   const filterActive = query.trim().length > 0;
-  const shouldVirtualize = filtered.length > VIRTUALIZE_THRESHOLD;
+  const shouldVirtualize = displayed.length > VIRTUALIZE_THRESHOLD;
 
   // Window virtualizer — uses page scroll, preserves sticky header.
   const virtualizer = useWindowVirtualizer({
