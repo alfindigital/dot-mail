@@ -354,6 +354,7 @@ export function ResultsList({ variants, username }: Props) {
               variant="outline"
               className="rounded-xl h-10 w-10 p-0"
               title="Salin semua"
+              aria-label="Salin semua"
             >
               <Copy className="size-4" />
             </Button>
@@ -362,6 +363,7 @@ export function ResultsList({ variants, username }: Props) {
               variant="outline"
               className="rounded-xl h-10 w-10 p-0"
               title={filterActive ? "Unduh hasil tersaring .csv" : "Unduh sebagai .csv"}
+              aria-label={filterActive ? "Unduh hasil tersaring .csv" : "Unduh sebagai .csv"}
             >
               <Download className="size-4" />
             </Button>
