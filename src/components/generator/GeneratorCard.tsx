@@ -102,16 +102,8 @@ export function GeneratorCard({ onGenerate, isGenerating, externalValue }: Props
           </Button>
         </div>
 
-        <div className="mt-2 sm:hidden text-xs text-muted-foreground">
-          {value.length > 0 ? (
-            <>
-              akan jadi:{" "}
-              <span className="font-mono text-foreground">{value}@gmail.com</span>
-            </>
-          ) : (
-            "Tanpa @gmail.com, kami tambahkan otomatis."
-          )}
-        </div>
+
+
 
         <div className="mt-3 min-h-[1.25rem] text-sm">
           {showError ? (
