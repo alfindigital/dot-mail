@@ -357,7 +357,6 @@ export function ResultsList({ variants, username }: Props) {
               </Button>
             )}
             <Button
-              onColumn
               onClick={copyAll}
               variant="outline"
               className="rounded-xl h-10 w-10 p-0"
