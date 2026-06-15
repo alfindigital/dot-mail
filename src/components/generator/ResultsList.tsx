@@ -324,7 +324,7 @@ export function ResultsList({ variants, username }: Props) {
           <h2 className="font-serif text-2xl sm:text-3xl text-foreground whitespace-nowrap">
             {variants.length.toLocaleString("id-ID")} variasi
           </h2>
-          <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+          <div className="flex flex-wrap items-center gap-2">
             {selected.size > 0 && (
               <Button
                 onClick={copySelected}
