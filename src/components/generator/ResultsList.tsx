@@ -11,7 +11,6 @@ interface Props {
   username: string;
 }
 
-
 // Threshold above which we switch to virtualized rendering.
 const VIRTUALIZE_THRESHOLD = 100;
 // Estimated row height; the virtualizer measures the real one after mount.
@@ -25,42 +24,30 @@ function dotCount(s: string) {
   return c;
 }
 
-
-
-function HighlightedEmail({
-  value,
-  query,
-}: {
-  value: string;
-  query: string;
-}) {
-  const q = query.trim().toLowerCase();
-  const matchStart = q ? value.toLowerCase().indexOf(q) : -1;
-  const matchEnd = matchStart >= 0 ? matchStart + q.length : -1;
-
+function DotEmail({ value }: { value: string }) {
   return (
     <span className="font-mono text-sm break-all">
-      {value.split("").map((c, i) => {
-        const inMatch = matchStart >= 0 && i >= matchStart && i < matchEnd;
-        if (c === ".") {
-          return (
-            <span
-              key={i}
-              className={`text-accent font-bold${inMatch ? " bg-accent/20 rounded-sm" : ""}`}
-            >
-              .
-            </span>
-          );
-        }
-        return (
-          <span key={i} className={inMatch ? "bg-accent/20 rounded-sm" : undefined}>
-            {c}
+      {value.split("").map((c, i) =>
+        c === "." ? (
+          <span key={i} className="text-accent font-bold">
+            .
           </span>
-        );
-      })}
+        ) : (
+          <span key={i}>{c}</span>
+        ),
+      )}
       <span className="text-muted-foreground">@gmail.com</span>
     </span>
   );
+}
+
+async function safeCopy(text: string, successMsg: string) {
+  try {
+    await navigator.clipboard.writeText(text);
+    toast.success(successMsg);
+  } catch {
+    toast.error("Gagal menyalin — periksa izin browser");
+  }
 }
 
 function CopyButton({ text }: { text: string }) {
@@ -71,10 +58,14 @@ function CopyButton({ text }: { text: string }) {
       aria-label="Salin"
       onClick={async (e) => {
         e.stopPropagation();
-        await navigator.clipboard.writeText(text);
-        setCopied(true);
-        toast.success("Disalin", { duration: 1000 });
-        setTimeout(() => setCopied(false), 1200);
+        try {
+          await navigator.clipboard.writeText(text);
+          setCopied(true);
+          toast.success("Disalin", { duration: 1000 });
+          setTimeout(() => setCopied(false), 1200);
+        } catch {
+          toast.error("Gagal menyalin — periksa izin browser");
+        }
       }}
       className="opacity-30 sm:group-hover:opacity-100 hover:opacity-100 focus:opacity-100 transition rounded-md p-1.5 hover:bg-muted text-muted-foreground shrink-0"
     >
@@ -103,12 +94,11 @@ interface RowProps {
   v: string;
   idx: number;
   isSelected: boolean;
-  query: string;
   onToggle: (v: string) => void;
   withBorderTop: boolean;
 }
 
-function Row({ v, idx, isSelected, query, onToggle, withBorderTop }: RowProps) {
+function Row({ v, idx, isSelected, onToggle, withBorderTop }: RowProps) {
   const full = `${v}@gmail.com`;
   return (
     <div
@@ -120,7 +110,14 @@ function Row({ v, idx, isSelected, query, onToggle, withBorderTop }: RowProps) {
           : "border-l-transparent hover:bg-muted/40 hover:border-l-accent/40"
       }`}
       onClick={() => onToggle(v)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onToggle(v);
+        }
+      }}
       role="listitem"
+      tabIndex={0}
     >
       <div className="flex items-center gap-3 min-w-0">
         <Checkbox
@@ -132,7 +129,7 @@ function Row({ v, idx, isSelected, query, onToggle, withBorderTop }: RowProps) {
         <span className="text-xs text-muted-foreground tabular-nums w-12 shrink-0">
           {(idx + 1).toString().padStart(3, "0")}
         </span>
-        <HighlightedEmail value={v} query={query} />
+        <DotEmail value={v} />
       </div>
       <CopyButton text={full} />
     </div>
@@ -140,35 +137,22 @@ function Row({ v, idx, isSelected, query, onToggle, withBorderTop }: RowProps) {
 }
 
 export function ResultsList({ variants, username }: Props) {
-  // Selection keyed by variant string so it survives filtering.
+  // Selection keyed by variant string.
   const [selected, setSelected] = useState<Set<string>>(new Set());
-  const [query, setQuery] = useState("");
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
-  const searchRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
 
   // Reset on new generation
   useEffect(() => {
     setSelected(new Set());
-    setQuery("");
     setVisibleCount(PAGE_SIZE);
   }, [username, variants]);
 
-  const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    const out: { v: string; idx: number }[] = [];
-    for (let i = 0; i < variants.length; i++) {
-      const v = variants[i];
-      if (q && !v.toLowerCase().includes(q)) continue;
-      out.push({ v, idx: i });
-    }
-    return out;
-  }, [variants, query]);
-
-  const displayed = useMemo(() => filtered.slice(0, visibleCount), [filtered, visibleCount]);
-  const hasMore = visibleCount < filtered.length;
-
-  const filterActive = query.trim().length > 0;
+  const displayed = useMemo(
+    () => variants.slice(0, visibleCount).map((v, i) => ({ v, idx: i })),
+    [variants, visibleCount],
+  );
+  const hasMore = visibleCount < variants.length;
   const shouldVirtualize = displayed.length > VIRTUALIZE_THRESHOLD;
 
   // Window virtualizer — uses page scroll, preserves sticky header.
@@ -180,26 +164,19 @@ export function ResultsList({ variants, username }: Props) {
     getItemKey: (i) => displayed[i].v,
   });
 
-  // Recompute scrollMargin when filter/list re-mounts.
   useEffect(() => {
     virtualizer.measure();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query, variants]);
+  }, [variants]);
 
-  function selectAllVisible(rangeStart: number, rangeEnd: number) {
-    const next = new Set(selected);
-    for (let i = rangeStart; i < rangeEnd; i++) next.add(filtered[i].v);
-    setSelected(next);
-  }
-
-  function toggleAllFiltered() {
+  function toggleAll() {
     const allSelected =
-      filtered.length > 0 && filtered.every(({ v }) => selected.has(v));
+      variants.length > 0 && variants.every((v) => selected.has(v));
     const next = new Set(selected);
     if (allSelected) {
-      filtered.forEach(({ v }) => next.delete(v));
+      variants.forEach((v) => next.delete(v));
     } else {
-      filtered.forEach(({ v }) => next.add(v));
+      variants.forEach((v) => next.add(v));
     }
     setSelected(next);
   }
@@ -213,20 +190,9 @@ export function ResultsList({ variants, username }: Props) {
     });
   }
 
-  function clearSelection() {
-    setSelected(new Set());
-  }
-
   async function copyAll() {
     const all = variants.map((v) => `${v}@gmail.com`).join("\n");
-    await navigator.clipboard.writeText(all);
-    toast.success(`Disalin ${variants.length.toLocaleString("id-ID")} email`);
-  }
-
-  async function copyFiltered() {
-    const list = filtered.map(({ v }) => `${v}@gmail.com`).join("\n");
-    await navigator.clipboard.writeText(list);
-    toast.success(`Disalin ${filtered.length.toLocaleString("id-ID")} email tersaring`);
+    await safeCopy(all, `Disalin ${variants.length.toLocaleString("id-ID")} email`);
   }
 
   async function copySelected() {
@@ -236,32 +202,20 @@ export function ResultsList({ variants, username }: Props) {
       .sort((a, b) => (order.get(a) ?? 0) - (order.get(b) ?? 0))
       .map((v) => `${v}@gmail.com`)
       .join("\n");
-    await navigator.clipboard.writeText(list);
-    toast.success(`Disalin ${selected.size.toLocaleString("id-ID")} email terpilih`);
+    await safeCopy(list, `Disalin ${selected.size.toLocaleString("id-ID")} email terpilih`);
   }
 
-  // Smart copy: selection > filtered > all.
   async function smartCopy() {
     if (selected.size > 0) return copySelected();
-    if (filterActive) return copyFiltered();
     return copyAll();
   }
 
-  function downloadTxt() {
-    const source = filterActive ? filtered.map((f) => f.v) : variants;
-    const content = source.map((v) => `${v}@gmail.com`).join("\n");
-    const suffix = filterActive ? "-tersaring" : "";
-    download(`dotmail-${username}${suffix}.txt`, content, "text/plain");
-  }
-
   function downloadCsv() {
-    const source = filterActive ? filtered.map((f) => f.v) : variants;
     const lines = ["email,dots"];
-    for (const v of source) {
+    for (const v of variants) {
       lines.push(`${v}@gmail.com,${dotCount(v)}`);
     }
-    const suffix = filterActive ? "-tersaring" : "";
-    download(`dotmail-${username}${suffix}.csv`, lines.join("\n"), "text/csv");
+    download(`dotmail-${username}.csv`, lines.join("\n"), "text/csv");
   }
 
   // Keyboard shortcuts
@@ -271,47 +225,30 @@ export function ResultsList({ variants, username }: Props) {
     function handler(e: KeyboardEvent) {
       const mod = e.metaKey || e.ctrlKey;
 
-      // Cmd/Ctrl+K → focus search
-      if (mod && !e.shiftKey && e.key.toLowerCase() === "k") {
-        e.preventDefault();
-        searchRef.current?.focus();
-        searchRef.current?.select();
-        return;
-      }
-
-      // Cmd/Ctrl+Shift+C → smart copy (selection > filtered > all)
+      // Cmd/Ctrl+Shift+C → smart copy (selection > all)
       if (mod && e.shiftKey && e.key.toLowerCase() === "c") {
         e.preventDefault();
         smartCopy();
         return;
       }
 
-      // Cmd/Ctrl+Shift+A → select / deselect all filtered
+      // Cmd/Ctrl+Shift+A → select / deselect all
       if (mod && e.shiftKey && e.key.toLowerCase() === "a") {
         e.preventDefault();
-        toggleAllFiltered();
+        toggleAll();
         return;
       }
-
-      // Esc while typing in search → clear & blur
-      if (e.key === "Escape" && document.activeElement === searchRef.current) {
-        e.preventDefault();
-        setQuery("");
-        searchRef.current?.blur();
-        return;
-      }
-
     }
 
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [variants, filtered, selected, filterActive, query]);
+  }, [variants, selected]);
 
   if (variants.length === 0) return null;
 
-  const allFilteredSelected =
-    filtered.length > 0 && filtered.every(({ v }) => selected.has(v));
+  const allSelected =
+    variants.length > 0 && variants.every((v) => selected.has(v));
 
   const virtualItems = virtualizer.getVirtualItems();
   const totalSize = virtualizer.getTotalSize();
@@ -326,11 +263,11 @@ export function ResultsList({ variants, username }: Props) {
           </h2>
           <div className="flex flex-wrap items-center gap-2">
             <Button
-              onClick={toggleAllFiltered}
-              variant={allFilteredSelected ? "default" : "outline"}
+              onClick={toggleAll}
+              variant={allSelected ? "default" : "outline"}
               className="rounded-xl h-10 w-10 p-0"
-              title={allFilteredSelected ? "Batal pilih semua" : "Pilih semua"}
-              aria-label={allFilteredSelected ? "Batal pilih semua" : "Pilih semua"}
+              title={allSelected ? "Batal pilih semua" : "Pilih semua"}
+              aria-label={allSelected ? "Batal pilih semua" : "Pilih semua"}
             >
               <ListChecks className="size-4" />
             </Button>
@@ -340,17 +277,6 @@ export function ResultsList({ variants, username }: Props) {
                 variant="default"
                 className="rounded-xl h-10 flex-1 sm:flex-none"
                 title={`Salin terpilih (${selected.size.toLocaleString("id-ID")})`}
-              >
-                <Copy className="size-4" />
-                Salin
-              </Button>
-            )}
-            {filterActive && selected.size === 0 && (
-              <Button
-                onClick={copyFiltered}
-                variant="default"
-                className="rounded-xl h-10 flex-1 sm:flex-none"
-                title={`Salin tersaring (${filtered.length.toLocaleString("id-ID")})`}
               >
                 <Copy className="size-4" />
                 Salin
@@ -369,8 +295,8 @@ export function ResultsList({ variants, username }: Props) {
               onClick={downloadCsv}
               variant="outline"
               className="rounded-xl h-10 w-10 p-0"
-              title={filterActive ? "Unduh hasil tersaring .csv" : "Unduh sebagai .csv"}
-              aria-label={filterActive ? "Unduh hasil tersaring .csv" : "Unduh sebagai .csv"}
+              title="Unduh sebagai .csv"
+              aria-label="Unduh sebagai .csv"
             >
               <Download className="size-4" />
             </Button>
@@ -378,15 +304,7 @@ export function ResultsList({ variants, username }: Props) {
         </header>
       </div>
 
-
-
-      {filtered.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-border bg-muted/20 px-6 py-10 text-center">
-          <p className="text-sm text-muted-foreground">
-            Tidak ada variasi yang cocok dengan filter saat ini.
-          </p>
-        </div>
-      ) : shouldVirtualize ? (
+      {shouldVirtualize ? (
         <div
           ref={listRef}
           className="rounded-2xl border border-border bg-card overflow-hidden"
@@ -418,7 +336,6 @@ export function ResultsList({ variants, username }: Props) {
                     v={item.v}
                     idx={item.idx}
                     isSelected={selected.has(item.v)}
-                    query={query}
                     onToggle={toggleOne}
                     withBorderTop={vi.index > 0}
                   />
@@ -440,7 +357,6 @@ export function ResultsList({ variants, username }: Props) {
               v={item.v}
               idx={item.idx}
               isSelected={selected.has(item.v)}
-              query={query}
               onToggle={toggleOne}
               withBorderTop={pos > 0}
             />
@@ -459,7 +375,6 @@ export function ResultsList({ variants, username }: Props) {
           </Button>
         </div>
       )}
-
     </section>
   );
 }
