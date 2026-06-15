@@ -3,7 +3,7 @@ import { useWindowVirtualizer } from "@tanstack/react-virtual";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
-import { Check, Copy, Download, Search, X } from "lucide-react";
+import { Check, Copy, Download, ListChecks, Search, X } from "lucide-react";
 import { toast } from "sonner";
 
 interface Props {
@@ -325,6 +325,15 @@ export function ResultsList({ variants, username }: Props) {
             {variants.length.toLocaleString("id-ID")} variasi
           </h2>
           <div className="flex flex-wrap items-center gap-2">
+            <Button
+              onClick={toggleAllFiltered}
+              variant={allFilteredSelected ? "default" : "outline"}
+              className="rounded-xl h-10"
+              title={allFilteredSelected ? "Batal pilih semua" : "Pilih semua"}
+            >
+              <ListChecks className="size-4" />
+              {allFilteredSelected ? "Batal" : "Pilih semua"}
+            </Button>
             {selected.size > 0 && (
               <Button
                 onClick={copySelected}
@@ -394,30 +403,6 @@ export function ResultsList({ variants, username }: Props) {
         </div>
       </div>
 
-      <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-2 mb-2 text-xs text-muted-foreground">
-        <div className="flex items-center gap-3">
-          <Checkbox
-            checked={allFilteredSelected}
-            onCheckedChange={toggleAllFiltered}
-            aria-label="Pilih semua tersaring"
-          />
-          <span>
-            Pilih semua{filterActive ? " tersaring" : ""} (
-            {filtered.length.toLocaleString("id-ID")})
-          </span>
-        </div>
-        <div className="flex items-center gap-3">
-          {selected.size > 0 && (
-            <button
-              type="button"
-              onClick={clearSelection}
-              className="underline hover:text-foreground transition"
-            >
-              Kosongkan pilihan
-            </button>
-          )}
-        </div>
-      </div>
 
       {filtered.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-border bg-muted/20 px-6 py-10 text-center">
