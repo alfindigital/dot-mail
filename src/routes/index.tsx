@@ -194,7 +194,7 @@ function Index() {
             <span className="italic text-accent">Ratusan</span> alamat.
           </h1>
           <p className="mt-5 text-base sm:text-lg text-muted-foreground max-w-xl mx-auto">
-            Gmail mengabaikan titik di username. Semua variasi dibawah masuk ke inbox yang sama. Generate pakai tools ini.
+            Gmail mengabaikan titik di username. Semua variasi di bawah masuk ke inbox yang sama. Generate pakai tools ini.
           </p>
 
         </section>
