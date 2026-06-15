@@ -320,12 +320,10 @@ export function ResultsList({ variants, username }: Props) {
   return (
     <section className="mt-8" data-results-section>
       <div className="sticky top-0 z-10 -mx-5 sm:-mx-8 px-5 sm:px-8 py-3 bg-background/85 backdrop-blur border-b border-border/60 mb-4">
-        <header className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
-          <div>
-            <h2 className="font-serif text-2xl sm:text-3xl text-foreground">
-              {variants.length.toLocaleString("id-ID")} variasi
-            </h2>
-          </div>
+        <header className="flex flex-row items-center justify-between gap-3">
+          <h2 className="font-serif text-2xl sm:text-3xl text-foreground whitespace-nowrap">
+            {variants.length.toLocaleString("id-ID")} variasi
+          </h2>
           <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
             {selected.size > 0 && (
               <Button
