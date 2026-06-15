@@ -46,7 +46,7 @@ async function safeCopy(text: string, successMsg: string) {
     await navigator.clipboard.writeText(text);
     toast.success(successMsg);
   } catch {
-    toast.error("Gagal menyalin — periksa izin browser");
+    toast.error("Gagal menyalin - periksa izin browser");
   }
 }
 
@@ -64,7 +64,7 @@ function CopyButton({ text }: { text: string }) {
           toast.success("Disalin", { duration: 1000 });
           setTimeout(() => setCopied(false), 1200);
         } catch {
-          toast.error("Gagal menyalin — periksa izin browser");
+          toast.error("Gagal menyalin - periksa izin browser");
         }
       }}
       className="opacity-30 sm:group-hover:opacity-100 hover:opacity-100 focus:opacity-100 transition rounded-md p-1.5 hover:bg-muted text-muted-foreground shrink-0"
