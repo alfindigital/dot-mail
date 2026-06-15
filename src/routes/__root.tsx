@@ -153,9 +153,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 });
 
 function RootShell({ children }: { children: React.ReactNode }) {
+  // Blocking inline script: apply stored dark theme BEFORE first paint to
+  // prevent a flash of the wrong theme (FOUC). Must stay synchronous, tiny,
+  // and self-contained. Mirrors the storage key used by ThemeToggle.
+  const themeBootstrap = `(function(){try{var t=localStorage.getItem('dotmail-theme');if(t==='dark'||(!t&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.classList.add('dark');}}catch(_){}})();`;
   return (
     <html lang="id">
       <head>
+        <script suppressHydrationWarning dangerouslySetInnerHTML={{ __html: themeBootstrap }} />
         <HeadContent />
       </head>
       <body>
