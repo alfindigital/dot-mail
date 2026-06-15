@@ -328,11 +328,11 @@ export function ResultsList({ variants, username }: Props) {
             <Button
               onClick={toggleAllFiltered}
               variant={allFilteredSelected ? "default" : "outline"}
-              className="rounded-xl h-10"
+              className="rounded-xl h-10 w-10 p-0"
               title={allFilteredSelected ? "Batal pilih semua" : "Pilih semua"}
+              aria-label={allFilteredSelected ? "Batal pilih semua" : "Pilih semua"}
             >
               <ListChecks className="size-4" />
-              {allFilteredSelected ? "Batal" : "Pilih semua"}
             </Button>
             {selected.size > 0 && (
               <Button
