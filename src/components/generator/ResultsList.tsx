@@ -2,8 +2,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useWindowVirtualizer } from "@tanstack/react-virtual";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
-import { Check, Copy, Download, ListChecks, Search, X } from "lucide-react";
+
+import { Check, Copy, Download, ListChecks } from "lucide-react";
 import { toast } from "sonner";
 
 interface Props {
@@ -328,11 +328,11 @@ export function ResultsList({ variants, username }: Props) {
             <Button
               onClick={toggleAllFiltered}
               variant={allFilteredSelected ? "default" : "outline"}
-              className="rounded-xl h-10"
+              className="rounded-xl h-10 w-10 p-0"
               title={allFilteredSelected ? "Batal pilih semua" : "Pilih semua"}
+              aria-label={allFilteredSelected ? "Batal pilih semua" : "Pilih semua"}
             >
               <ListChecks className="size-4" />
-              {allFilteredSelected ? "Batal" : "Pilih semua"}
             </Button>
             {selected.size > 0 && (
               <Button
@@ -378,30 +378,6 @@ export function ResultsList({ variants, username }: Props) {
         </header>
       </div>
 
-      {/* Search + dot filter */}
-      <div className="flex flex-col gap-2 mb-3">
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
-          <Input
-            ref={searchRef}
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Cari pola titik, mis. s.a atau .tu  (Ctrl+K)"
-            className="pl-9 pr-9 h-10 rounded-xl"
-            aria-label="Cari variasi"
-          />
-          {query && (
-            <button
-              type="button"
-              onClick={() => setQuery("")}
-              aria-label="Hapus pencarian"
-              className="absolute right-2 top-1/2 -translate-y-1/2 p-1 rounded hover:bg-muted text-muted-foreground"
-            >
-              <X className="size-4" />
-            </button>
-          )}
-        </div>
-      </div>
 
 
       {filtered.length === 0 ? (
