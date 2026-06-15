@@ -379,7 +379,7 @@ export function ResultsList({ variants, username }: Props) {
             ref={searchRef}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Cari pola titik, mis. s.a atau .tu  (⌘K)"
+            placeholder="Cari pola titik, mis. s.a atau .tu  (Ctrl+K)"
             className="pl-9 pr-9 h-10 rounded-xl"
             aria-label="Cari variasi"
           />
