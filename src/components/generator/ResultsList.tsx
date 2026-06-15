@@ -325,6 +325,15 @@ export function ResultsList({ variants, username }: Props) {
             {variants.length.toLocaleString("id-ID")} variasi
           </h2>
           <div className="flex flex-wrap items-center gap-2">
+            <Button
+              onClick={toggleAllFiltered}
+              variant={allFilteredSelected ? "default" : "outline"}
+              className="rounded-xl h-10"
+              title={allFilteredSelected ? "Batal pilih semua" : "Pilih semua"}
+            >
+              <ListChecks className="size-4" />
+              {allFilteredSelected ? "Batal" : "Pilih semua"}
+            </Button>
             {selected.size > 0 && (
               <Button
                 onClick={copySelected}
@@ -348,6 +357,7 @@ export function ResultsList({ variants, username }: Props) {
               </Button>
             )}
             <Button
+              onColumn
               onClick={copyAll}
               variant="outline"
               className="rounded-xl h-10 w-10 p-0"
