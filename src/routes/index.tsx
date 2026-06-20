@@ -115,6 +115,17 @@ function Index() {
   const [username, setUsername] = useState("");
   const [externalValue, setExternalValue] = useState<string | undefined>(undefined);
   const [recentVersion, setRecentVersion] = useState(0);
+  const [dateStr, setDateStr] = useState("");
+
+  useEffect(() => {
+    setDateStr(
+      new Date().toLocaleDateString("id-ID", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      })
+    );
+  }, []);
 
   function handleGenerate(u: string) {
     setUsername(u);
