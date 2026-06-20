@@ -189,6 +189,11 @@ function Index() {
             <span className="size-2.5 rounded-full bg-accent" />
             <span className="font-serif text-xl tracking-tight">DotMail</span>
           </div>
+          {dateStr && (
+            <div className="hidden sm:block text-xs text-muted-foreground tabular-nums">
+              {dateStr}
+            </div>
+          )}
           <div className="flex items-center gap-1">
             <InfoButton />
             <HistoryButton onPick={handleGenerate} recentVersion={recentVersion} />
