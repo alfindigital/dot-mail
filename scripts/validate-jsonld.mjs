@@ -17,7 +17,7 @@
 import { writeFileSync, mkdirSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 
-const DEFAULT_URLS = ["https://dotmail.lovable.app/"];
+const DEFAULT_URLS = ["https://dotmail.alfindigital.com/", "https://dotmail.alfindigital.com/en"];
 
 function parseArgs() {
   const cli = process.argv.slice(2).filter(Boolean);
@@ -40,8 +40,7 @@ function parseArgs() {
 }
 
 function extractJsonLdBlocks(html) {
-  const re =
-    /<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi;
+  const re = /<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi;
   const out = [];
   let m;
   while ((m = re.exec(html)) !== null) out.push(m[1].trim());
@@ -58,7 +57,10 @@ function inferName(item) {
     return `@graph → ${types || "(unknown)"}`;
   }
   if (Array.isArray(item)) {
-    const types = item.map((n) => n?.["@type"]).filter(Boolean).join(", ");
+    const types = item
+      .map((n) => n?.["@type"])
+      .filter(Boolean)
+      .join(", ");
     return `[array] → ${types || "(unknown)"}`;
   }
   return item["@type"] || item.name || "(unknown)";
@@ -120,8 +122,7 @@ async function validateUrl(url) {
           entry.errors.push("not an object");
         } else {
           if (!item["@context"]) entry.errors.push("missing @context");
-          if (!item["@type"] && !item["@graph"])
-            entry.errors.push("missing @type or @graph");
+          if (!item["@type"] && !item["@graph"]) entry.errors.push("missing @type or @graph");
         }
       }
     } catch (e) {

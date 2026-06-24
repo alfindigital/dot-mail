@@ -10,11 +10,19 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as EnRouteImport } from './routes/en'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ArtikelIndexRouteImport } from './routes/artikel/index'
+import { Route as ArtikelSlugRouteImport } from './routes/artikel/$slug'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnRoute = EnRouteImport.update({
+  id: '/en',
+  path: '/en',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -22,31 +30,53 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ArtikelIndexRoute = ArtikelIndexRouteImport.update({
+  id: '/artikel/',
+  path: '/artikel/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ArtikelSlugRoute = ArtikelSlugRouteImport.update({
+  id: '/artikel/$slug',
+  path: '/artikel/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/en': typeof EnRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/artikel/$slug': typeof ArtikelSlugRoute
+  '/artikel/': typeof ArtikelIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/en': typeof EnRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/artikel/$slug': typeof ArtikelSlugRoute
+  '/artikel': typeof ArtikelIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/en': typeof EnRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/artikel/$slug': typeof ArtikelSlugRoute
+  '/artikel/': typeof ArtikelIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/sitemap.xml'
+  fullPaths: '/' | '/en' | '/sitemap.xml' | '/artikel/$slug' | '/artikel/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/sitemap.xml'
-  id: '__root__' | '/' | '/sitemap.xml'
+  to: '/' | '/en' | '/sitemap.xml' | '/artikel/$slug' | '/artikel'
+  id: '__root__' | '/' | '/en' | '/sitemap.xml' | '/artikel/$slug' | '/artikel/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  EnRoute: typeof EnRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  ArtikelSlugRoute: typeof ArtikelSlugRoute
+  ArtikelIndexRoute: typeof ArtikelIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -58,6 +88,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/en': {
+      id: '/en'
+      path: '/en'
+      fullPath: '/en'
+      preLoaderRoute: typeof EnRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -65,13 +102,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/artikel/': {
+      id: '/artikel/'
+      path: '/artikel'
+      fullPath: '/artikel/'
+      preLoaderRoute: typeof ArtikelIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/artikel/$slug': {
+      id: '/artikel/$slug'
+      path: '/artikel/$slug'
+      fullPath: '/artikel/$slug'
+      preLoaderRoute: typeof ArtikelSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  EnRoute: EnRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  ArtikelSlugRoute: ArtikelSlugRoute,
+  ArtikelIndexRoute: ArtikelIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

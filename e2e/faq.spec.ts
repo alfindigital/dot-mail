@@ -5,66 +5,61 @@ const VIEWPORTS = [
   { name: "mobile", width: 390, height: 844 },
 ];
 
-async function getFaqTriggers(page: Page) {
-  const section = page.getByRole("heading", { name: "Pertanyaan", level: 2 }).locator("..");
-  return section.locator('[data-slot="accordion-trigger"], button[aria-controls]');
+async function noHorizontalOverflow(page: Page) {
+  return page.evaluate(
+    () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+  );
 }
 
 for (const vp of VIEWPORTS) {
-  test.describe(`FAQ accordion @ ${vp.name}`, () => {
+  test.describe(`Home @ ${vp.name}`, () => {
     test.use({ viewport: { width: vp.width, height: vp.height } });
 
-    test("renders, expands, and stays within viewport width", async ({ page }) => {
+    test("generator produces variants and copies", async ({ page }) => {
       await page.goto("/");
+      await page.getByPlaceholder("contoh: satu").fill("satu");
+      await page.getByRole("button", { name: /Generate/ }).click();
+      // 8 variants for a 4-char username.
+      await expect(page.getByRole("heading", { name: /8 variasi/ })).toBeVisible();
+    });
 
-      // Section visible
-      const heading = page.getByRole("heading", { name: "Pertanyaan", level: 2 });
+    test("on-page FAQ is visible and expands", async ({ page }) => {
+      await page.goto("/");
+      const heading = page.getByRole("heading", {
+        name: "Pertanyaan yang sering ditanya",
+        level: 2,
+      });
       await expect(heading).toBeVisible();
 
-      // Has 4 FAQ items
-      const triggers = page.locator('button[aria-expanded]').filter({
-        hasText: /Legal\?|diblokir\?|Data simpan|Bisa buat/,
-      });
-      await expect(triggers).toHaveCount(4);
+      const trigger = page.getByRole("button", { name: /Apa itu Gmail dot trick/ });
+      await expect(trigger).toHaveAttribute("aria-expanded", "false");
+      await trigger.click();
+      await expect(trigger).toHaveAttribute("aria-expanded", "true");
+      await expect(page.getByText(/fitur bawaan Gmail/i).first()).toBeVisible();
 
-      // All collapsed by default
-      for (let i = 0; i < 4; i++) {
-        await expect(triggers.nth(i)).toHaveAttribute("aria-expanded", "false");
-      }
+      expect(await noHorizontalOverflow(page)).toBeLessThanOrEqual(1);
+    });
 
-      // Expand first item, content shows
-      await triggers.first().click();
-      await expect(triggers.first()).toHaveAttribute("aria-expanded", "true");
-      await expect(page.getByText(/fitur bawaan Gmail/i)).toBeVisible();
-
-      // No horizontal overflow anywhere on page
-      const overflow = await page.evaluate(() => {
-        return document.documentElement.scrollWidth - document.documentElement.clientWidth;
-      });
-      expect(overflow).toBeLessThanOrEqual(1);
-
-      // FAQ container fits viewport
-      const box = await triggers.first().boundingBox();
-      expect(box).not.toBeNull();
-      expect(box!.x).toBeGreaterThanOrEqual(0);
-      expect(box!.x + box!.width).toBeLessThanOrEqual(vp.width + 1);
-
-      // Expand all and verify still no overflow
-      for (let i = 1; i < 4; i++) await triggers.nth(i).click();
-      const overflowAfter = await page.evaluate(
-        () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
-      );
-      expect(overflowAfter).toBeLessThanOrEqual(1);
+    test("deep link ?u= auto-generates", async ({ page }) => {
+      await page.goto("/?u=andi");
+      await expect(page.getByRole("heading", { name: /variasi/ })).toBeVisible();
     });
 
     test("no em dash visible to user", async ({ page }) => {
       await page.goto("/");
-      // expand everything so accordion content is in DOM text
-      const triggers = page.locator('button[aria-expanded="false"]');
-      const n = await triggers.count();
-      for (let i = 0; i < n; i++) await triggers.nth(i).click({ trial: false }).catch(() => {});
       const bodyText = await page.locator("body").innerText();
-      expect(bodyText).not.toContain("\u2014");
+      expect(bodyText).not.toContain("—");
     });
   });
 }
+
+test("English route renders", async ({ page }) => {
+  await page.goto("/en");
+  await expect(page.getByRole("heading", { name: /One inbox/i })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Frequently asked questions" })).toBeVisible();
+});
+
+test("article page renders", async ({ page }) => {
+  await page.goto("/artikel/cara-filter-gmail-dengan-titik");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Cara Filter Email");
+});

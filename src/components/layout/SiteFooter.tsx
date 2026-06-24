@@ -1,5 +1,3 @@
-import { useEffect, useRef, useState } from "react";
-
 type Social = {
   href: string;
   label: string;
@@ -35,42 +33,11 @@ const SOCIALS: Social[] = [
 ];
 
 export function SiteFooter() {
-  const [activeIdx, setActiveIdx] = useState(0);
-  const pausedRef = useRef(false);
-  const glowRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    const id = setInterval(() => {
-      if (pausedRef.current) return;
-      setActiveIdx((i) => (i + 1) % SOCIALS.length);
-    }, 2300);
-    return () => clearInterval(id);
-  }, []);
-
-  useEffect(() => {
-    let timer: ReturnType<typeof setTimeout>;
-    let cancelled = false;
-    const move = () => {
-      if (cancelled) return;
-      const el = glowRef.current;
-      if (el) {
-        el.style.left = Math.random() * 120 - 30 + "%";
-        el.style.top = Math.random() * 60 - 30 + "%";
-      }
-      timer = setTimeout(move, 4000 + Math.random() * 4000);
-    };
-    move();
-    return () => {
-      cancelled = true;
-      clearTimeout(timer);
-    };
-  }, []);
-
   const year = new Date().getFullYear();
 
   return (
     <footer className="afd-foot" aria-label="Site footer">
-      <div ref={glowRef} className="afd-glow" aria-hidden="true" />
+      <div className="afd-glow" aria-hidden="true" />
       <span className="afd-cr">
         © {year}
         <a
@@ -81,31 +48,25 @@ export function SiteFooter() {
         >
           alfindigital
         </a>
-        <span className="afd-caret" aria-hidden="true" />
       </span>
-      <div
-        className="afd-rot"
-        onMouseEnter={() => (pausedRef.current = true)}
-        onMouseLeave={() => (pausedRef.current = false)}
-      >
-        {SOCIALS.map((s, idx) => (
+      {/* All socials always visible & keyboard-reachable. */}
+      <nav className="afd-socials" aria-label="Social links">
+        {SOCIALS.map((s) => (
           <a
             key={s.label}
-            className={`afd-item${idx === activeIdx ? " active" : ""}`}
+            className="afd-soc"
             href={s.href}
             target="_blank"
             rel="noopener noreferrer"
             aria-label={s.label}
+            title={`${s.label} ${s.handle}`}
           >
-            <span className="afd-ico">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d={s.path} />
-              </svg>
-            </span>
-            <b>{s.handle}</b>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d={s.path} />
+            </svg>
           </a>
         ))}
-      </div>
+      </nav>
     </footer>
   );
 }

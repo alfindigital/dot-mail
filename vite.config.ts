@@ -22,7 +22,6 @@ export default defineConfig({
         "react/jsx-dev-runtime",
         "react-dom",
         "react-dom/client",
-        "@tanstack/react-query",
         "@tanstack/react-router",
         "@tanstack/react-store",
         "@tanstack/react-virtual",

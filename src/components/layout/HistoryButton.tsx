@@ -9,6 +9,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { getRecent, removeRecent, subscribeRecent } from "@/lib/recent-usernames";
+import { useT } from "@/lib/i18n";
 
 interface Props {
   onPick: (username: string) => void;
@@ -16,6 +17,7 @@ interface Props {
 }
 
 export function HistoryButton({ onPick, recentVersion }: Props) {
+  const t = useT();
   const [open, setOpen] = useState(false);
   const [recent, setRecent] = useState<string[]>([]);
 
@@ -29,23 +31,16 @@ export function HistoryButton({ onPick, recentVersion }: Props) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button
-          variant="ghost"
-          size="icon"
-          aria-label="Riwayat username"
-          className="rounded-full"
-        >
+        <Button variant="ghost" size="icon" aria-label={t.historyButton} className="rounded-full">
           <History className="size-4" />
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle className="font-serif text-xl">Riwayat username</DialogTitle>
+          <DialogTitle className="font-serif text-xl">{t.historyTitle}</DialogTitle>
         </DialogHeader>
         {recent.length === 0 ? (
-          <p className="text-sm text-muted-foreground py-6 text-center">
-            Belum ada riwayat. Generate username untuk mulai menyimpan.
-          </p>
+          <p className="text-sm text-muted-foreground py-6 text-center">{t.historyEmpty}</p>
         ) : (
           <ul className="divide-y divide-border -mx-2">
             {recent.map((u) => (
@@ -63,7 +58,7 @@ export function HistoryButton({ onPick, recentVersion }: Props) {
                 </button>
                 <button
                   type="button"
-                  aria-label={`Hapus ${u}`}
+                  aria-label={`${t.lang === "id" ? "Hapus" : "Remove"} ${u}`}
                   onClick={() => setRecent(removeRecent(u))}
                   className="rounded-full p-1.5 text-muted-foreground hover:text-foreground hover:bg-muted transition"
                 >

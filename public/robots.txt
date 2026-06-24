@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://dotmail.lovable.app/sitemap.xml
+Sitemap: https://dotmail.alfindigital.com/sitemap.xml

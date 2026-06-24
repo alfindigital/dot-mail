@@ -1,7 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
+import { SITE_URL } from "@/lib/site";
+import { ARTICLES } from "@/lib/articles";
 
-const BASE_URL = (process.env.SITE_URL ?? "https://dotmail.lovable.app").replace(/\/$/, "");
+const BASE_URL = SITE_URL;
 
 interface SitemapEntry {
   path: string;
@@ -17,6 +19,14 @@ export const Route = createFileRoute("/sitemap.xml")({
         const today = new Date().toISOString().slice(0, 10);
         const entries: SitemapEntry[] = [
           { path: "/", lastmod: today, changefreq: "weekly", priority: "1.0" },
+          { path: "/en", lastmod: today, changefreq: "weekly", priority: "0.9" },
+          { path: "/artikel", lastmod: today, changefreq: "weekly", priority: "0.6" },
+          ...ARTICLES.map((a) => ({
+            path: `/artikel/${a.slug}`,
+            lastmod: a.dateModified,
+            changefreq: "monthly" as const,
+            priority: "0.7",
+          })),
         ];
 
         const urls = entries.map((e) =>

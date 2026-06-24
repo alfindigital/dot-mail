@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useT } from "@/lib/i18n";
 
 const KEY = "dotmail-theme";
 
@@ -23,6 +24,7 @@ function getInitial(): "light" | "dark" {
 }
 
 export function ThemeToggle() {
+  const t = useT();
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const [mounted, setMounted] = useState(false);
 
@@ -57,7 +59,7 @@ export function ThemeToggle() {
     <Button
       variant="ghost"
       size="icon"
-      aria-label="Ganti tema"
+      aria-label={t.themeToggle}
       className="rounded-full"
       onClick={() => setTheme((t) => (t === "dark" ? "light" : "dark"))}
     >

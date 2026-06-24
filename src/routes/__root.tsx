@@ -1,14 +1,15 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet,
   Link,
-  createRootRouteWithContext,
+  createRootRoute,
   useRouter,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { registerPWA } from "@/lib/pwa-register";
+import { SITE_URL, abs } from "@/lib/site";
+import { analyticsScripts } from "@/lib/analytics";
 
 import appCss from "../styles.css?url";
 
@@ -69,7 +70,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   );
 }
 
-export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+export const Route = createRootRoute({
   head: () => ({
     meta: [
       { charSet: "utf-8" },
@@ -100,8 +101,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap",
         media: "print",
+        "data-font": "google",
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        ["data-font" as any]: "google",
       } as any,
     ],
     scripts: [
@@ -116,8 +117,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "@graph": [
             {
               "@type": "WebSite",
-              "@id": "https://dotmail.lovable.app/#website",
-              url: "https://dotmail.lovable.app/",
+              "@id": `${SITE_URL}/#website`,
+              url: abs("/"),
               name: "DotMail",
               description:
                 "Generator gmail dot trick: buat semua variasi titik alamat Gmail. Gratis, privat, berjalan di browser.",
@@ -126,7 +127,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
                 "@type": "SearchAction",
                 target: {
                   "@type": "EntryPoint",
-                  urlTemplate: "https://dotmail.lovable.app/?u={search_term_string}",
+                  urlTemplate: `${abs("/")}?u={search_term_string}`,
                 },
                 "query-input": "required name=search_term_string",
               },
@@ -134,7 +135,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
             {
               "@type": "SoftwareApplication",
               name: "DotMail - Gmail Dot Trick Generator",
-              url: "https://dotmail.lovable.app/",
+              url: abs("/"),
               applicationCategory: "UtilitiesApplication",
               operatingSystem: "Any",
               inLanguage: "id-ID",
@@ -143,6 +144,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           ],
         }),
       },
+      ...analyticsScripts(),
     ],
   }),
 
@@ -178,16 +180,10 @@ function RootShell({ children }: { children: React.ReactNode }) {
 }
 
 function RootComponent() {
-  const { queryClient } = Route.useRouteContext();
-
   useEffect(() => {
     registerPWA();
   }, []);
 
-  return (
-    <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
-    </QueryClientProvider>
-  );
+  // Required: nested routes render here. Removing <Outlet /> breaks all child routes.
+  return <Outlet />;
 }
