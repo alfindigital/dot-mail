@@ -8,8 +8,6 @@ import { HistoryButton } from "@/components/layout/HistoryButton";
 import { InfoButton } from "@/components/layout/InfoButton";
 import { LangSwitch } from "@/components/layout/LangSwitch";
 import { SiteFooter } from "@/components/layout/SiteFooter";
-import { WhySection } from "@/components/sections/WhySection";
-import { FaqSection } from "@/components/sections/FaqSection";
 import { ArticleTeaser } from "@/components/sections/ArticleTeaser";
 import { generateDotVariants, validateUsername } from "@/lib/dot-variants";
 import { addRecent } from "@/lib/recent-usernames";
@@ -97,7 +95,7 @@ function HomeInner({ lang }: { lang: Lang }) {
           </div>
           <div className="flex items-center gap-1.5">
             <LangSwitch lang={lang} />
-            <InfoButton />
+            <InfoButton lang={lang} />
             <HistoryButton onPick={handlePick} recentVersion={recentVersion} />
             <ThemeToggle />
           </div>
@@ -134,8 +132,6 @@ function HomeInner({ lang }: { lang: Lang }) {
           </div>
         )}
 
-        <WhySection />
-        <FaqSection />
         {lang === "id" && <ArticleTeaser />}
       </main>
 

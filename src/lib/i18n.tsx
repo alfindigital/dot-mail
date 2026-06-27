@@ -126,8 +126,7 @@ export const id: Dict = {
     charset: "Hanya huruf a-z, angka 0-9, dan titik. Tanpa spasi atau simbol.",
     dotPattern: "Titik tidak boleh di awal, akhir, atau berurutan.",
     minLen: "Minimal 2 karakter (tanpa titik).",
-    maxLen:
-      "Maksimal 18 karakter - di atas itu jumlah kombinasi meledak. Untuk username panjang, pakai mode Plus alias.",
+    maxLen: "Maksimal 18 karakter - di atas itu jumlah kombinasi terlalu besar.",
   },
   plusEmptyError: "Masukkan minimal satu label.",
   resultsCount: (n) => `${n.toLocaleString("id-ID")} variasi`,
@@ -252,8 +251,7 @@ export const en: Dict = {
     charset: "Only letters a-z, digits 0-9, and dots. No spaces or symbols.",
     dotPattern: "Dots can't be at the start, end, or repeated.",
     minLen: "At least 2 characters (without dots).",
-    maxLen:
-      "Max 18 characters - beyond that the combination count explodes. For long usernames, use Plus alias mode.",
+    maxLen: "Max 18 characters - beyond that the combination count is too large.",
   },
   plusEmptyError: "Enter at least one label.",
   resultsCount: (n) => `${n.toLocaleString("en-US")} variations`,
