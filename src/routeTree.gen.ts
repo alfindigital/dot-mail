@@ -10,14 +10,21 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as InfoRouteImport } from './routes/info'
 import { Route as EnRouteImport } from './routes/en'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ArtikelIndexRouteImport } from './routes/artikel/index'
+import { Route as EnInfoRouteImport } from './routes/en.info'
 import { Route as ArtikelSlugRouteImport } from './routes/artikel/$slug'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InfoRoute = InfoRouteImport.update({
+  id: '/info',
+  path: '/info',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EnRoute = EnRouteImport.update({
@@ -35,6 +42,11 @@ const ArtikelIndexRoute = ArtikelIndexRouteImport.update({
   path: '/artikel/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EnInfoRoute = EnInfoRouteImport.update({
+  id: '/info',
+  path: '/info',
+  getParentRoute: () => EnRoute,
+} as any)
 const ArtikelSlugRoute = ArtikelSlugRouteImport.update({
   id: '/artikel/$slug',
   path: '/artikel/$slug',
@@ -43,37 +55,66 @@ const ArtikelSlugRoute = ArtikelSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/en': typeof EnRoute
+  '/en': typeof EnRouteWithChildren
+  '/info': typeof InfoRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/artikel/$slug': typeof ArtikelSlugRoute
+  '/en/info': typeof EnInfoRoute
   '/artikel/': typeof ArtikelIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/en': typeof EnRoute
+  '/en': typeof EnRouteWithChildren
+  '/info': typeof InfoRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/artikel/$slug': typeof ArtikelSlugRoute
+  '/en/info': typeof EnInfoRoute
   '/artikel': typeof ArtikelIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/en': typeof EnRoute
+  '/en': typeof EnRouteWithChildren
+  '/info': typeof InfoRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/artikel/$slug': typeof ArtikelSlugRoute
+  '/en/info': typeof EnInfoRoute
   '/artikel/': typeof ArtikelIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/en' | '/sitemap.xml' | '/artikel/$slug' | '/artikel/'
+  fullPaths:
+    | '/'
+    | '/en'
+    | '/info'
+    | '/sitemap.xml'
+    | '/artikel/$slug'
+    | '/en/info'
+    | '/artikel/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/en' | '/sitemap.xml' | '/artikel/$slug' | '/artikel'
-  id: '__root__' | '/' | '/en' | '/sitemap.xml' | '/artikel/$slug' | '/artikel/'
+  to:
+    | '/'
+    | '/en'
+    | '/info'
+    | '/sitemap.xml'
+    | '/artikel/$slug'
+    | '/en/info'
+    | '/artikel'
+  id:
+    | '__root__'
+    | '/'
+    | '/en'
+    | '/info'
+    | '/sitemap.xml'
+    | '/artikel/$slug'
+    | '/en/info'
+    | '/artikel/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  EnRoute: typeof EnRoute
+  EnRoute: typeof EnRouteWithChildren
+  InfoRoute: typeof InfoRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ArtikelSlugRoute: typeof ArtikelSlugRoute
   ArtikelIndexRoute: typeof ArtikelIndexRoute
@@ -86,6 +127,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/info': {
+      id: '/info'
+      path: '/info'
+      fullPath: '/info'
+      preLoaderRoute: typeof InfoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/en': {
@@ -109,6 +157,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ArtikelIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/en/info': {
+      id: '/en/info'
+      path: '/info'
+      fullPath: '/en/info'
+      preLoaderRoute: typeof EnInfoRouteImport
+      parentRoute: typeof EnRoute
+    }
     '/artikel/$slug': {
       id: '/artikel/$slug'
       path: '/artikel/$slug'
@@ -119,9 +174,20 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface EnRouteChildren {
+  EnInfoRoute: typeof EnInfoRoute
+}
+
+const EnRouteChildren: EnRouteChildren = {
+  EnInfoRoute: EnInfoRoute,
+}
+
+const EnRouteWithChildren = EnRoute._addFileChildren(EnRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  EnRoute: EnRoute,
+  EnRoute: EnRouteWithChildren,
+  InfoRoute: InfoRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   ArtikelSlugRoute: ArtikelSlugRoute,
   ArtikelIndexRoute: ArtikelIndexRoute,
@@ -129,13 +195,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

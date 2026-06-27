@@ -58,6 +58,58 @@ export function homeHead(lang: Lang) {
   };
 }
 
+export function infoHead(lang: Lang) {
+  const t = DICTS[lang];
+  const path = lang === "id" ? "/info" : "/en/info";
+  const url = abs(path);
+  const title =
+    lang === "id"
+      ? "Info & Bantuan: Cara Pakai dan FAQ - DotMail"
+      : "Info & Help: How to Use and FAQ - DotMail";
+  const description =
+    lang === "id"
+      ? "Cara pakai DotMail, kegunaan Gmail dot trick, dan pertanyaan yang sering ditanya."
+      : "How to use DotMail, what the Gmail dot trick is good for, and answers to common questions.";
+
+  return {
+    meta: [
+      { title },
+      { name: "description", content: description },
+      { name: "robots", content: "index, follow" },
+      { property: "og:title", content: title },
+      { property: "og:description", content: description },
+      { property: "og:url", content: url },
+      { property: "og:image", content: OG_IMAGE },
+      { property: "og:image:alt", content: t.ogImageAlt },
+      { property: "og:locale", content: lang === "id" ? "id_ID" : "en_US" },
+      { name: "twitter:title", content: title },
+      { name: "twitter:description", content: description },
+      { name: "twitter:image", content: OG_IMAGE },
+    ],
+    links: [
+      { rel: "canonical", href: url },
+      { rel: "alternate", hrefLang: "id", href: abs("/info") },
+      { rel: "alternate", hrefLang: "en", href: abs("/en/info") },
+      { rel: "alternate", hrefLang: "x-default", href: abs("/info") },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          inLanguage: lang === "id" ? "id-ID" : "en-US",
+          mainEntity: t.faqs.map((f) => ({
+            "@type": "Question",
+            name: f.q,
+            acceptedAnswer: { "@type": "Answer", text: f.a },
+          })),
+        }),
+      },
+    ],
+  };
+}
+
 export interface ArticleSeoInput {
   slug: string;
   title: string;
