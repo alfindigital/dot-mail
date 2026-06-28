@@ -136,21 +136,6 @@ export function GeneratorCard({ onGenerate, externalValue }: Props) {
           </Button>
         </div>
 
-        {value.length === 0 && (
-          <div className="mt-3 flex flex-wrap items-center gap-2 text-xs">
-            <span className="text-muted-foreground">{t.tryLabel}</span>
-            {EXAMPLES.map((ex) => (
-              <button
-                key={ex}
-                type="button"
-                onClick={() => pickExample(ex)}
-                className="rounded-full border border-border bg-muted/40 px-3 py-1 font-mono text-foreground hover:border-accent/50 hover:text-accent transition"
-              >
-                {ex}
-              </button>
-            ))}
-          </div>
-        )}
 
         <div className="mt-3 min-h-[1.25rem] text-sm">
           {showError ? (
