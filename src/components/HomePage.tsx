@@ -89,9 +89,6 @@ function HomeInner({ lang }: { lang: Lang }) {
           <div className="flex items-center gap-2 min-w-0">
             <span className="size-2.5 rounded-full bg-accent shrink-0" />
             <span className="font-serif text-xl tracking-tight">DotMail</span>
-            <span className="hidden md:inline text-xs text-muted-foreground truncate">
-              {t.brandTagline}
-            </span>
           </div>
           <div className="flex items-center gap-1.5">
             <LangSwitch lang={lang} />
