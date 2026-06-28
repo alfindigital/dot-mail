@@ -124,7 +124,7 @@ function HomeInner({ lang }: { lang: Lang }) {
           <ResultsList variants={result.variants} username={result.username} mode={result.mode} />
         ) : (
           <div className="mt-8 rounded-2xl border border-dashed border-border bg-muted/20 px-6 py-10 flex flex-col items-center justify-center text-center">
-            <Sparkles className="size-5 text-muted-foreground/60 mb-2" />
+            <Sparkles className="size-5 text-accent mb-2" />
             <p className="text-sm text-muted-foreground">{t.emptyPlaceholder}</p>
           </div>
         )}
