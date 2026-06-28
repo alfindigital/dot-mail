@@ -130,7 +130,7 @@ export function GeneratorCard({ onGenerate, externalValue }: Props) {
               @gmail.com
             </span>
           </div>
-          <Button type="submit" size="lg" className="h-12 px-6 rounded-xl">
+          <Button type="submit" size="lg" className="h-12 px-6 rounded-xl bg-accent text-accent-foreground hover:bg-accent/90">
             {t.generate}
             <ArrowRight className="size-4" />
           </Button>
