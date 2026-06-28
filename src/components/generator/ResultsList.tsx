@@ -332,9 +332,21 @@ export function ResultsList({ variants, username, mode }: Props) {
     <section className="mt-8" data-results-section>
       <div className="sticky top-0 z-10 -mx-5 sm:-mx-8 px-5 sm:px-8 py-3 bg-background/85 backdrop-blur border-b border-border/60 mb-4 space-y-3">
         <header className="flex flex-row items-center justify-between gap-3">
-          <h2 className="font-serif text-2xl sm:text-3xl text-foreground whitespace-nowrap">
-            {t.resultsCount(filtered.length)}
-          </h2>
+          <div className="flex items-center gap-3 min-w-0">
+            <h2 className="font-serif text-2xl sm:text-3xl text-foreground whitespace-nowrap">
+              {t.resultsCount(filtered.length)}
+            </h2>
+            {selected.size > 0 && (
+              <Button
+                onClick={copySelected}
+                variant="default"
+                className="rounded-xl h-10 bg-accent text-accent-foreground hover:bg-accent/90"
+              >
+                <Copy className="size-4" />
+                {t.copySelected} ({selected.size.toLocaleString()})
+              </Button>
+            )}
+          </div>
           <div className="flex flex-wrap items-center gap-2">
             <Button
               onClick={toggleAll}
@@ -345,12 +357,6 @@ export function ResultsList({ variants, username, mode }: Props) {
             >
               <ListChecks className="size-4" />
             </Button>
-            {selected.size > 0 && (
-              <Button onClick={copySelected} variant="default" className="rounded-xl h-10">
-                <Copy className="size-4" />
-                {t.copySelected} ({selected.size.toLocaleString()})
-              </Button>
-            )}
             <Button
               onClick={copyAll}
               variant="outline"
@@ -369,16 +375,9 @@ export function ResultsList({ variants, username, mode }: Props) {
             >
               <Download className="size-4" />
             </Button>
-            <Button
-              onClick={downloadTxt}
-              variant="outline"
-              className="rounded-xl h-10 px-3 hidden sm:inline-flex"
-              title={t.downloadTxt}
-            >
-              .txt
-            </Button>
           </div>
         </header>
+
 
         {/* Search */}
         <div className="relative">
