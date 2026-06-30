@@ -10,7 +10,7 @@ import { LangSwitch } from "@/components/layout/LangSwitch";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { ArticleTeaser } from "@/components/sections/ArticleTeaser";
 import { generateDotVariants, validateUsername } from "@/lib/dot-variants";
-import { addRecent } from "@/lib/recent-usernames";
+import { addRecent, getLabelsFor } from "@/lib/recent-usernames";
 import { LangProvider, useT, type Lang } from "@/lib/i18n";
 
 function isTyping(el: EventTarget | null) {
@@ -23,14 +23,13 @@ function HomeInner({ lang }: { lang: Lang }) {
   const t = useT();
   const [result, setResult] = useState<GenerateResult | null>(null);
   const [externalValue, setExternalValue] = useState<string | undefined>(undefined);
-  const [recentVersion, setRecentVersion] = useState(0);
+  const [initialLabels, setInitialLabels] = useState<Record<string, string>>({});
 
   function handleGenerate(r: GenerateResult) {
     setResult(r);
     addRecent(r.username);
-    setRecentVersion((v) => v + 1);
+    setInitialLabels(getLabelsFor(r.username));
 
-    // Keep a shareable ?u= for dot mode.
     if (typeof window !== "undefined") {
       const url = new URL(window.location.href);
       if (r.mode === "dots") url.searchParams.set("u", r.username);
@@ -54,7 +53,6 @@ function HomeInner({ lang }: { lang: Lang }) {
     handleGenerate({ mode: "dots", username: u, variants: generateDotVariants(u) });
   }
 
-  // Deep link: /?u=username auto-generates (powers the SearchAction schema).
   useEffect(() => {
     if (typeof window === "undefined") return;
     const u = new URLSearchParams(window.location.search).get("u");
@@ -64,7 +62,6 @@ function HomeInner({ lang }: { lang: Lang }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // "/" focuses the username field.
   useEffect(() => {
     function handler(e: KeyboardEvent) {
       if (e.key === "/" && !isTyping(e.target)) {
@@ -93,7 +90,7 @@ function HomeInner({ lang }: { lang: Lang }) {
           <div className="flex items-center gap-1.5">
             <LangSwitch lang={lang} />
             <InfoButton lang={lang} />
-            <HistoryButton onPick={handlePick} recentVersion={recentVersion} />
+            <HistoryButton lang={lang} />
             <ThemeToggle />
           </div>
         </div>
@@ -121,7 +118,12 @@ function HomeInner({ lang }: { lang: Lang }) {
         <GeneratorCard onGenerate={handleGenerate} externalValue={externalValue} />
 
         {result && result.variants.length > 0 ? (
-          <ResultsList variants={result.variants} username={result.username} mode={result.mode} />
+          <ResultsList
+            variants={result.variants}
+            username={result.username}
+            mode={result.mode}
+            initialLabels={initialLabels}
+          />
         ) : (
           <div className="mt-8 rounded-2xl border border-dashed border-border bg-muted/20 px-6 py-10 flex flex-col items-center justify-center text-center">
             <Sparkles className="size-5 text-accent mb-2" />
