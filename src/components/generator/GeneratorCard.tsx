@@ -22,7 +22,7 @@ interface Props {
   externalValue?: string;
 }
 
-const EXAMPLES = ["johndoe", "satu", "andi", "budi.santoso"];
+
 
 function useCountUp(target: number, duration = 400) {
   const [value, setValue] = useState(target);
