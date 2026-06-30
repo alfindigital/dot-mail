@@ -38,9 +38,9 @@ function InfoInner({ lang }: { lang: Lang }) {
         </Link>
         <h1 className="mt-4 font-serif text-4xl text-foreground">{t.infoTitle}</h1>
 
-        <section className="mt-8">
-          <h2 className="font-serif text-lg text-foreground mb-3">{t.howToTitle}</h2>
-          <div className="grid grid-cols-1 gap-2">
+        <section className="mt-12">
+          <h2 className="font-serif text-3xl sm:text-4xl text-foreground">{t.howToTitle}</h2>
+          <div className="mt-6 grid grid-cols-1 gap-2">
             {t.steps.map(({ title, desc }) => (
               <div key={title} className="rounded-xl border border-border bg-card px-4 py-3">
                 <h3 className="font-serif text-base text-foreground">{title}</h3>
