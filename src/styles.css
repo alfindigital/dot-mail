@@ -213,7 +213,7 @@
   pointer-events: none;
   background: radial-gradient(
     closest-side,
-    color-mix(in oklch, var(--primary) 16%, transparent),
+    color-mix(in oklch, var(--accent) 16%, transparent),
     transparent
   );
   filter: blur(8px);
@@ -221,15 +221,15 @@
 
 .afd-cr {
   font-size: 12px;
-  color: var(--muted-foreground);
+  color: var(--accent);
   display: inline-flex;
   align-items: center;
-  border-left: 2px solid var(--primary);
+  border-left: 2px solid var(--accent);
   padding-left: 9px;
   line-height: 1;
 }
 .afd-brand {
-  color: var(--primary);
+  color: var(--accent);
   font-weight: 600;
   text-decoration: none;
   margin-left: 4px;
@@ -250,8 +250,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: var(--primary);
-  background: color-mix(in oklch, var(--primary) 10%, transparent);
+  color: var(--accent);
+  background: color-mix(in oklch, var(--accent) 10%, transparent);
   transition:
     background 0.2s,
     color 0.2s,
@@ -259,8 +259,8 @@
 }
 .afd-soc:hover,
 .afd-soc:focus-visible {
-  background: var(--primary);
-  color: var(--card, var(--background));
+  background: var(--accent);
+  color: #fff;
   transform: translateY(-1px);
   outline: none;
 }

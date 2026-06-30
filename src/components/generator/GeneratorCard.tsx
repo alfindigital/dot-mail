@@ -22,7 +22,7 @@ interface Props {
   externalValue?: string;
 }
 
-const EXAMPLES = ["johndoe", "satu", "andi", "budi.santoso"];
+
 
 function useCountUp(target: number, duration = 400) {
   const [value, setValue] = useState(target);
@@ -96,11 +96,6 @@ export function GeneratorCard({ onGenerate, externalValue }: Props) {
     runGenerate(raw);
   }
 
-  function pickExample(ex: string) {
-    setValue(ex);
-    setTouched(true);
-    runGenerate(ex);
-  }
 
   const showError = (touched || value.length > 0) && !validation.valid;
   const errorMsg = !validation.valid ? t.errors[validation.code] : "";
@@ -130,7 +125,7 @@ export function GeneratorCard({ onGenerate, externalValue }: Props) {
               @gmail.com
             </span>
           </div>
-          <Button type="submit" size="lg" className="h-12 px-6 rounded-xl bg-accent text-accent-foreground hover:bg-accent/90">
+          <Button type="submit" size="lg" className="h-12 px-6 rounded-xl bg-accent text-white hover:bg-accent/90">
             {t.generate}
             <ArrowRight className="size-4" />
           </Button>

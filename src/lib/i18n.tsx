@@ -58,6 +58,8 @@ export interface Dict {
   clearLabels: string;
   noMatch: string;
   emptyPlaceholder: string;
+  loadMore: string;
+  historyBack: string;
   // toasts
   copiedOne: string;
   copiedN: (n: number) => string;
@@ -91,9 +93,9 @@ export interface Dict {
 }
 
 const KEYBOARD_HELP_ID =
-  "Tekan / untuk fokus ke kolom username. Ctrl+K untuk cari di hasil. Ctrl+Shift+A pilih/batal semua hasil tampil. Ctrl+Shift+C salin pintar (terpilih > tersaring > semua). Esc bersihkan pencarian.";
+  "Tekan / untuk fokus ke kolom username. Enter untuk generate. Pakai checkbox di tiap baris untuk pilih variasi.";
 const KEYBOARD_HELP_EN =
-  "Press / to focus the username field. Ctrl+K to search results. Ctrl+Shift+A to select/deselect all shown results. Ctrl+Shift+C for smart copy (selected > filtered > all). Esc clears the search.";
+  "Press / to focus the username field. Enter to generate. Use the checkbox on each row to select variations.";
 
 export const id: Dict = {
   lang: "id",
@@ -108,7 +110,7 @@ export const id: Dict = {
   heroLine2: "alamat.",
   heroSubtitle:
     "Gmail mengabaikan titik di username. Semua variasi di bawah masuk ke inbox yang sama. Generate pakai tools ini.",
-  trustBadge: "100% di browser - input kamu tidak pernah dikirim ke server.",
+  trustBadge: "100% di browser. Datamu tidak dikirim ke server.",
   tryLabel: "Coba:",
   modeDots: "Variasi titik",
   modePlus: "Plus alias",
@@ -143,6 +145,8 @@ export const id: Dict = {
   clearLabels: "Hapus semua label",
   noMatch: "Tidak ada variasi yang cocok.",
   emptyPlaceholder: "Hasil akan muncul di sini",
+  loadMore: "Muat lebih",
+  historyBack: "Kembali ke generator",
   copiedOne: "Disalin",
   copiedN: (n) => `Disalin ${n.toLocaleString("id-ID")} email`,
   copiedSelected: (n) => `Disalin ${n.toLocaleString("id-ID")} email terpilih`,
@@ -233,7 +237,7 @@ export const en: Dict = {
   heroLine2: "of addresses.",
   heroSubtitle:
     "Gmail ignores dots in the username. Every variation below lands in the same inbox. Generate them with this tool.",
-  trustBadge: "100% in your browser - your input never leaves your device.",
+  trustBadge: "100% in your browser. Your data is never sent to a server.",
   tryLabel: "Try:",
   modeDots: "Dot variants",
   modePlus: "Plus alias",
@@ -268,6 +272,8 @@ export const en: Dict = {
   clearLabels: "Clear all labels",
   noMatch: "No variations match.",
   emptyPlaceholder: "Results will appear here",
+  loadMore: "Load more",
+  historyBack: "Back to generator",
   copiedOne: "Copied",
   copiedN: (n) => `Copied ${n.toLocaleString("en-US")} emails`,
   copiedSelected: (n) => `Copied ${n.toLocaleString("en-US")} selected emails`,
