@@ -110,7 +110,7 @@ export const id: Dict = {
   heroLine2: "alamat.",
   heroSubtitle:
     "Gmail mengabaikan titik di username. Semua variasi di bawah masuk ke inbox yang sama. Generate pakai tools ini.",
-  trustBadge: "100% di browser - input kamu tidak pernah dikirim ke server.",
+  trustBadge: "100% di browser. Datamu tidak dikirim ke server.",
   tryLabel: "Coba:",
   modeDots: "Variasi titik",
   modePlus: "Plus alias",
