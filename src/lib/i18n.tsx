@@ -145,6 +145,8 @@ export const id: Dict = {
   clearLabels: "Hapus semua label",
   noMatch: "Tidak ada variasi yang cocok.",
   emptyPlaceholder: "Hasil akan muncul di sini",
+  loadMore: "Muat lebih",
+  historyBack: "Kembali ke generator",
   copiedOne: "Disalin",
   copiedN: (n) => `Disalin ${n.toLocaleString("id-ID")} email`,
   copiedSelected: (n) => `Disalin ${n.toLocaleString("id-ID")} email terpilih`,
