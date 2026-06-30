@@ -93,9 +93,9 @@ export interface Dict {
 }
 
 const KEYBOARD_HELP_ID =
-  "Tekan / untuk fokus ke kolom username. Ctrl+K untuk cari di hasil. Ctrl+Shift+A pilih/batal semua hasil tampil. Ctrl+Shift+C salin pintar (terpilih > tersaring > semua). Esc bersihkan pencarian.";
+  "Tekan / untuk fokus ke kolom username. Enter untuk generate. Pakai checkbox di tiap baris untuk pilih variasi.";
 const KEYBOARD_HELP_EN =
-  "Press / to focus the username field. Ctrl+K to search results. Ctrl+Shift+A to select/deselect all shown results. Ctrl+Shift+C for smart copy (selected > filtered > all). Esc clears the search.";
+  "Press / to focus the username field. Enter to generate. Use the checkbox on each row to select variations.";
 
 export const id: Dict = {
   lang: "id",
