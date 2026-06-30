@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as RiwayatRouteImport } from './routes/riwayat'
 import { Route as InfoRouteImport } from './routes/info'
 import { Route as EnRouteImport } from './routes/en'
 import { Route as IndexRouteImport } from './routes/index'
@@ -20,6 +21,11 @@ import { Route as ArtikelSlugRouteImport } from './routes/artikel/$slug'
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RiwayatRoute = RiwayatRouteImport.update({
+  id: '/riwayat',
+  path: '/riwayat',
   getParentRoute: () => rootRouteImport,
 } as any)
 const InfoRoute = InfoRouteImport.update({
@@ -57,6 +63,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/en': typeof EnRouteWithChildren
   '/info': typeof InfoRoute
+  '/riwayat': typeof RiwayatRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/artikel/$slug': typeof ArtikelSlugRoute
   '/en/info': typeof EnInfoRoute
@@ -66,6 +73,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/en': typeof EnRouteWithChildren
   '/info': typeof InfoRoute
+  '/riwayat': typeof RiwayatRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/artikel/$slug': typeof ArtikelSlugRoute
   '/en/info': typeof EnInfoRoute
@@ -76,6 +84,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/en': typeof EnRouteWithChildren
   '/info': typeof InfoRoute
+  '/riwayat': typeof RiwayatRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/artikel/$slug': typeof ArtikelSlugRoute
   '/en/info': typeof EnInfoRoute
@@ -87,6 +96,7 @@ export interface FileRouteTypes {
     | '/'
     | '/en'
     | '/info'
+    | '/riwayat'
     | '/sitemap.xml'
     | '/artikel/$slug'
     | '/en/info'
@@ -96,6 +106,7 @@ export interface FileRouteTypes {
     | '/'
     | '/en'
     | '/info'
+    | '/riwayat'
     | '/sitemap.xml'
     | '/artikel/$slug'
     | '/en/info'
@@ -105,6 +116,7 @@ export interface FileRouteTypes {
     | '/'
     | '/en'
     | '/info'
+    | '/riwayat'
     | '/sitemap.xml'
     | '/artikel/$slug'
     | '/en/info'
@@ -115,6 +127,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   EnRoute: typeof EnRouteWithChildren
   InfoRoute: typeof InfoRoute
+  RiwayatRoute: typeof RiwayatRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ArtikelSlugRoute: typeof ArtikelSlugRoute
   ArtikelIndexRoute: typeof ArtikelIndexRoute
@@ -127,6 +140,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/riwayat': {
+      id: '/riwayat'
+      path: '/riwayat'
+      fullPath: '/riwayat'
+      preLoaderRoute: typeof RiwayatRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/info': {
@@ -188,6 +208,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   EnRoute: EnRouteWithChildren,
   InfoRoute: InfoRoute,
+  RiwayatRoute: RiwayatRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   ArtikelSlugRoute: ArtikelSlugRoute,
   ArtikelIndexRoute: ArtikelIndexRoute,
