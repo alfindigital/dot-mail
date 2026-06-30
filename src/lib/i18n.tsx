@@ -237,7 +237,7 @@ export const en: Dict = {
   heroLine2: "of addresses.",
   heroSubtitle:
     "Gmail ignores dots in the username. Every variation below lands in the same inbox. Generate them with this tool.",
-  trustBadge: "100% in your browser - your input never leaves your device.",
+  trustBadge: "100% in your browser. Your data is never sent to a server.",
   tryLabel: "Try:",
   modeDots: "Dot variants",
   modePlus: "Plus alias",
