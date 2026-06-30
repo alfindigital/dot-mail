@@ -58,6 +58,8 @@ export interface Dict {
   clearLabels: string;
   noMatch: string;
   emptyPlaceholder: string;
+  loadMore: string;
+  historyBack: string;
   // toasts
   copiedOne: string;
   copiedN: (n: number) => string;
