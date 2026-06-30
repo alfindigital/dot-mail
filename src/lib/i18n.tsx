@@ -272,6 +272,8 @@ export const en: Dict = {
   clearLabels: "Clear all labels",
   noMatch: "No variations match.",
   emptyPlaceholder: "Results will appear here",
+  loadMore: "Load more",
+  historyBack: "Back to generator",
   copiedOne: "Copied",
   copiedN: (n) => `Copied ${n.toLocaleString("en-US")} emails`,
   copiedSelected: (n) => `Copied ${n.toLocaleString("en-US")} selected emails`,
