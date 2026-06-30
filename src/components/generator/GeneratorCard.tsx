@@ -96,11 +96,6 @@ export function GeneratorCard({ onGenerate, externalValue }: Props) {
     runGenerate(raw);
   }
 
-  function pickExample(ex: string) {
-    setValue(ex);
-    setTouched(true);
-    runGenerate(ex);
-  }
 
   const showError = (touched || value.length > 0) && !validation.valid;
   const errorMsg = !validation.valid ? t.errors[validation.code] : "";
