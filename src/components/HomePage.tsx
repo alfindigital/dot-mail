@@ -6,12 +6,11 @@ import { ResultsList } from "@/components/generator/ResultsList";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { HistoryButton } from "@/components/layout/HistoryButton";
 import { InfoButton } from "@/components/layout/InfoButton";
-import { LangSwitch } from "@/components/layout/LangSwitch";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { ArticleTeaser } from "@/components/sections/ArticleTeaser";
 import { generateDotVariants, validateUsername } from "@/lib/dot-variants";
 import { addRecent, getLabelsFor } from "@/lib/recent-usernames";
-import { LangProvider, useT, type Lang } from "@/lib/i18n";
+import { useT } from "@/lib/i18n";
 
 function isTyping(el: EventTarget | null) {
   if (!(el instanceof HTMLElement)) return false;
@@ -19,7 +18,7 @@ function isTyping(el: EventTarget | null) {
   return tag === "INPUT" || tag === "TEXTAREA" || el.isContentEditable;
 }
 
-function HomeInner({ lang }: { lang: Lang }) {
+export function HomePage() {
   const t = useT();
   const [result, setResult] = useState<GenerateResult | null>(null);
   const [externalValue, setExternalValue] = useState<string | undefined>(undefined);
@@ -32,8 +31,7 @@ function HomeInner({ lang }: { lang: Lang }) {
 
     if (typeof window !== "undefined") {
       const url = new URL(window.location.href);
-      if (r.mode === "dots") url.searchParams.set("u", r.username);
-      else url.searchParams.delete("u");
+      url.searchParams.set("u", r.username);
       window.history.replaceState(null, "", url);
     }
 
@@ -50,7 +48,7 @@ function HomeInner({ lang }: { lang: Lang }) {
 
   function handlePick(u: string) {
     setExternalValue(u);
-    handleGenerate({ mode: "dots", username: u, variants: generateDotVariants(u) });
+    handleGenerate({ username: u, variants: generateDotVariants(u) });
   }
 
   useEffect(() => {
@@ -88,9 +86,8 @@ function HomeInner({ lang }: { lang: Lang }) {
             <span className="font-serif text-xl tracking-tight">DotMail</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <LangSwitch lang={lang} />
-            <InfoButton lang={lang} />
-            <HistoryButton lang={lang} />
+            <InfoButton />
+            <HistoryButton />
             <ThemeToggle />
           </div>
         </div>
@@ -121,7 +118,6 @@ function HomeInner({ lang }: { lang: Lang }) {
           <ResultsList
             variants={result.variants}
             username={result.username}
-            mode={result.mode}
             initialLabels={initialLabels}
           />
         ) : (
@@ -131,18 +127,10 @@ function HomeInner({ lang }: { lang: Lang }) {
           </div>
         )}
 
-        {lang === "id" && <ArticleTeaser />}
+        <ArticleTeaser />
       </main>
 
       <SiteFooter />
     </div>
-  );
-}
-
-export function HomePage({ lang }: { lang: Lang }) {
-  return (
-    <LangProvider lang={lang}>
-      <HomeInner lang={lang} />
-    </LangProvider>
   );
 }
