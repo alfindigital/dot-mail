@@ -5,7 +5,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { dotCount } from "@/lib/dot-variants";
 import { useT } from "@/lib/i18n";
 import { setLabels as persistLabels } from "@/lib/recent-usernames";
-import { Check, Copy, Download, ListChecks, Tag, Trash2 } from "lucide-react";
+import { Check, Copy, Download, Tag, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
 interface Props {
@@ -113,14 +113,7 @@ export function ResultsList({ variants, username, mode, initialLabels }: Props) 
   }, [labels, username]);
 
   const visible = useMemo(() => variants.slice(0, visibleCount), [variants, visibleCount]);
-  const allVisibleSelected = visible.length > 0 && visible.every((v) => selected.has(v));
 
-  function toggleAll() {
-    const next = new Set(selected);
-    if (allVisibleSelected) visible.forEach((v) => next.delete(v));
-    else visible.forEach((v) => next.add(v));
-    setSelected(next);
-  }
 
   function toggleOne(v: string) {
     setSelected((prev) => {
@@ -175,15 +168,22 @@ export function ResultsList({ variants, username, mode, initialLabels }: Props) 
           {t.resultsCount(variants.length)}
         </h2>
         <div className="flex flex-wrap items-center gap-2">
-          <Button
-            onClick={toggleAll}
-            variant={allVisibleSelected ? "default" : "outline"}
-            className="rounded-xl h-10 w-10 p-0"
-            title={allVisibleSelected ? t.deselectAll : t.selectAll}
-            aria-label={allVisibleSelected ? t.deselectAll : t.selectAll}
-          >
-            <ListChecks className="size-4" />
-          </Button>
+          {selected.size > 0 && (
+            <Button
+              onClick={() =>
+                safeCopy(
+                  emailsFor([...selected]),
+                  t.copiedSelected(selected.size),
+                  t.copyFailed,
+                )
+              }
+              className="rounded-xl h-10 px-3 bg-accent text-white hover:bg-accent/90"
+              title={t.copySelected}
+            >
+              <Copy className="size-4" />
+              <span className="ml-1.5 tabular-nums">{t.copySelected} ({selected.size})</span>
+            </Button>
+          )}
           <Button
             onClick={copyAll}
             variant="outline"
