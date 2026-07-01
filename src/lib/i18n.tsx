@@ -118,7 +118,7 @@ export const id: Dict = {
   placeholder: "contoh: satu",
   plusTagPlaceholder: "label: netflix, belanja, kerja",
   plusHint: "Pisahkan beberapa label dengan koma. Tiap label jadi satu alias.",
-  generate: "Generate",
+  generate: "Buat",
   generating: "Membuat...",
   combosReady: "kombinasi siap dibuat",
   fromChars: (n) => `dari ${n} karakter`,
