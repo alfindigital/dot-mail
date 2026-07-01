@@ -11,7 +11,6 @@ import { toast } from "sonner";
 interface Props {
   variants: string[];
   username: string;
-  mode: "dots" | "plus";
   initialLabels?: Record<string, string>;
 }
 
@@ -88,7 +87,7 @@ function csvCell(s: string): string {
   return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
 }
 
-export function ResultsList({ variants, username, mode, initialLabels }: Props) {
+export function ResultsList({ variants, username, initialLabels }: Props) {
   const t = useT();
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [labels, setLabelsState] = useState<Record<string, string>>(initialLabels ?? {});
@@ -101,7 +100,7 @@ export function ResultsList({ variants, username, mode, initialLabels }: Props) 
     setLabelsState(initialLabels ?? {});
     setLabelDraft("");
     setVisibleCount(PAGE_SIZE);
-  }, [username, variants, mode, initialLabels]);
+  }, [username, variants, initialLabels]);
 
   // Persist labels to history (skip first mount echo).
   useEffect(() => {
@@ -301,7 +300,7 @@ export function ResultsList({ variants, username, mode, initialLabels }: Props) 
             variant="outline"
             className="rounded-xl h-10 px-6"
           >
-            {t.loadMore} ({(variants.length - visibleCount).toLocaleString(t.lang === "id" ? "id-ID" : "en-US")})
+            {t.loadMore} ({(variants.length - visibleCount).toLocaleString("en-US")})
           </Button>
         </div>
       )}

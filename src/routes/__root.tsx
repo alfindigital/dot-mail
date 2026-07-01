@@ -79,7 +79,7 @@ export const Route = createRootRoute({
       { name: "theme-color", content: "#1a1a1a", media: "(prefers-color-scheme: dark)" },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "DotMail" },
-      { property: "og:locale", content: "id_ID" },
+      { property: "og:locale", content: "en_US" },
       { name: "twitter:card", content: "summary_large_image" },
       {
         name: "google-site-verification",
@@ -121,8 +121,8 @@ export const Route = createRootRoute({
               url: abs("/"),
               name: "DotMail",
               description:
-                "Generator gmail dot trick: buat semua variasi titik alamat Gmail. Gratis, privat, berjalan di browser.",
-              inLanguage: "id-ID",
+                "Gmail dot trick generator: create every dot variation of a Gmail username. Free, private, runs in your browser.",
+              inLanguage: "en-US",
               potentialAction: {
                 "@type": "SearchAction",
                 target: {
@@ -138,7 +138,7 @@ export const Route = createRootRoute({
               url: abs("/"),
               applicationCategory: "UtilitiesApplication",
               operatingSystem: "Any",
-              inLanguage: "id-ID",
+              inLanguage: "en-US",
               offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
             },
           ],
@@ -160,7 +160,7 @@ function RootShell({ children }: { children: React.ReactNode }) {
   // and self-contained. Mirrors the storage key used by ThemeToggle.
   const themeBootstrap = `(function(){try{var t=localStorage.getItem('dotmail-theme');if(t==='dark'||(!t&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.classList.add('dark');}}catch(_){}})();`;
   return (
-    <html lang="id">
+    <html lang="en">
       <head>
         <script suppressHydrationWarning dangerouslySetInnerHTML={{ __html: themeBootstrap }} />
         <HeadContent />
@@ -170,7 +170,7 @@ function RootShell({ children }: { children: React.ReactNode }) {
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-primary-foreground"
         >
-          Lewati ke konten utama
+          Skip to main content
         </a>
         {children}
         <Scripts />
