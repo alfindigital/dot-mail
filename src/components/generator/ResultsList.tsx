@@ -5,7 +5,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { dotCount } from "@/lib/dot-variants";
 import { useT } from "@/lib/i18n";
 import { setLabels as persistLabels } from "@/lib/recent-usernames";
-import { Check, Copy, Download, ListChecks, Tag, Trash2 } from "lucide-react";
+import { Check, Copy, Download, Tag, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
 interface Props {
