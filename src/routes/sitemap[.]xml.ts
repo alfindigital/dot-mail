@@ -19,12 +19,10 @@ export const Route = createFileRoute("/sitemap.xml")({
         const today = new Date().toISOString().slice(0, 10);
         const entries: SitemapEntry[] = [
           { path: "/", lastmod: today, changefreq: "weekly", priority: "1.0" },
-          { path: "/en", lastmod: today, changefreq: "weekly", priority: "0.9" },
           { path: "/info", lastmod: today, changefreq: "monthly", priority: "0.7" },
-          { path: "/en/info", lastmod: today, changefreq: "monthly", priority: "0.7" },
-          { path: "/artikel", lastmod: today, changefreq: "weekly", priority: "0.6" },
+          { path: "/articles", lastmod: today, changefreq: "weekly", priority: "0.6" },
           ...ARTICLES.map((a) => ({
-            path: `/artikel/${a.slug}`,
+            path: `/articles/${a.slug}`,
             lastmod: a.dateModified,
             changefreq: "monthly" as const,
             priority: "0.7",

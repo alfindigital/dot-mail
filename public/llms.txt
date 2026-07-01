@@ -1,32 +1,30 @@
 # DotMail
 
-> Generator gmail dot trick (variasi titik) untuk alamat Gmail. Gratis, privat, jalan sepenuhnya di browser. Tersedia dalam Bahasa Indonesia dan Inggris.
+> Gmail dot trick generator: create every dot variation of a Gmail username. Free, private, runs entirely in your browser.
 
-DotMail memanfaatkan fakta bahwa Gmail mengabaikan titik (.) di bagian username sebuah alamat email. Artinya s.atu@gmail.com, sa.tu@gmail.com, dan satu@gmail.com semuanya masuk ke inbox yang sama. Tool ini menghasilkan seluruh kombinasi titik dari satu username Gmail, plus mode "Plus alias" (username+label@gmail.com). Berguna untuk filter Gmail per layanan, melacak siapa yang membocorkan alamat email, dan merapikan inbox.
+DotMail relies on Gmail's built-in behavior of ignoring dots (.) in the username of an email address. That means j.ohn@gmail.com, jo.hn@gmail.com, and john@gmail.com all land in the same inbox. This tool generates every dot combination of one Gmail username. It's useful for filtering Gmail per service, tracing who leaked your email address, and organizing your inbox.
 
-Bahasa: Bahasa Indonesia (default) dan Inggris (/en). Sepenuhnya client-side: tidak ada server, tidak ada database, tidak ada login. Input dan hasil tidak pernah meninggalkan browser.
+Fully client-side: no server, no database, no login. Your input and results never leave the browser.
 
 ## Pages
 
-- [Home - Generator Dot Trick (ID)](/): Generator utama untuk membuat seluruh variasi titik dari sebuah alamat Gmail, plus FAQ dan use case.
-- [Home - Dot Trick Generator (EN)](/en): English version of the generator.
-- [Artikel](/artikel): Kumpulan panduan seputar Gmail dot trick.
-- [Cara filter Gmail dengan titik](/artikel/cara-filter-gmail-dengan-titik)
-- [Dot trick vs plus addressing](/artikel/dot-trick-vs-plus-addressing)
-- [Apakah dot trick masih work di 2026](/artikel/apakah-gmail-dot-trick-masih-work-2026)
-- [Deteksi kebocoran email](/artikel/deteksi-kebocoran-email)
-- [Sitemap](/sitemap.xml): Daftar URL terindeks.
+- [Home - Dot Trick Generator](/): Main generator with FAQ and use cases.
+- [Info & Help](/info): How to use, why to use, and FAQ.
+- [Articles](/articles): Guides about the Gmail dot trick.
+- [Filter Gmail with dots](/articles/filter-gmail-with-dots)
+- [Does the dot trick still work in 2026](/articles/does-gmail-dot-trick-still-work-2026)
+- [Detect email leaks](/articles/detect-email-leaks)
+- [Sitemap](/sitemap.xml): Indexed URLs.
 
 ## Key Facts
 
-- Jumlah variasi untuk username n karakter: 2^(n-1). Contoh: "satu" (4 char) menghasilkan 8 variasi.
-- Batas input dot mode: 2-18 karakter (tanpa hitung titik), hanya a-z dan 0-9. Untuk username panjang gunakan mode Plus alias.
-- Semua variasi diarahkan ke satu inbox Gmail yang sama oleh server Google.
-- Plus addressing: username+label@gmail.com juga masuk ke inbox yang sama dan labelnya lebih terbaca.
+- Variations for an n-character username: 2^(n-1). Example: "john" (4 chars) yields 8 variations.
+- Input limits: 2-18 characters (excluding dots), only a-z and 0-9.
+- All variations route to the same Gmail inbox by Google's servers.
 
 ## FAQ
 
-- Apa itu Gmail dot trick? Fitur bawaan Gmail yang mengabaikan titik di username; semua variasi masuk ke inbox yang sama.
-- Apakah legal? Ya, ini perilaku resmi Gmail, bukan eksploit.
-- Apakah data disimpan? Tidak, semua perhitungan di browser, tanpa server.
-- Apakah bisa untuk daftar banyak akun? Sering tidak. Makin banyak layanan menormalkan titik, jadi dot trick tidak andal untuk multi-akun. Kekuatan utamanya: filtering dan deteksi kebocoran.
+- What is the Gmail dot trick? A built-in Gmail feature that ignores dots in the username; every variation lands in the same inbox.
+- Is it legal? Yes, official Gmail behavior, not an exploit.
+- Is data stored? No, all computation is in the browser, no server.
+- Does it work for multiple signups? Often not. More services normalize dots. The real value is filtering and leak detection.

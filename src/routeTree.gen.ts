@@ -10,23 +10,15 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-import { Route as RiwayatRouteImport } from './routes/riwayat'
 import { Route as InfoRouteImport } from './routes/info'
-import { Route as EnRouteImport } from './routes/en'
+import { Route as HistoryRouteImport } from './routes/history'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as ArtikelIndexRouteImport } from './routes/artikel/index'
-import { Route as EnRiwayatRouteImport } from './routes/en.riwayat'
-import { Route as EnInfoRouteImport } from './routes/en.info'
-import { Route as ArtikelSlugRouteImport } from './routes/artikel/$slug'
+import { Route as ArticlesIndexRouteImport } from './routes/articles/index'
+import { Route as ArticlesSlugRouteImport } from './routes/articles/$slug'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RiwayatRoute = RiwayatRouteImport.update({
-  id: '/riwayat',
-  path: '/riwayat',
   getParentRoute: () => rootRouteImport,
 } as any)
 const InfoRoute = InfoRouteImport.update({
@@ -34,9 +26,9 @@ const InfoRoute = InfoRouteImport.update({
   path: '/info',
   getParentRoute: () => rootRouteImport,
 } as any)
-const EnRoute = EnRouteImport.update({
-  id: '/en',
-  path: '/en',
+const HistoryRoute = HistoryRouteImport.update({
+  id: '/history',
+  path: '/history',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -44,105 +36,76 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ArtikelIndexRoute = ArtikelIndexRouteImport.update({
-  id: '/artikel/',
-  path: '/artikel/',
+const ArticlesIndexRoute = ArticlesIndexRouteImport.update({
+  id: '/articles/',
+  path: '/articles/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const EnRiwayatRoute = EnRiwayatRouteImport.update({
-  id: '/riwayat',
-  path: '/riwayat',
-  getParentRoute: () => EnRoute,
-} as any)
-const EnInfoRoute = EnInfoRouteImport.update({
-  id: '/info',
-  path: '/info',
-  getParentRoute: () => EnRoute,
-} as any)
-const ArtikelSlugRoute = ArtikelSlugRouteImport.update({
-  id: '/artikel/$slug',
-  path: '/artikel/$slug',
+const ArticlesSlugRoute = ArticlesSlugRouteImport.update({
+  id: '/articles/$slug',
+  path: '/articles/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/en': typeof EnRouteWithChildren
+  '/history': typeof HistoryRoute
   '/info': typeof InfoRoute
-  '/riwayat': typeof RiwayatRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/artikel/$slug': typeof ArtikelSlugRoute
-  '/en/info': typeof EnInfoRoute
-  '/en/riwayat': typeof EnRiwayatRoute
-  '/artikel/': typeof ArtikelIndexRoute
+  '/articles/$slug': typeof ArticlesSlugRoute
+  '/articles/': typeof ArticlesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/en': typeof EnRouteWithChildren
+  '/history': typeof HistoryRoute
   '/info': typeof InfoRoute
-  '/riwayat': typeof RiwayatRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/artikel/$slug': typeof ArtikelSlugRoute
-  '/en/info': typeof EnInfoRoute
-  '/en/riwayat': typeof EnRiwayatRoute
-  '/artikel': typeof ArtikelIndexRoute
+  '/articles/$slug': typeof ArticlesSlugRoute
+  '/articles': typeof ArticlesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/en': typeof EnRouteWithChildren
+  '/history': typeof HistoryRoute
   '/info': typeof InfoRoute
-  '/riwayat': typeof RiwayatRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/artikel/$slug': typeof ArtikelSlugRoute
-  '/en/info': typeof EnInfoRoute
-  '/en/riwayat': typeof EnRiwayatRoute
-  '/artikel/': typeof ArtikelIndexRoute
+  '/articles/$slug': typeof ArticlesSlugRoute
+  '/articles/': typeof ArticlesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/en'
+    | '/history'
     | '/info'
-    | '/riwayat'
     | '/sitemap.xml'
-    | '/artikel/$slug'
-    | '/en/info'
-    | '/en/riwayat'
-    | '/artikel/'
+    | '/articles/$slug'
+    | '/articles/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/en'
+    | '/history'
     | '/info'
-    | '/riwayat'
     | '/sitemap.xml'
-    | '/artikel/$slug'
-    | '/en/info'
-    | '/en/riwayat'
-    | '/artikel'
+    | '/articles/$slug'
+    | '/articles'
   id:
     | '__root__'
     | '/'
-    | '/en'
+    | '/history'
     | '/info'
-    | '/riwayat'
     | '/sitemap.xml'
-    | '/artikel/$slug'
-    | '/en/info'
-    | '/en/riwayat'
-    | '/artikel/'
+    | '/articles/$slug'
+    | '/articles/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  EnRoute: typeof EnRouteWithChildren
+  HistoryRoute: typeof HistoryRoute
   InfoRoute: typeof InfoRoute
-  RiwayatRoute: typeof RiwayatRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
-  ArtikelSlugRoute: typeof ArtikelSlugRoute
-  ArtikelIndexRoute: typeof ArtikelIndexRoute
+  ArticlesSlugRoute: typeof ArticlesSlugRoute
+  ArticlesIndexRoute: typeof ArticlesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -154,13 +117,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/riwayat': {
-      id: '/riwayat'
-      path: '/riwayat'
-      fullPath: '/riwayat'
-      preLoaderRoute: typeof RiwayatRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/info': {
       id: '/info'
       path: '/info'
@@ -168,11 +124,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InfoRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/en': {
-      id: '/en'
-      path: '/en'
-      fullPath: '/en'
-      preLoaderRoute: typeof EnRouteImport
+    '/history': {
+      id: '/history'
+      path: '/history'
+      fullPath: '/history'
+      preLoaderRoute: typeof HistoryRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -182,57 +138,30 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/artikel/': {
-      id: '/artikel/'
-      path: '/artikel'
-      fullPath: '/artikel/'
-      preLoaderRoute: typeof ArtikelIndexRouteImport
+    '/articles/': {
+      id: '/articles/'
+      path: '/articles'
+      fullPath: '/articles/'
+      preLoaderRoute: typeof ArticlesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/en/riwayat': {
-      id: '/en/riwayat'
-      path: '/riwayat'
-      fullPath: '/en/riwayat'
-      preLoaderRoute: typeof EnRiwayatRouteImport
-      parentRoute: typeof EnRoute
-    }
-    '/en/info': {
-      id: '/en/info'
-      path: '/info'
-      fullPath: '/en/info'
-      preLoaderRoute: typeof EnInfoRouteImport
-      parentRoute: typeof EnRoute
-    }
-    '/artikel/$slug': {
-      id: '/artikel/$slug'
-      path: '/artikel/$slug'
-      fullPath: '/artikel/$slug'
-      preLoaderRoute: typeof ArtikelSlugRouteImport
+    '/articles/$slug': {
+      id: '/articles/$slug'
+      path: '/articles/$slug'
+      fullPath: '/articles/$slug'
+      preLoaderRoute: typeof ArticlesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
 }
 
-interface EnRouteChildren {
-  EnInfoRoute: typeof EnInfoRoute
-  EnRiwayatRoute: typeof EnRiwayatRoute
-}
-
-const EnRouteChildren: EnRouteChildren = {
-  EnInfoRoute: EnInfoRoute,
-  EnRiwayatRoute: EnRiwayatRoute,
-}
-
-const EnRouteWithChildren = EnRoute._addFileChildren(EnRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  EnRoute: EnRouteWithChildren,
+  HistoryRoute: HistoryRoute,
   InfoRoute: InfoRoute,
-  RiwayatRoute: RiwayatRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
-  ArtikelSlugRoute: ArtikelSlugRoute,
-  ArtikelIndexRoute: ArtikelIndexRoute,
+  ArticlesSlugRoute: ArticlesSlugRoute,
+  ArticlesIndexRoute: ArticlesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -3,6 +3,6 @@ import { HomePage } from "@/components/HomePage";
 import { homeHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/")({
-  head: () => homeHead("id"),
-  component: () => <HomePage lang="id" />,
+  head: () => homeHead(),
+  component: HomePage,
 });

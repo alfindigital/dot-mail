@@ -1,13 +1,13 @@
 {
   "name": "DotMail - Gmail Dot Trick Generator",
   "short_name": "DotMail",
-  "description": "Generator gmail dot trick: buat semua variasi titik untuk satu username Gmail.",
+  "description": "Gmail dot trick generator: create every dot variation of a Gmail username.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "background_color": "#f5f3ee",
   "theme_color": "#f5f3ee",
-  "lang": "id-ID",
+  "lang": "en-US",
   "dir": "ltr",
   "categories": ["productivity", "utilities"],
   "icons": [

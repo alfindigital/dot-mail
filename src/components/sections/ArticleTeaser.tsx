@@ -14,7 +14,7 @@ export function ArticleTeaser() {
         {ARTICLES.map((a) => (
           <Link
             key={a.slug}
-            to="/artikel/$slug"
+            to="/articles/$slug"
             params={{ slug: a.slug }}
             className="group rounded-2xl border border-border bg-card p-5 transition hover:border-accent/50"
           >

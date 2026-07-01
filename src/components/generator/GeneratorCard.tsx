@@ -9,10 +9,7 @@ import {
 import { useT } from "@/lib/i18n";
 import { ArrowRight } from "lucide-react";
 
-export type GenMode = "dots";
-
 export interface GenerateResult {
-  mode: GenMode;
   username: string;
   variants: string[];
 }
@@ -21,8 +18,6 @@ interface Props {
   onGenerate: (result: GenerateResult) => void;
   externalValue?: string;
 }
-
-
 
 function useCountUp(target: number, duration = 400) {
   const [value, setValue] = useState(target);
@@ -81,7 +76,6 @@ export function GeneratorCard({ onGenerate, externalValue }: Props) {
     const result = validateUsername(raw);
     if (!result.valid) return;
     onGenerate({
-      mode: "dots",
       username: result.username,
       variants: generateDotVariants(result.username),
     });
@@ -95,7 +89,6 @@ export function GeneratorCard({ onGenerate, externalValue }: Props) {
     if (normalized !== value) setValue(normalized);
     runGenerate(raw);
   }
-
 
   const showError = (touched || value.length > 0) && !validation.valid;
   const errorMsg = !validation.valid ? t.errors[validation.code] : "";
@@ -131,14 +124,13 @@ export function GeneratorCard({ onGenerate, externalValue }: Props) {
           </Button>
         </div>
 
-
         <div className="mt-3 min-h-[1.25rem] text-sm">
           {showError ? (
             <span className="text-destructive">{errorMsg}</span>
           ) : validation.valid ? (
             <div className="flex items-end gap-3 rounded-xl bg-muted/40 px-4 py-3">
               <span className="font-serif text-3xl sm:text-4xl leading-none text-foreground tabular-nums">
-                {animatedTotal.toLocaleString(t.lang === "id" ? "id-ID" : "en-US")}
+                {animatedTotal.toLocaleString("en-US")}
               </span>
               <div className="flex flex-col leading-tight pb-0.5">
                 <span className="text-sm text-foreground">{t.combosReady}</span>

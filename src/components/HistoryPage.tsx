@@ -9,12 +9,11 @@ import {
   subscribeRecent,
   type RecentEntry,
 } from "@/lib/recent-usernames";
-import { LangProvider, useT, type Lang } from "@/lib/i18n";
+import { useT } from "@/lib/i18n";
 
-function HistoryInner({ lang }: { lang: Lang }) {
+export function HistoryPage() {
   const t = useT();
   const navigate = useNavigate();
-  const backTo = lang === "id" ? "/" : "/en";
   const [recent, setRecent] = useState<RecentEntry[]>([]);
 
   useEffect(() => {
@@ -23,14 +22,14 @@ function HistoryInner({ lang }: { lang: Lang }) {
   }, []);
 
   function pick(u: string) {
-    navigate({ to: backTo, search: { u } as never });
+    navigate({ to: "/", search: { u } as never });
   }
 
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
       <header className="border-b border-border/60">
         <div className="mx-auto max-w-2xl px-5 sm:px-8 py-2.5 flex items-center justify-between">
-          <Link to={backTo} className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-2">
             <span className="size-2.5 rounded-full bg-accent" />
             <span className="font-serif text-xl tracking-tight">DotMail</span>
           </Link>
@@ -40,7 +39,7 @@ function HistoryInner({ lang }: { lang: Lang }) {
 
       <main className="flex-1 w-full mx-auto max-w-2xl px-5 sm:px-8 py-8">
         <Link
-          to={backTo}
+          to="/"
           className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
         >
           <ArrowLeft className="size-3.5" />
@@ -81,7 +80,7 @@ function HistoryInner({ lang }: { lang: Lang }) {
                   </button>
                   <button
                     type="button"
-                    aria-label={`${lang === "id" ? "Hapus" : "Remove"} ${entry.u}`}
+                    aria-label={t.historyRemove(entry.u)}
                     onClick={() => setRecent(removeRecent(entry.u))}
                     className="rounded-full p-1.5 text-muted-foreground hover:text-foreground hover:bg-muted transition"
                   >
@@ -96,13 +95,5 @@ function HistoryInner({ lang }: { lang: Lang }) {
 
       <SiteFooter />
     </div>
-  );
-}
-
-export function HistoryPage({ lang }: { lang: Lang }) {
-  return (
-    <LangProvider lang={lang}>
-      <HistoryInner lang={lang} />
-    </LangProvider>
   );
 }

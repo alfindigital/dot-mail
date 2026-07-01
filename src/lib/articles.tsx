@@ -12,7 +12,6 @@ export interface Article {
   body: () => ReactNode;
 }
 
-// --- Tiny prose primitives (no typography plugin in this project) ---
 function H2({ children }: { children: ReactNode }) {
   return <h2 className="font-serif text-2xl text-foreground mt-10 mb-3">{children}</h2>;
 }
@@ -50,237 +49,162 @@ function Code({ children }: { children: ReactNode }) {
 
 export const ARTICLES: Article[] = [
   {
-    slug: "cara-filter-gmail-dengan-titik",
-    title: "Cara Filter Email di Gmail Pakai Trik Titik (Langkah demi Langkah)",
+    slug: "filter-gmail-with-dots",
+    title: "How to Filter Gmail Using the Dot Trick (Step by Step)",
     description:
-      "Pisahkan email per layanan secara otomatis pakai Gmail dot trick. Panduan lengkap membuat filter berdasarkan variasi titik.",
+      "Automatically sort email by service using the Gmail dot trick. A complete guide to creating filters based on dot variations.",
     datePublished: "2026-06-22",
     dateModified: "2026-06-22",
     readMins: 5,
     excerpt:
-      "Beri tiap layanan satu variasi titik, lalu buat filter otomatis di Gmail. Begini langkah lengkapnya.",
+      "Give each service one dot variation, then build automatic Gmail filters. Here is the full walkthrough.",
     body: () => (
       <>
         <P>
-          Gmail mengabaikan titik di bagian username. Artinya <Code>ne.tflix@gmail.com</Code> dan{" "}
-          <Code>netflix@gmail.com</Code> sama-sama masuk ke inbox kamu. Sifat ini bisa kamu pakai
-          untuk memberi setiap layanan satu alamat unik, lalu memfilternya otomatis.
+          Gmail ignores dots in the username part of an address. That means{" "}
+          <Code>ne.tflix@gmail.com</Code> and <Code>netflix@gmail.com</Code> both land in your
+          inbox. You can use this to give every service its own unique address and filter it
+          automatically.
         </P>
-        <H2>Langkah 1 - Buat variasi unik per layanan</H2>
+        <H2>Step 1 - Create a unique variation per service</H2>
         <P>
-          Buka <A to="/">generator DotMail</A>, ketik username Gmail kamu, dan pilih satu variasi
-          untuk tiap layanan. Catat pasangannya, misalnya:
+          Open the <A to="/">DotMail generator</A>, type your Gmail username, and pick one
+          variation for each service. Keep a note of the pairings, for example:
         </P>
         <UL>
           <li>
-            Netflix → <Code>na.mahkamu@gmail.com</Code>
+            Netflix → <Code>yo.urname@gmail.com</Code>
           </li>
           <li>
-            Toko online → <Code>nama.kamu@gmail.com</Code>
+            Online store → <Code>your.name@gmail.com</Code>
           </li>
           <li>
-            Newsletter → <Code>n.amakamu@gmail.com</Code>
+            Newsletter → <Code>y.ourname@gmail.com</Code>
           </li>
         </UL>
-        <H2>Langkah 2 - Pakai alamat itu saat mendaftar</H2>
+        <H2>Step 2 - Use that address when signing up</H2>
         <P>
-          Saat sign up ke layanan, masukkan variasi yang sudah kamu pilih. Email tetap mendarat di
-          inbox yang sama, tapi kolom "To" sekarang membawa penanda layanan.
+          When you sign up to a service, use the variation you chose. Email still lands in the same
+          inbox, but the "To" field now carries the service fingerprint.
         </P>
-        <H2>Langkah 3 - Buat filter di Gmail</H2>
+        <H2>Step 3 - Create a filter in Gmail</H2>
         <OL>
-          <li>Di Gmail, klik ikon pencarian lanjutan (slider) di kotak cari.</li>
+          <li>In Gmail, click the advanced search icon in the search box.</li>
           <li>
-            Isi kolom <strong>To</strong> dengan variasi spesifik, mis.{" "}
-            <Code>na.mahkamu@gmail.com</Code>.
+            Fill the <strong>To</strong> field with the specific variation, e.g.{" "}
+            <Code>yo.urname@gmail.com</Code>.
           </li>
-          <li>Klik "Create filter".</li>
+          <li>Click "Create filter".</li>
           <li>
-            Pilih aksinya: beri label, skip inbox, arsipkan, atau teruskan. Klik "Create filter"
-            lagi.
+            Pick the action: apply label, skip inbox, archive, or forward. Click "Create filter"
+            again.
           </li>
         </OL>
-        <P>
-          Selesai. Mulai sekarang email dari layanan itu otomatis dirapikan. Ulangi untuk tiap
-          layanan.
-        </P>
+        <P>Done. From now on email from that service is sorted automatically. Repeat per service.</P>
         <H2>Tips</H2>
         <UL>
-          <li>Gunakan satu variasi konsisten per layanan supaya filter gampang dikelola.</li>
+          <li>Use one consistent variation per service so filters are easy to manage.</li>
           <li>
-            Kombinasikan dengan <A to="/artikel/dot-trick-vs-plus-addressing">plus addressing</A>{" "}
-            bila kamu ingin label yang lebih terbaca seperti <Code>+netflix</Code>.
-          </li>
-          <li>
-            Mau melacak kebocoran data? Lihat{" "}
-            <A to="/artikel/deteksi-kebocoran-email">panduan deteksi kebocoran</A>.
+            Want to track leaks? See the{" "}
+            <A to="/articles/detect-email-leaks">leak detection guide</A>.
           </li>
         </UL>
       </>
     ),
   },
   {
-    slug: "dot-trick-vs-plus-addressing",
-    title: "Gmail Dot Trick vs Plus Addressing: Mana yang Lebih Baik?",
+    slug: "does-gmail-dot-trick-still-work-2026",
+    title: "Does the Gmail Dot Trick Still Work in 2026?",
     description:
-      "Perbandingan dot trick (titik) dan plus addressing (+tag) di Gmail: cara kerja, kelebihan, kekurangan, dan kapan memakai yang mana.",
-    datePublished: "2026-06-22",
-    dateModified: "2026-06-22",
-    readMins: 6,
-    excerpt:
-      "Dua trik alias Gmail, dua karakter berbeda. Mana yang cocok untuk filtering, mana untuk leak detection?",
-    body: () => (
-      <>
-        <P>
-          Gmail punya dua cara membuat banyak alamat dari satu akun: <strong>dot trick</strong>{" "}
-          (menyisipkan titik) dan <strong>plus addressing</strong> (menambah <Code>+tag</Code>).
-          Keduanya mengarah ke inbox yang sama, tapi karakternya beda.
-        </P>
-        <H2>Cara kerja</H2>
-        <UL>
-          <li>
-            <strong>Dot trick:</strong> <Code>jo.hn@gmail.com</Code> = <Code>john@gmail.com</Code>.
-            Titik diabaikan total oleh Gmail.
-          </li>
-          <li>
-            <strong>Plus addressing:</strong> <Code>john+netflix@gmail.com</Code> ={" "}
-            <Code>john@gmail.com</Code>. Semua setelah tanda <Code>+</Code> diabaikan.
-          </li>
-        </UL>
-        <H2>Kelebihan & kekurangan</H2>
-        <P>
-          <strong>Dot trick</strong> terlihat seperti alamat normal - banyak form menerimanya tanpa
-          curiga. Tapi labelnya tidak terbaca manusia, dan jumlah variasinya terbatas pada panjang
-          username.
-        </P>
-        <P>
-          <strong>Plus addressing</strong> labelnya jelas (<Code>+belanja</Code>,{" "}
-          <Code>+kerja</Code>) dan tak terbatas. Kelemahannya: sebagian layanan menolak tanda{" "}
-          <Code>+</Code> di form, atau justru gampang dihapus orang yang ingin "membersihkan"
-          alamat.
-        </P>
-        <H2>Kapan pakai yang mana?</H2>
-        <UL>
-          <li>
-            <strong>Filtering rapi & label terbaca:</strong> plus addressing. Coba mode "Plus alias"
-            di <A to="/">generator</A>.
-          </li>
-          <li>
-            <strong>Form yang rewel soal simbol:</strong> dot trick, karena tampak seperti email
-            biasa.
-          </li>
-          <li>
-            <strong>Deteksi kebocoran:</strong> keduanya bisa, tapi dot trick lebih sulit ditebak
-            pihak ketiga. Lihat{" "}
-            <A to="/artikel/deteksi-kebocoran-email">panduan deteksi kebocoran</A>.
-          </li>
-        </UL>
-        <P>
-          Tidak harus memilih satu. Banyak orang memakai dot trick untuk identitas "tersamar" dan
-          plus addressing untuk pelabelan internal. Penasaran apakah trik ini masih jalan? Baca{" "}
-          <A to="/artikel/apakah-gmail-dot-trick-masih-work-2026">status dot trick 2026</A>.
-        </P>
-      </>
-    ),
-  },
-  {
-    slug: "apakah-gmail-dot-trick-masih-work-2026",
-    title: "Apakah Gmail Dot Trick Masih Berfungsi di 2026?",
-    description:
-      "Status dot trick Gmail di 2026: apakah masih jalan, kenapa sebagian layanan menolaknya, dan apa alternatif yang lebih andal.",
+      "Status of the Gmail dot trick in 2026: does it still work, why some services reject it, and what a more reliable alternative looks like.",
     datePublished: "2026-06-22",
     dateModified: "2026-06-22",
     readMins: 4,
     excerpt:
-      "Jawaban singkat: ya, di sisi Gmail masih 100% jalan. Tapi ada satu hal penting yang berubah.",
+      "Short answer: yes, on Gmail's side it still works 100%. But one important thing has changed.",
     body: () => (
       <>
         <P>
-          Jawaban singkat: <strong>ya</strong>. Di sisi Gmail, dot trick masih bekerja sempurna pada
-          2026. Google tetap mengabaikan titik di username, jadi semua variasi mendarat di inbox
-          yang sama persis seperti dulu.
+          Short answer: <strong>yes</strong>. On Gmail's side, the dot trick still works perfectly
+          in 2026. Google keeps ignoring dots in the username, so every variation lands in the same
+          inbox exactly like before.
         </P>
-        <H2>Lalu apa yang berubah?</H2>
+        <H2>So what has changed?</H2>
         <P>
-          Yang berubah adalah <strong>sisi layanan pihak ketiga</strong>. Makin banyak situs yang
-          "menormalkan" alamat email - mereka menghapus titik sebelum menyimpan, sehingga{" "}
-          <Code>jo.hn@gmail.com</Code> dan <Code>john@gmail.com</Code> dianggap satu orang yang
-          sama.
+          What changed is <strong>third-party services</strong>. More sites now "normalize" email
+          addresses - they strip dots before storing, so <Code>jo.hn@gmail.com</Code> and{" "}
+          <Code>john@gmail.com</Code> are treated as the same person.
         </P>
-        <P>Dampaknya:</P>
+        <P>Impact:</P>
         <UL>
           <li>
-            Untuk <strong>mendaftar banyak akun</strong> di layanan yang sama: sering gagal, karena
-            mereka menganggapnya duplikat.
+            For <strong>signing up multiple accounts</strong> on the same service: often fails,
+            since they treat it as a duplicate.
           </li>
           <li>
-            Untuk <strong>filtering & deteksi kebocoran</strong>: tetap andal, karena yang penting
-            adalah alamat yang tertulis di header email yang masuk ke kamu.
+            For <strong>filtering and leak detection</strong>: still reliable, because what matters
+            is the address written in the header of the email that reaches you.
           </li>
         </UL>
-        <H2>Kesimpulan</H2>
+        <H2>Conclusion</H2>
         <P>
-          Dot trick belum mati - hanya use case-nya bergeser. Pakai untuk{" "}
-          <A to="/artikel/cara-filter-gmail-dengan-titik">filtering</A> dan{" "}
-          <A to="/artikel/deteksi-kebocoran-email">leak detection</A>, bukan untuk menggandakan
-          akun. Kalau butuh label yang lebih fleksibel, pertimbangkan{" "}
-          <A to="/artikel/dot-trick-vs-plus-addressing">plus addressing</A>.
+          The dot trick isn't dead - its use cases have shifted. Use it for{" "}
+          <A to="/articles/filter-gmail-with-dots">filtering</A> and{" "}
+          <A to="/articles/detect-email-leaks">leak detection</A>, not for duplicating accounts.
         </P>
         <P>
-          Mau coba? <A to="/">Generate semua variasi titik kamu di sini.</A>
+          Want to try? <A to="/">Generate all your dot variations here.</A>
         </P>
       </>
     ),
   },
   {
-    slug: "deteksi-kebocoran-email",
-    title: "Cara Melacak Siapa yang Membocorkan Alamat Email Kamu",
+    slug: "detect-email-leaks",
+    title: "How to Trace Who Leaked Your Email Address",
     description:
-      "Gunakan variasi titik unik per layanan untuk mendeteksi sumber spam dan kebocoran data. Langkah praktis dan contohnya.",
+      "Use unique dot variations per service to detect spam sources and data leaks. Practical steps and examples.",
     datePublished: "2026-06-22",
     dateModified: "2026-06-22",
     readMins: 5,
     excerpt:
-      "Kalau spam datang ke alamat yang cuma kamu pakai untuk satu layanan, kamu tahu persis siapa pelakunya.",
+      "When spam arrives at an address you only used with one service, you know exactly who did it.",
     body: () => (
       <>
         <P>
-          Pernah dapat spam dan bingung dari mana mereka tahu email kamu? Dengan dot trick, kamu
-          bisa memberi setiap layanan "sidik jari" alamat sendiri. Saat spam muncul, kamu langsung
-          tahu sumbernya.
+          Ever received spam and wondered how they got your email? With the dot trick you can give
+          every service its own address "fingerprint". When spam shows up, you instantly know the
+          source.
         </P>
-        <H2>Idenya</H2>
+        <H2>The idea</H2>
         <P>
-          Setiap layanan dapat satu variasi titik unik. Karena hanya kamu yang tahu pasangan
-          "layanan → variasi", alamat yang muncul di email masuk membongkar sumbernya.
+          Each service gets one unique dot variation. Since only you know the "service → variation"
+          pairing, the address in the incoming email reveals the source.
         </P>
-        <H2>Langkah praktis</H2>
+        <H2>Practical steps</H2>
         <OL>
           <li>
-            Buka <A to="/">generator</A> dan buat variasi titik dari username kamu.
+            Open the <A to="/">generator</A> and produce all dot variations of your username.
           </li>
           <li>
-            Beri label tiap variasi (fitur "Beri label" ada di daftar hasil) lalu unduh sebagai CSV
-            sebagai catatan.
+            Label each variation ("Label" feature in the results list) and download as CSV to keep
+            a record.
           </li>
-          <li>Pakai variasi berbeda saat mendaftar ke tiap layanan penting.</li>
+          <li>Use a different variation when signing up to each important service.</li>
           <li>
-            Saat ada email mencurigakan, cek alamat di kolom "To". Cocokkan dengan catatan CSV kamu.
+            When a suspicious email arrives, check the "To" address. Match it against your CSV.
           </li>
         </OL>
-        <H2>Contoh</H2>
+        <H2>Example</H2>
         <P>
-          Kamu daftar ke sebuah toko pakai <Code>na.makamu@gmail.com</Code>. Sebulan kemudian ada
-          promo judi masuk ke alamat itu. Karena hanya toko itu yang punya variasi tersebut, kamu
-          tahu data kamu bocor dari sana - bukti kuat untuk berhenti memakai layanan itu.
+          You sign up to a store using <Code>yo.urname@gmail.com</Code>. A month later gambling
+          promos arrive at that exact address. Since only that store has that variation, you know
+          your data leaked from them - strong evidence to stop using that service.
         </P>
-        <H2>Catatan</H2>
+        <H2>Note</H2>
         <P>
-          Sebagian layanan menormalkan titik (lihat{" "}
-          <A to="/artikel/apakah-gmail-dot-trick-masih-work-2026">apakah dot trick masih work</A>).
-          Untuk jaga-jaga, kamu bisa memadukan dengan{" "}
-          <A to="/artikel/dot-trick-vs-plus-addressing">plus addressing</A> yang labelnya lebih
-          eksplisit.
+          Some services normalize dots (see{" "}
+          <A to="/articles/does-gmail-dot-trick-still-work-2026">does it still work in 2026</A>).
+          Combine with a service-specific password for extra safety.
         </P>
       </>
     ),

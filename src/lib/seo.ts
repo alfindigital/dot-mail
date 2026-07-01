@@ -1,25 +1,10 @@
 import { abs, SITE_NAME } from "@/lib/site";
-import { DICTS, type Lang } from "@/lib/i18n";
+import { t } from "@/lib/i18n";
 
 const OG_IMAGE = abs("/og.jpg");
 
-function pathForLang(lang: Lang) {
-  return lang === "id" ? "/" : "/en";
-}
-
-/** hreflang alternates shared by every localized page. */
-function alternateLinks() {
-  return [
-    { rel: "alternate", hrefLang: "id", href: abs("/") },
-    { rel: "alternate", hrefLang: "en", href: abs("/en") },
-    { rel: "alternate", hrefLang: "x-default", href: abs("/") },
-  ];
-}
-
-export function homeHead(lang: Lang) {
-  const t = DICTS[lang];
-  const url = abs(pathForLang(lang));
-
+export function homeHead() {
+  const url = abs("/");
   return {
     meta: [
       { title: t.metaTitle },
@@ -33,20 +18,20 @@ export function homeHead(lang: Lang) {
       { property: "og:image:height", content: "630" },
       { property: "og:image:type", content: "image/jpeg" },
       { property: "og:image:alt", content: t.ogImageAlt },
-      { property: "og:locale", content: lang === "id" ? "id_ID" : "en_US" },
+      { property: "og:locale", content: "en_US" },
       { name: "twitter:title", content: t.metaTitle },
       { name: "twitter:description", content: t.metaDescription },
       { name: "twitter:image", content: OG_IMAGE },
       { name: "twitter:image:alt", content: t.ogImageAlt },
     ],
-    links: [{ rel: "canonical", href: url }, ...alternateLinks()],
+    links: [{ rel: "canonical", href: url }],
     scripts: [
       {
         type: "application/ld+json",
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "FAQPage",
-          inLanguage: lang === "id" ? "id-ID" : "en-US",
+          inLanguage: "en-US",
           mainEntity: t.faqs.map((f) => ({
             "@type": "Question",
             name: f.q,
@@ -58,19 +43,11 @@ export function homeHead(lang: Lang) {
   };
 }
 
-export function infoHead(lang: Lang) {
-  const t = DICTS[lang];
-  const path = lang === "id" ? "/info" : "/en/info";
-  const url = abs(path);
-  const title =
-    lang === "id"
-      ? "Info & Bantuan: Cara Pakai dan FAQ - DotMail"
-      : "Info & Help: How to Use and FAQ - DotMail";
+export function infoHead() {
+  const url = abs("/info");
+  const title = "Info & Help: How to Use and FAQ - DotMail";
   const description =
-    lang === "id"
-      ? "Cara pakai DotMail, kegunaan Gmail dot trick, dan pertanyaan yang sering ditanya."
-      : "How to use DotMail, what the Gmail dot trick is good for, and answers to common questions.";
-
+    "How to use DotMail, what the Gmail dot trick is good for, and answers to common questions.";
   return {
     meta: [
       { title },
@@ -81,24 +58,19 @@ export function infoHead(lang: Lang) {
       { property: "og:url", content: url },
       { property: "og:image", content: OG_IMAGE },
       { property: "og:image:alt", content: t.ogImageAlt },
-      { property: "og:locale", content: lang === "id" ? "id_ID" : "en_US" },
+      { property: "og:locale", content: "en_US" },
       { name: "twitter:title", content: title },
       { name: "twitter:description", content: description },
       { name: "twitter:image", content: OG_IMAGE },
     ],
-    links: [
-      { rel: "canonical", href: url },
-      { rel: "alternate", hrefLang: "id", href: abs("/info") },
-      { rel: "alternate", hrefLang: "en", href: abs("/en/info") },
-      { rel: "alternate", hrefLang: "x-default", href: abs("/info") },
-    ],
+    links: [{ rel: "canonical", href: url }],
     scripts: [
       {
         type: "application/ld+json",
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "FAQPage",
-          inLanguage: lang === "id" ? "id-ID" : "en-US",
+          inLanguage: "en-US",
           mainEntity: t.faqs.map((f) => ({
             "@type": "Question",
             name: f.q,
@@ -119,7 +91,7 @@ export interface ArticleSeoInput {
 }
 
 export function articleHead(a: ArticleSeoInput) {
-  const url = abs(`/artikel/${a.slug}`);
+  const url = abs(`/articles/${a.slug}`);
   return {
     meta: [
       { title: `${a.title} - ${SITE_NAME}` },
@@ -130,7 +102,7 @@ export function articleHead(a: ArticleSeoInput) {
       { property: "og:description", content: a.description },
       { property: "og:url", content: url },
       { property: "og:image", content: OG_IMAGE },
-      { property: "og:locale", content: "id_ID" },
+      { property: "og:locale", content: "en_US" },
       { name: "twitter:title", content: a.title },
       { name: "twitter:description", content: a.description },
       { name: "twitter:image", content: OG_IMAGE },
@@ -146,7 +118,7 @@ export function articleHead(a: ArticleSeoInput) {
               "@type": "Article",
               headline: a.title,
               description: a.description,
-              inLanguage: "id-ID",
+              inLanguage: "en-US",
               datePublished: a.datePublished,
               dateModified: a.dateModified,
               mainEntityOfPage: url,
@@ -157,7 +129,7 @@ export function articleHead(a: ArticleSeoInput) {
               "@type": "BreadcrumbList",
               itemListElement: [
                 { "@type": "ListItem", position: 1, name: "Home", item: abs("/") },
-                { "@type": "ListItem", position: 2, name: "Artikel", item: abs("/artikel") },
+                { "@type": "ListItem", position: 2, name: "Articles", item: abs("/articles") },
                 { "@type": "ListItem", position: 3, name: a.title, item: url },
               ],
             },
