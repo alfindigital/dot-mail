@@ -242,7 +242,7 @@ export const en: Dict = {
   modeDots: "Dot variants",
   modePlus: "Plus alias",
   inputLabel: "Your Gmail username",
-  placeholder: "e.g. john",
+  placeholder: "e.g. one",
   plusTagPlaceholder: "labels: netflix, shopping, work",
   plusHint: "Separate labels with commas. Each label becomes one alias.",
   generate: "Generate",
