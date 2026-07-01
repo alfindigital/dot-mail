@@ -113,14 +113,7 @@ export function ResultsList({ variants, username, mode, initialLabels }: Props) 
   }, [labels, username]);
 
   const visible = useMemo(() => variants.slice(0, visibleCount), [variants, visibleCount]);
-  const allVisibleSelected = visible.length > 0 && visible.every((v) => selected.has(v));
 
-  function toggleAll() {
-    const next = new Set(selected);
-    if (allVisibleSelected) visible.forEach((v) => next.delete(v));
-    else visible.forEach((v) => next.add(v));
-    setSelected(next);
-  }
 
   function toggleOne(v: string) {
     setSelected((prev) => {
