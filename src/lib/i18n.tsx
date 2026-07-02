@@ -32,12 +32,18 @@ export interface Dict {
   resultsCount: (n: number) => string;
   copySelected: string;
   copyAll: string;
+  copyFilter: string;
+  copyFilterHint: string;
+  filterCopied: string;
+  shareLink: string;
+  shareCopied: string;
   downloadCsv: string;
   labelSelected: string;
   applyLabel: string;
   labelPlaceholder: string;
   clearLabels: string;
   emptyPlaceholder: string;
+  emptyDemoHint: string;
   loadMore: string;
   historyBack: string;
   // toasts
