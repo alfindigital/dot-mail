@@ -88,7 +88,7 @@ export const t: Dict = {
   heroEm: "Hundreds",
   heroLine2: "of addresses.",
   heroSubtitle:
-    "Gmail ignores dots in the username. Every variation below lands in the same inbox. Generate them with this tool.",
+    "Filter email per service, catch who leaked your address, or organize signups - all from one Gmail inbox. Gmail ignores dots in usernames, so every variation below lands in the same place.",
   trustBadge: "100% in your browser. Your data is never sent to a server.",
   inputLabel: "Your Gmail username",
   placeholder: "e.g. john",
