@@ -196,6 +196,25 @@ export function ResultsList({ variants, username, initialLabels }: Props) {
             </Button>
           )}
           <Button
+            onClick={copyFilterQuery}
+            variant="outline"
+            className="rounded-xl h-10 px-3"
+            title={t.copyFilterHint}
+            aria-label={t.copyFilter}
+          >
+            <Filter className="size-4" />
+            <span className="ml-1.5 hidden sm:inline">{t.copyFilter}</span>
+          </Button>
+          <Button
+            onClick={shareLink}
+            variant="outline"
+            className="rounded-xl h-10 w-10 p-0"
+            title={t.shareLink}
+            aria-label={t.shareLink}
+          >
+            <Share2 className="size-4" />
+          </Button>
+          <Button
             onClick={copyAll}
             variant="outline"
             className="rounded-xl h-10 w-10 p-0"
