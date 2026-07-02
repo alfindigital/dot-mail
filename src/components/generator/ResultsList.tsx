@@ -5,7 +5,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { dotCount } from "@/lib/dot-variants";
 import { useT } from "@/lib/i18n";
 import { setLabels as persistLabels } from "@/lib/recent-usernames";
-import { Check, Copy, Download, Tag, Trash2 } from "lucide-react";
+import { Check, Copy, Download, Filter, Share2, Tag, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
 interface Props {
@@ -131,6 +131,18 @@ export function ResultsList({ variants, username, initialLabels }: Props) {
     return safeCopy(emailsFor(variants), t.copiedN(variants.length), t.copyFailed);
   }
 
+  function copyFilterQuery() {
+    const list = selected.size > 0 ? [...selected] : variants;
+    const query = `to:(${list.map((v) => `${v}@gmail.com`).join(" OR ")})`;
+    return safeCopy(query, t.filterCopied, t.copyFailed);
+  }
+
+  function shareLink() {
+    if (typeof window === "undefined") return;
+    const url = `${window.location.origin}/?u=${encodeURIComponent(username)}`;
+    return safeCopy(url, t.shareCopied, t.copyFailed);
+  }
+
   function applyLabel() {
     const value = labelDraft.trim();
     if (!value || selected.size === 0) return;
@@ -183,6 +195,25 @@ export function ResultsList({ variants, username, initialLabels }: Props) {
               <span className="ml-1.5 tabular-nums">{t.copySelected} ({selected.size})</span>
             </Button>
           )}
+          <Button
+            onClick={copyFilterQuery}
+            variant="outline"
+            className="rounded-xl h-10 px-3"
+            title={t.copyFilterHint}
+            aria-label={t.copyFilter}
+          >
+            <Filter className="size-4" />
+            <span className="ml-1.5 hidden sm:inline">{t.copyFilter}</span>
+          </Button>
+          <Button
+            onClick={shareLink}
+            variant="outline"
+            className="rounded-xl h-10 w-10 p-0"
+            title={t.shareLink}
+            aria-label={t.shareLink}
+          >
+            <Share2 className="size-4" />
+          </Button>
           <Button
             onClick={copyAll}
             variant="outline"

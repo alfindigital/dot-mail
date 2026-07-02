@@ -121,9 +121,29 @@ export function HomePage() {
             initialLabels={initialLabels}
           />
         ) : (
-          <div className="mt-8 rounded-2xl border border-dashed border-border bg-muted/20 px-6 py-10 flex flex-col items-center justify-center text-center">
-            <Sparkles className="size-5 text-accent mb-2" />
-            <p className="text-sm text-muted-foreground">{t.emptyPlaceholder}</p>
+          <div className="mt-8 rounded-2xl border border-dashed border-border bg-muted/20 px-6 py-8">
+            <div className="flex items-center gap-2 mb-4">
+              <Sparkles className="size-4 text-accent" />
+              <p className="text-sm text-muted-foreground">{t.emptyPlaceholder}</p>
+            </div>
+            <ul className="space-y-1.5 font-mono text-sm text-muted-foreground/80 select-none">
+              {["john", "jo.hn", "j.ohn", "j.o.hn", "jo.h.n", "j.oh.n"].map((v) => (
+                <li key={v} className="flex items-center gap-2">
+                  <span className="size-1 rounded-full bg-accent/50" />
+                  <span>
+                    {v.split(/(\.)/).map((p, i) =>
+                      p === "." ? (
+                        <span key={i} className="text-accent font-bold">.</span>
+                      ) : (
+                        <span key={i}>{p}</span>
+                      ),
+                    )}
+                    <span className="opacity-60">@gmail.com</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-4 text-xs text-muted-foreground/70">{t.emptyDemoHint}</p>
           </div>
         )}
 

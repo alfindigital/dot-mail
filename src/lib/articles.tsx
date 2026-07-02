@@ -209,6 +209,159 @@ export const ARTICLES: Article[] = [
       </>
     ),
   },
+  {
+    slug: "gmail-dot-trick-vs-plus-alias",
+    title: "Gmail Dot Trick vs Plus Alias: Which Should You Use?",
+    description:
+      "Side-by-side comparison of Gmail dot trick and plus addressing. When to pick which, real limitations, and how to combine both.",
+    datePublished: "2026-07-01",
+    dateModified: "2026-07-01",
+    readMins: 5,
+    excerpt:
+      "Both route email to the same inbox, but only one survives when services strip characters. Here is the honest comparison.",
+    body: () => (
+      <>
+        <P>
+          Gmail gives you two ways to create alternative addresses that all land in the same inbox:
+          the <strong>dot trick</strong> (<Code>j.ohn@gmail.com</Code>) and{" "}
+          <strong>plus addressing</strong> (<Code>john+netflix@gmail.com</Code>). Both work, but
+          they fail in different situations.
+        </P>
+        <H2>Quick comparison</H2>
+        <UL>
+          <li>
+            <strong>Dot trick</strong>: unlimited free variations, invisible to most form
+            validators, harder to detect and strip.
+          </li>
+          <li>
+            <strong>Plus alias</strong>: infinite unique tags, semantically clear ("netflix", "shop"),
+            but many signup forms reject the <Code>+</Code> character outright.
+          </li>
+        </UL>
+        <H2>When to use the dot trick</H2>
+        <P>
+          Use dots when the signup form is strict, when you want the address to look normal, or when
+          you want to test whether a service normalizes usernames. Use the{" "}
+          <A to="/">DotMail generator</A> to produce every variation at once.
+        </P>
+        <H2>When to use plus alias</H2>
+        <P>
+          Use <Code>+tag</Code> when the form accepts it and you want the address itself to describe
+          the source ("newsletter", "job-application"). It also makes Gmail filters trivial to write.
+        </P>
+        <H2>Combine both</H2>
+        <P>
+          Nothing stops you from combining them: <Code>jo.hn+netflix@gmail.com</Code> still lands in{" "}
+          <Code>john@gmail.com</Code>. The dot layer stays even if plus tags are stripped later.
+        </P>
+      </>
+    ),
+  },
+  {
+    slug: "gmail-filter-step-by-step",
+    title: "Gmail Filter Step by Step: Auto-Sort Every Email You Get",
+    description:
+      "A complete walkthrough of Gmail filters using dot-trick addresses. Skip inbox, apply labels, forward, and archive - fully automated.",
+    datePublished: "2026-07-01",
+    dateModified: "2026-07-01",
+    readMins: 6,
+    excerpt:
+      "Stop triaging manually. This guide shows the exact clicks to build filters that sort your inbox for you.",
+    body: () => (
+      <>
+        <P>
+          Inbox chaos is a solvable problem. If you use a different dot variation per service, you
+          can build Gmail filters that sort every incoming email automatically - before you see it.
+        </P>
+        <H2>1. Generate your variations</H2>
+        <P>
+          Open the <A to="/">generator</A> and pick a unique variation for each service (Netflix,
+          bank, newsletters, work signups). Keep a CSV of the pairings.
+        </P>
+        <H2>2. Open the Gmail filter dialog</H2>
+        <OL>
+          <li>In Gmail, click the sliders icon inside the search bar.</li>
+          <li>
+            In the <strong>To</strong> field, paste one variation address.
+          </li>
+          <li>Click "Create filter" at the bottom.</li>
+        </OL>
+        <H2>3. Pick actions</H2>
+        <UL>
+          <li>
+            <strong>Apply label</strong>: create per-service labels like "Shopping" or "Bank".
+          </li>
+          <li>
+            <strong>Skip inbox</strong>: bypass inbox for low-priority senders.
+          </li>
+          <li>
+            <strong>Forward</strong>: pipe receipts to an accountant automatically.
+          </li>
+          <li>
+            <strong>Never send to Spam</strong>: for critical services.
+          </li>
+        </UL>
+        <H2>4. Bulk-filter with DotMail</H2>
+        <P>
+          DotMail has a "Copy Gmail filter" button that produces{" "}
+          <Code>to:(a@gmail.com OR b@gmail.com ...)</Code> for every selected variation. Paste that
+          into Gmail search, click sliders → Create filter, and you have one filter covering an
+          entire cluster of addresses.
+        </P>
+        <H2>5. Audit yearly</H2>
+        <P>
+          Once a year, revisit filters and prune. Services change addresses, promotional patterns
+          shift, and old filters silently keep archiving mail you now want to see.
+        </P>
+      </>
+    ),
+  },
+  {
+    slug: "yahoo-outlook-dot-trick",
+    title: "Does the Dot Trick Work on Yahoo, Outlook, or ProtonMail?",
+    description:
+      "Yahoo, Outlook, iCloud, ProtonMail - a per-provider breakdown of dot-trick support and what alternatives each one offers.",
+    datePublished: "2026-07-01",
+    dateModified: "2026-07-01",
+    readMins: 4,
+    excerpt:
+      "Short answer: no, dots matter everywhere except Gmail. Here is what each provider offers instead.",
+    body: () => (
+      <>
+        <P>
+          The dot trick is a Gmail-only quirk. Every other major provider treats dots as significant
+          characters - <Code>j.ohn@yahoo.com</Code> and <Code>john@yahoo.com</Code> are different
+          accounts. But most offer their own aliasing systems.
+        </P>
+        <H2>Yahoo Mail</H2>
+        <P>
+          Dots matter. Yahoo Plus (paid) offers "Disposable Addresses" and a base + keyword system
+          similar to plus addressing.
+        </P>
+        <H2>Outlook / Hotmail</H2>
+        <P>
+          Dots matter. Microsoft supports <Code>+tag</Code> plus addressing, and paid accounts can
+          create up to 10 alias addresses that share one inbox.
+        </P>
+        <H2>iCloud Mail</H2>
+        <P>
+          Dots matter. Apple offers "Hide My Email" (unlimited random forwarding addresses) and up
+          to 3 custom aliases per iCloud account - stronger privacy than dots.
+        </P>
+        <H2>ProtonMail</H2>
+        <P>
+          Dots matter. Proton offers <Code>+tag</Code> plus addressing on all plans and dedicated
+          aliases via SimpleLogin on paid plans.
+        </P>
+        <H2>So Gmail wins?</H2>
+        <P>
+          For unlimited free variations that require no configuration, yes. That is why the{" "}
+          <A to="/">DotMail generator</A> exists specifically for Gmail. For other providers, use
+          their plus-alias or hide-my-email features.
+        </P>
+      </>
+    ),
+  },
 ];
 
 export function getArticle(slug: string): Article | undefined {

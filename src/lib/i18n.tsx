@@ -32,12 +32,18 @@ export interface Dict {
   resultsCount: (n: number) => string;
   copySelected: string;
   copyAll: string;
+  copyFilter: string;
+  copyFilterHint: string;
+  filterCopied: string;
+  shareLink: string;
+  shareCopied: string;
   downloadCsv: string;
   labelSelected: string;
   applyLabel: string;
   labelPlaceholder: string;
   clearLabels: string;
   emptyPlaceholder: string;
+  emptyDemoHint: string;
   loadMore: string;
   historyBack: string;
   // toasts
@@ -82,7 +88,7 @@ export const t: Dict = {
   heroEm: "Hundreds",
   heroLine2: "of addresses.",
   heroSubtitle:
-    "Gmail ignores dots in the username. Every variation below lands in the same inbox. Generate them with this tool.",
+    "Filter email per service, catch who leaked your address, or organize signups - all from one Gmail inbox. Gmail ignores dots in usernames, so every variation below lands in the same place.",
   trustBadge: "100% in your browser. Your data is never sent to a server.",
   inputLabel: "Your Gmail username",
   placeholder: "e.g. john",
@@ -99,12 +105,18 @@ export const t: Dict = {
   resultsCount: (n) => `${n.toLocaleString("en-US")} variations`,
   copySelected: "Copy",
   copyAll: "Copy all",
+  copyFilter: "Copy Gmail filter",
+  copyFilterHint: "Paste into Gmail search to filter all these addresses at once.",
+  filterCopied: "Gmail filter query copied - paste in Gmail search",
+  shareLink: "Share link",
+  shareCopied: "Share link copied to clipboard",
   downloadCsv: "Download .csv",
   labelSelected: "Label selected",
   applyLabel: "Apply",
   labelPlaceholder: "service name (e.g. Netflix)",
   clearLabels: "Clear all labels",
-  emptyPlaceholder: "Results will appear here",
+  emptyPlaceholder: "Try it - here is what john would generate:",
+  emptyDemoHint: "Type your username above to get your own set.",
   loadMore: "Load more",
   historyBack: "Back to generator",
   copiedN: (n) => `Copied ${n.toLocaleString("en-US")} emails`,
