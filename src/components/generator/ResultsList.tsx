@@ -131,6 +131,18 @@ export function ResultsList({ variants, username, initialLabels }: Props) {
     return safeCopy(emailsFor(variants), t.copiedN(variants.length), t.copyFailed);
   }
 
+  function copyFilterQuery() {
+    const list = selected.size > 0 ? [...selected] : variants;
+    const query = `to:(${list.map((v) => `${v}@gmail.com`).join(" OR ")})`;
+    return safeCopy(query, t.filterCopied, t.copyFailed);
+  }
+
+  function shareLink() {
+    if (typeof window === "undefined") return;
+    const url = `${window.location.origin}/?u=${encodeURIComponent(username)}`;
+    return safeCopy(url, t.shareCopied, t.copyFailed);
+  }
+
   function applyLabel() {
     const value = labelDraft.trim();
     if (!value || selected.size === 0) return;
