@@ -77,7 +77,7 @@
   --muted: oklch(0.955 0.008 80);
   --muted-foreground: oklch(0.48 0.012 60);
 
-  --accent: oklch(0.62 0.22 27); /* Gmail red */
+  --accent: oklch(0.645 0.235 27); /* DotMail red - unified */
   --accent-foreground: oklch(0.18 0.012 60);
 
   --destructive: oklch(0.55 0.2 27);
@@ -121,7 +121,7 @@
   /* WCAG AA on dark bg: lift muted text */
   --muted-foreground: oklch(0.78 0.012 70);
 
-  --accent: oklch(0.7 0.22 27);
+  --accent: oklch(0.645 0.235 27); /* DotMail red - unified */
   --accent-foreground: oklch(0.16 0.01 60);
 
   --destructive: oklch(0.72 0.19 25);
