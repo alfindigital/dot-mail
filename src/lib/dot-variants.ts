@@ -6,9 +6,9 @@
 // Plus addressing: username+tag@gmail.com always routes to username@gmail.com.
 
 export const MIN_USERNAME_LEN = 2;
-// 2^(MAX-1) variants. 18 chars -> 131,072 variants: heavy but virtualized.
-// Beyond this the combination count is exponential and practically useless,
-// so we cap and steer long usernames toward plus-addressing instead.
+// 2^(MAX-1) variants. 18 chars -> 131,072 variants: rendered via paginated
+// load-more (20 per page). Beyond this the combination count is exponential
+// and practically useless, so we cap the input length.
 export const MAX_USERNAME_LEN = 18;
 
 export function countVariants(username: string): number {
