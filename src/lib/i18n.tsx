@@ -91,7 +91,7 @@ export const t: Dict = {
     "Gmail ignores dots in usernames - every variation lands in the same inbox.",
   trustBadge: "100% private, runs in your browser.",
   inputLabel: "Your Gmail username",
-  placeholder: "e.g. john",
+  placeholder: "e.g. one",
   generate: "Generate",
   combosReady: "combinations ready",
   fromChars: (n) => `from ${n} characters`,
