@@ -64,7 +64,7 @@ function CopyButton({ text, ariaLabel, failMsg }: { text: string; ariaLabel: str
           toast.error(failMsg);
         }
       }}
-      className="opacity-60 sm:opacity-40 sm:group-hover:opacity-100 hover:opacity-100 focus:opacity-100 transition rounded-md p-1.5 hover:bg-muted text-muted-foreground shrink-0"
+      className="opacity-100 sm:opacity-70 sm:group-hover:opacity-100 hover:opacity-100 focus:opacity-100 transition rounded-md p-1.5 hover:bg-muted text-muted-foreground shrink-0"
     >
       {copied ? <Check className="size-4 text-accent copy-pop" /> : <Copy className="size-4" />}
     </button>
