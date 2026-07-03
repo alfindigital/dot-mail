@@ -127,7 +127,7 @@ export function HomePage() {
               <p className="text-sm text-muted-foreground">{t.emptyPlaceholder}</p>
             </div>
             <ul className="space-y-1.5 font-mono text-sm text-muted-foreground/80 select-none">
-              {["john", "jo.hn", "j.ohn", "j.o.hn", "jo.h.n", "j.oh.n"].map((v) => (
+              {["one", "o.ne", "on.e", "o.n.e"].map((v) => (
                 <li key={v} className="flex items-center gap-2">
                   <span className="size-1 rounded-full bg-accent/50" />
                   <span>
