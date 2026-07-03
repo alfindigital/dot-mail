@@ -126,10 +126,10 @@ export function HomePage() {
               <Sparkles className="size-4 text-accent" />
               <p className="text-sm text-muted-foreground">{t.emptyPlaceholder}</p>
             </div>
-            <ul className="space-y-1.5 font-mono text-sm text-muted-foreground/80 select-none">
+            <ul className="space-y-1.5 font-mono text-sm text-foreground select-none">
               {["one", "o.ne", "on.e", "o.n.e"].map((v) => (
                 <li key={v} className="flex items-center gap-2">
-                  <span className="size-1 rounded-full bg-accent/50" />
+                  <span className="size-1 rounded-full bg-accent" />
                   <span>
                     {v.split(/(\.)/).map((p, i) =>
                       p === "." ? (
@@ -138,12 +138,12 @@ export function HomePage() {
                         <span key={i}>{p}</span>
                       ),
                     )}
-                    <span className="opacity-60">@gmail.com</span>
+                    <span className="text-muted-foreground">@gmail.com</span>
                   </span>
                 </li>
               ))}
             </ul>
-            <p className="mt-4 text-xs text-muted-foreground/70">{t.emptyDemoHint}</p>
+            <p className="mt-4 text-xs text-muted-foreground">{t.emptyDemoHint}</p>
           </div>
         )}
 
