@@ -19,23 +19,21 @@ function getInitial(): "light" | "dark" {
 export function ThemeToggle() {
   const t = useT();
   const [theme, setTheme] = useState<"light" | "dark">("light");
-  const [mounted, setMounted] = useState(false);
+  const [userInitiated, setUserInitiated] = useState(false);
 
   useEffect(() => {
-    const t = getInitial();
-    setTheme(t);
-    setMounted(true);
+    setTheme(getInitial());
   }, []);
 
   useEffect(() => {
-    if (!mounted) return;
     document.documentElement.classList.toggle("dark", theme === "dark");
+    if (!userInitiated) return;
     try {
       localStorage.setItem(KEY, theme);
     } catch {
       /* ignore */
     }
-  }, [theme, mounted]);
+  }, [theme, userInitiated]);
 
   // Multi-tab sync: react to theme changes from other tabs.
   useEffect(() => {
@@ -54,7 +52,10 @@ export function ThemeToggle() {
       size="icon"
       aria-label={t.themeToggle}
       className="rounded-full"
-      onClick={() => setTheme((t) => (t === "dark" ? "light" : "dark"))}
+      onClick={() => {
+        setUserInitiated(true);
+        setTheme((t) => (t === "dark" ? "light" : "dark"));
+      }}
     >
       {theme === "dark" ? <Sun className="size-4" /> : <Moon className="size-4" />}
     </Button>
