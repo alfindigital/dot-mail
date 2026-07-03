@@ -89,7 +89,7 @@ export const t: Dict = {
   heroLine2: "of addresses.",
   heroSubtitle:
     "Gmail ignores dots in usernames - every variation lands in the same inbox.",
-  trustBadge: "100% in your browser. Your data is never sent to a server.",
+  trustBadge: "100% private, runs in your browser.",
   inputLabel: "Your Gmail username",
   placeholder: "e.g. john",
   generate: "Generate",
