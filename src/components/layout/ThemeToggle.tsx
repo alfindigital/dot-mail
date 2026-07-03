@@ -13,13 +13,6 @@ function getInitial(): "light" | "dark" {
   } catch {
     /* ignore */
   }
-  // No stored preference → fall back to OS setting so the toggle's
-  // initial state matches the bootstrap script in __root.tsx.
-  try {
-    if (window.matchMedia?.("(prefers-color-scheme: dark)").matches) return "dark";
-  } catch {
-    /* ignore */
-  }
   return "light";
 }
 
