@@ -115,7 +115,7 @@ export const t: Dict = {
   applyLabel: "Apply",
   labelPlaceholder: "service name (e.g. Netflix)",
   clearLabels: "Clear all labels",
-  emptyPlaceholder: "Try it - here is what john would generate:",
+  emptyPlaceholder: "Try it - here is what one would generate:",
   emptyDemoHint: "Type your username above to get your own set.",
   loadMore: "Load more",
   historyBack: "Back to generator",
