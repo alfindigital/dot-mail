@@ -49,6 +49,106 @@ function Code({ children }: { children: ReactNode }) {
 
 export const ARTICLES: Article[] = [
   {
+    slug: "dot-trick-vs-temp-mail",
+    title: "Gmail Dot Trick vs Temporary Email: Which One Should You Use?",
+    description:
+      "Comparing the Gmail dot trick with temporary email services like Gmailnator. When each makes sense, the real risks, and why one wins for long-term accounts.",
+    datePublished: "2026-07-07",
+    dateModified: "2026-07-07",
+    readMins: 6,
+    excerpt:
+      "Temporary Gmail addresses vanish. Dot-trick addresses don't. Here is the honest tradeoff for signups, privacy, and account recovery.",
+    body: () => (
+      <>
+        <P>
+          If you searched for "temporary gmail", "fake gmail generator", or "disposable inbox", you
+          are usually trying to solve one of two problems: <strong>keep spam out of your real
+          inbox</strong>, or <strong>sign up somewhere without handing over your identity</strong>.
+          Temporary email services (Gmailnator, Temp-Mail, 10minutemail) and the{" "}
+          <A to="/">Gmail dot trick</A> both try to answer that - but they work very differently,
+          and only one of them survives past the first login.
+        </P>
+        <H2>What each one actually is</H2>
+        <UL>
+          <li>
+            <strong>Temporary Gmail / disposable inbox</strong>: a public, throwaway address hosted
+            by a third party. Anyone with the URL can read the inbox. It usually self-destructs in
+            10 minutes to a few hours.
+          </li>
+          <li>
+            <strong>Gmail dot trick</strong>: your own real Gmail address with dots inserted in the
+            username. <Code>j.ohn@gmail.com</Code> and <Code>john@gmail.com</Code> land in the same
+            inbox - <em>your</em> inbox. Nothing expires.
+          </li>
+        </UL>
+        <H2>Side-by-side comparison</H2>
+        <UL>
+          <li>
+            <strong>Account recovery</strong>: dot trick ✅ (you own the mailbox forever) vs temp
+            mail ❌ (mailbox gone in minutes, password reset impossible).
+          </li>
+          <li>
+            <strong>Privacy from the service</strong>: dot trick ⚠️ (they see your real Gmail) vs
+            temp mail ✅ (random address, but public inbox).
+          </li>
+          <li>
+            <strong>Privacy from strangers</strong>: dot trick ✅ (only you can read it) vs temp
+            mail ❌ (anyone who guesses the address reads your mail).
+          </li>
+          <li>
+            <strong>Accepted at signup</strong>: dot trick ✅ (looks like a normal Gmail) vs temp
+            mail ❌ (most serious services blocklist known temp-mail domains).
+          </li>
+          <li>
+            <strong>Filtering & leak detection</strong>: dot trick ✅ (unique variation per service)
+            vs temp mail ⚠️ (works once, then gone).
+          </li>
+          <li>
+            <strong>Cost & setup</strong>: both free, both zero setup.
+          </li>
+        </UL>
+        <H2>When a temporary email is the right tool</H2>
+        <P>
+          Temp mail is fine for a <strong>one-time confirmation code</strong> you will never need
+          again - a whitepaper download, a one-off forum lurk, a wifi captive portal. If you never
+          need to log back in, disposable is perfect.
+        </P>
+        <H2>When the dot trick is the right tool</H2>
+        <P>
+          Any account you might ever want to log back into, reset a password on, or receive a
+          receipt from: use the dot trick. It gives you a permanent, private, per-service address
+          without creating a new mailbox. Combine with{" "}
+          <A to="/articles/filter-gmail-with-dots">Gmail filters</A> to auto-sort by service, and
+          with the <A to="/articles/detect-email-leaks">leak detection method</A> to trace who
+          sold your address.
+        </P>
+        <H2>The hidden risk of "fake gmail generators"</H2>
+        <P>
+          Sites that promise a "temporary Gmail" address are almost never real Gmail accounts -
+          they are third-party inboxes styled to look like Gmail. That means:
+        </P>
+        <UL>
+          <li>The provider (not Google) can read every message.</li>
+          <li>The address dies, so you cannot reset a password later.</li>
+          <li>
+            Many major services already block those domains, so signups silently fail or get banned.
+          </li>
+        </UL>
+        <H2>Recommendation</H2>
+        <P>
+          Use temp mail for genuinely disposable, single-use signups. Use the dot trick for
+          <strong> everything else</strong> - especially anything tied to a real account, a
+          purchase, or a subscription. You get the privacy and filtering benefits people want from
+          temp mail, without losing access next Tuesday.
+        </P>
+        <P>
+          <A to="/">Generate every dot variation of your Gmail address</A> in your browser - no
+          signup, no server, no expiry.
+        </P>
+      </>
+    ),
+  },
+  {
     slug: "filter-gmail-with-dots",
     title: "How to Filter Gmail Using the Dot Trick (Step by Step)",
     description:
