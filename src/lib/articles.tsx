@@ -462,6 +462,63 @@ export const ARTICLES: Article[] = [
       </>
     ),
   },
+  {
+    slug: "how-many-gmail-dot-variations",
+    title: "How Many Gmail Dot Variations Can You Create?",
+    description:
+      "The math behind Gmail dot variations and why the number grows fast. Use the DotMail generator to list every possible version of your username.",
+    datePublished: "2026-07-08",
+    dateModified: "2026-07-08",
+    readMins: 4,
+    excerpt:
+      "Every dot position is a binary choice. Here is how to calculate the total variations of your Gmail username.",
+    body: () => (
+      <>
+        <P>
+          The Gmail dot trick works because Google ignores dots in the username. That means every
+          possible placement of dots in your username creates a new address that lands in the same
+          inbox. But how many versions are possible?
+        </P>
+        <H2>The simple formula</H2>
+        <P>
+          For a username with <Code>n</Code> characters, there are <Code>n - 1</Code> gaps between
+          characters. Each gap can either have a dot or not. That gives:
+        </P>
+        <P>
+          <Code>2^(n - 1)</Code> possible dot variations.
+        </P>
+        <UL>
+          <li>
+            3-letter username → <Code>2^2 = 4</Code> variations.
+          </li>
+          <li>
+            5-letter username → <Code>2^4 = 16</Code> variations.
+          </li>
+          <li>
+            10-letter username → <Code>2^9 = 512</Code> variations.
+          </li>
+        </UL>
+        <H2>Why the number grows fast</H2>
+        <P>
+          Each extra character doubles the possibilities. A 15-character username has over 16,000
+          variations. That is why DotMail caps the generator at 15 characters - the list stays
+          usable while still giving you plenty of options.
+        </P>
+        <H2>What about dots at the start or end?</H2>
+        <P>
+          Gmail does not allow dots at the beginning or end of a username, and consecutive dots like
+          <Code>j..ohn</Code> are not valid. The generator only produces real Gmail addresses, so
+          those invalid patterns are skipped.
+        </P>
+        <H2>Generate them all instantly</H2>
+        <P>
+          Instead of counting manually, use the <A to="/">DotMail generator</A> to produce every
+          valid dot variation of your username in one click. Copy, label, and use them across
+          different services.
+        </P>
+      </>
+    ),
+  },
 ];
 
 export function getArticle(slug: string): Article | undefined {
