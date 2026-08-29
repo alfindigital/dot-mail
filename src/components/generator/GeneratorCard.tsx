@@ -57,11 +57,19 @@ export function GeneratorCard({ onGenerate, externalValue }: Props) {
   const [touched, setTouched] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  // Recover text typed before hydration finished (otherwise React's first
+  // commit wipes the DOM value and the field appears to clear itself).
+  useEffect(() => {
+    const typed = inputRef.current?.value;
+    if (typed) setValue(typed.toLowerCase());
+  }, []);
+
   useEffect(() => {
     if (externalValue !== undefined) {
       setValue(externalValue);
     }
   }, [externalValue]);
+
 
   const validation = useMemo(() => validateUsername(value), [value]);
 
