@@ -62,11 +62,12 @@ export const ARTICLES: Article[] = [
       <>
         <P>
           If you searched for "temporary gmail", "fake gmail generator", or "disposable inbox", you
-          are usually trying to solve one of two problems: <strong>keep spam out of your real
-          inbox</strong>, or <strong>sign up somewhere without handing over your identity</strong>.
-          Temporary email services (Gmailnator, Temp-Mail, 10minutemail) and the{" "}
-          <A to="/">Gmail dot trick</A> both try to answer that - but they work very differently,
-          and only one of them survives past the first login.
+          are usually trying to solve one of two problems:{" "}
+          <strong>keep spam out of your real inbox</strong>, or{" "}
+          <strong>sign up somewhere without handing over your identity</strong>. Temporary email
+          services (Gmailnator, Temp-Mail, 10minutemail) and the <A to="/">Gmail dot trick</A> both
+          try to answer that - but they work very differently, and only one of them survives past
+          the first login.
         </P>
         <H2>What each one actually is</H2>
         <UL>
@@ -119,13 +120,13 @@ export const ARTICLES: Article[] = [
           receipt from: use the dot trick. It gives you a permanent, private, per-service address
           without creating a new mailbox. Combine with{" "}
           <A to="/articles/filter-gmail-with-dots">Gmail filters</A> to auto-sort by service, and
-          with the <A to="/articles/detect-email-leaks">leak detection method</A> to trace who
-          sold your address.
+          with the <A to="/articles/detect-email-leaks">leak detection method</A> to trace who sold
+          your address.
         </P>
         <H2>The hidden risk of "fake gmail generators"</H2>
         <P>
-          Sites that promise a "temporary Gmail" address are almost never real Gmail accounts -
-          they are third-party inboxes styled to look like Gmail. That means:
+          Sites that promise a "temporary Gmail" address are almost never real Gmail accounts - they
+          are third-party inboxes styled to look like Gmail. That means:
         </P>
         <UL>
           <li>The provider (not Google) can read every message.</li>
@@ -168,8 +169,8 @@ export const ARTICLES: Article[] = [
         </P>
         <H2>Step 1 - Create a unique variation per service</H2>
         <P>
-          Open the <A to="/">DotMail generator</A>, type your Gmail username, and pick one
-          variation for each service. Keep a note of the pairings, for example:
+          Open the <A to="/">DotMail generator</A>, type your Gmail username, and pick one variation
+          for each service. Keep a note of the pairings, for example:
         </P>
         <UL>
           <li>
@@ -200,7 +201,9 @@ export const ARTICLES: Article[] = [
             again.
           </li>
         </OL>
-        <P>Done. From now on email from that service is sorted automatically. Repeat per service.</P>
+        <P>
+          Done. From now on email from that service is sorted automatically. Repeat per service.
+        </P>
         <H2>Tips</H2>
         <UL>
           <li>Use one consistent variation per service so filters are easy to manage.</li>
@@ -286,8 +289,8 @@ export const ARTICLES: Article[] = [
             Open the <A to="/">generator</A> and produce all dot variations of your username.
           </li>
           <li>
-            Label each variation ("Label" feature in the results list) and download as CSV to keep
-            a record.
+            Label each variation ("Label" feature in the results list) and download as CSV to keep a
+            record.
           </li>
           <li>Use a different variation when signing up to each important service.</li>
           <li>
@@ -334,8 +337,8 @@ export const ARTICLES: Article[] = [
             validators, harder to detect and strip.
           </li>
           <li>
-            <strong>Plus alias</strong>: infinite unique tags, semantically clear ("netflix", "shop"),
-            but many signup forms reject the <Code>+</Code> character outright.
+            <strong>Plus alias</strong>: infinite unique tags, semantically clear ("netflix",
+            "shop"), but many signup forms reject the <Code>+</Code> character outright.
           </li>
         </UL>
         <H2>When to use the dot trick</H2>
@@ -347,7 +350,8 @@ export const ARTICLES: Article[] = [
         <H2>When to use plus alias</H2>
         <P>
           Use <Code>+tag</Code> when the form accepts it and you want the address itself to describe
-          the source ("newsletter", "job-application"). It also makes Gmail filters trivial to write.
+          the source ("newsletter", "job-application"). It also makes Gmail filters trivial to
+          write.
         </P>
         <H2>Combine both</H2>
         <P>
