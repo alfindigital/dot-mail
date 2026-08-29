@@ -17,7 +17,7 @@ for (const vp of VIEWPORTS) {
 
     test("generator produces variants", async ({ page }) => {
       await page.goto("/");
-      await page.getByPlaceholder("e.g. john").fill("john");
+      await page.getByPlaceholder("e.g. one").fill("john");
       await page.getByRole("button", { name: /Generate/ }).click();
       await expect(page.getByRole("heading", { name: /8 variations/ })).toBeVisible();
       expect(await noHorizontalOverflow(page)).toBeLessThanOrEqual(1);

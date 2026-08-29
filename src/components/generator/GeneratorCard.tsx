@@ -1,11 +1,7 @@
 import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import {
-  countVariants,
-  generateDotVariants,
-  validateUsername,
-} from "@/lib/dot-variants";
+import { countVariants, generateDotVariants, validateUsername } from "@/lib/dot-variants";
 import { useT } from "@/lib/i18n";
 import { ArrowRight } from "lucide-react";
 
@@ -61,11 +57,19 @@ export function GeneratorCard({ onGenerate, externalValue }: Props) {
   const [touched, setTouched] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  // Recover text typed before hydration finished (otherwise React's first
+  // commit wipes the DOM value and the field appears to clear itself).
+  useEffect(() => {
+    const typed = inputRef.current?.value;
+    if (typed) setValue(typed.toLowerCase());
+  }, []);
+
   useEffect(() => {
     if (externalValue !== undefined) {
       setValue(externalValue);
     }
   }, [externalValue]);
+
 
   const validation = useMemo(() => validateUsername(value), [value]);
 
@@ -118,7 +122,11 @@ export function GeneratorCard({ onGenerate, externalValue }: Props) {
               @gmail.com
             </span>
           </div>
-          <Button type="submit" size="lg" className="h-12 px-6 rounded-xl bg-accent text-white hover:bg-accent/90">
+          <Button
+            type="submit"
+            size="lg"
+            className="h-12 px-6 rounded-xl bg-accent text-white hover:bg-accent/90"
+          >
             {t.generate}
             <ArrowRight className="size-4" />
           </Button>

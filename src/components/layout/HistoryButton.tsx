@@ -6,7 +6,13 @@ import { useT } from "@/lib/i18n";
 export function HistoryButton() {
   const t = useT();
   return (
-    <Button asChild variant="ghost" size="icon" aria-label={t.historyButton} className="rounded-full">
+    <Button
+      asChild
+      variant="ghost"
+      size="icon"
+      aria-label={t.historyButton}
+      className="rounded-full"
+    >
       <Link to="/history">
         <History className="size-4" />
       </Link>
