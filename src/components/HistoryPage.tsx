@@ -3,12 +3,7 @@ import { Link, useNavigate } from "@tanstack/react-router";
 import { ArrowLeft, X } from "lucide-react";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { SiteFooter } from "@/components/layout/SiteFooter";
-import {
-  getRecent,
-  removeRecent,
-  subscribeRecent,
-  type RecentEntry,
-} from "@/lib/recent-usernames";
+import { getRecent, removeRecent, subscribeRecent, type RecentEntry } from "@/lib/recent-usernames";
 import { useT } from "@/lib/i18n";
 
 export function HistoryPage() {

@@ -133,7 +133,9 @@ export function HomePage() {
                   <span>
                     {v.split(/(\.)/).map((p, i) =>
                       p === "." ? (
-                        <span key={i} className="text-accent font-bold">.</span>
+                        <span key={i} className="text-accent font-bold">
+                          .
+                        </span>
                       ) : (
                         <span key={i}>{p}</span>
                       ),

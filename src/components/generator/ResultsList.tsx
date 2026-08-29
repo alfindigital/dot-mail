@@ -26,7 +26,9 @@ function HighlightedEmail({ value }: { value: string }) {
       <span aria-hidden="true">
         {baseParts.map((p, i) =>
           p === "." ? (
-            <span key={i} className="text-accent font-bold">.</span>
+            <span key={i} className="text-accent font-bold">
+              .
+            </span>
           ) : (
             <span key={i}>{p}</span>
           ),
@@ -48,7 +50,15 @@ async function safeCopy(text: string, successMsg: string, failMsg: string) {
   }
 }
 
-function CopyButton({ text, ariaLabel, failMsg }: { text: string; ariaLabel: string; failMsg: string }) {
+function CopyButton({
+  text,
+  ariaLabel,
+  failMsg,
+}: {
+  text: string;
+  ariaLabel: string;
+  failMsg: string;
+}) {
   const [copied, setCopied] = useState(false);
   return (
     <button
@@ -112,7 +122,6 @@ export function ResultsList({ variants, username, initialLabels }: Props) {
   }, [labels, username]);
 
   const visible = useMemo(() => variants.slice(0, visibleCount), [variants, visibleCount]);
-
 
   function toggleOne(v: string) {
     setSelected((prev) => {
@@ -182,17 +191,15 @@ export function ResultsList({ variants, username, initialLabels }: Props) {
           {selected.size > 0 && (
             <Button
               onClick={() =>
-                safeCopy(
-                  emailsFor([...selected]),
-                  t.copiedSelected(selected.size),
-                  t.copyFailed,
-                )
+                safeCopy(emailsFor([...selected]), t.copiedSelected(selected.size), t.copyFailed)
               }
               className="rounded-xl h-10 px-3 bg-accent text-white hover:bg-accent/90"
               title={t.copySelected}
             >
               <Copy className="size-4" />
-              <span className="ml-1.5 tabular-nums">{t.copySelected} ({selected.size})</span>
+              <span className="ml-1.5 tabular-nums">
+                {t.copySelected} ({selected.size})
+              </span>
             </Button>
           )}
           <Button

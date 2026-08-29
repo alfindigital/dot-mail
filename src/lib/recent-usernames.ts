@@ -27,7 +27,10 @@ function parse(raw: string | null): RecentEntry[] {
     }
     // Legacy shape: plain array of strings
     if (Array.isArray(parsed)) {
-      return parsed.filter((x) => typeof x === "string").map((u: string) => ({ u })).slice(0, MAX);
+      return parsed
+        .filter((x) => typeof x === "string")
+        .map((u: string) => ({ u }))
+        .slice(0, MAX);
     }
     return [];
   } catch {
