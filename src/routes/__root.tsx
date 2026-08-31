@@ -81,10 +81,7 @@ export const Route = createRootRoute({
       { property: "og:site_name", content: "DotMail" },
       { property: "og:locale", content: "en_US" },
       { name: "twitter:card", content: "summary_large_image" },
-      {
-        name: "google-site-verification",
-        content: "J-Czc4w4Dto_XXTUZfW8lAMoT45CpTWqZ72Nt91yFbw",
-      },
+
     ],
     links: [
       { rel: "stylesheet", href: appCss },

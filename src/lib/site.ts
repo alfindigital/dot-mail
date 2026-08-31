@@ -1,7 +1,7 @@
 // Single source of truth for the canonical site origin. Used by SEO meta,
 // JSON-LD, sitemap, and any absolute URL. Override at build time with SITE_URL.
 const RAW =
-  (typeof process !== "undefined" && process.env?.SITE_URL) || "https://dotmail.alfindigital.com";
+  (typeof process !== "undefined" && process.env?.SITE_URL) || "http://localhost:3000";
 
 export const SITE_URL = RAW.replace(/\/$/, "");
 export const SITE_NAME = "DotMail";
