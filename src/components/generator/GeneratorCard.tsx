@@ -70,7 +70,6 @@ export function GeneratorCard({ onGenerate, externalValue }: Props) {
     }
   }, [externalValue]);
 
-
   const validation = useMemo(() => validateUsername(value), [value]);
 
   const dotTotal = validation.valid ? countVariants(validation.username) : 0;
